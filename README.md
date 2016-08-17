@@ -12,3 +12,4 @@ Konstantin Russo
 * Alex Belokon (<info.tehnokot@gmail.com>)
 * Konstantin Russo (<kstn.russo@gmail.com>)
 * Serhii Kobzin (<serhii.kobzin@gmail.com>)
+* Andrey Chudinovskyh (<andron989@gmail.com>)
