@@ -5,4 +5,4 @@ library portal helps admins to manage all readers and helps readers to see what 
 
 ## Authors
 
-* Dmitriy Malyarenko <dmitriy.malyarenko@gmail.com>
+* Dmitriy Malyarenko (<dmitriy.malyarenko@gmail.com>)
