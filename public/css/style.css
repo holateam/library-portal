@@ -1,8 +1,60 @@
 body {
   background-color: white; }
 
-section#main {
-  margin: 40px 0; }
-  section#main .book img {
-    width: 150px;
-    height: auto; }
+/* ------------------ section #header - styles sass ------------------------- */
+#header .navbar {
+  border-bottom: 5px solid #27ae60; }
+
+#header .sh {
+  color: black; }
+
+#header .plus {
+  color: #27ae60; }
+
+#header .sh, #header .plus {
+  font-family: arial;
+  font-size: 40px;
+  font-weight: bold;
+  line-height: 20px; }
+
+.navbar-form {
+  width: 60%; }
+  .navbar-form .form-group {
+    width: 80%; }
+  .navbar-form #search {
+    width: 100%; }
+  .navbar-form #search_btn {
+    margin-left: 10px; }
+
+/* ----------------------- section #main  - styles sass --------------------- */
+#main {
+  margin: 100px 0; }
+  #main #showcase_books {
+    border-left: 1px solid #e4dcdc;
+    padding: 0 50px; }
+  #main .book {
+    text-align: center;
+    margin-bottom: 60px;
+    padding: 20px 10px; }
+    #main .book:hover {
+      -webkit-box-shadow: 0px 6px 16px 1px rgba(0, 0, 0, 0.75);
+              box-shadow: 0px 6px 16px 1px rgba(0, 0, 0, 0.75); }
+    #main .book .title {
+      padding: 5px 0 0 0;
+      color: #27ae60;
+      font-size: 14px;
+      font-weight: bold; }
+    #main .book .author {
+      color: #2c3e50; }
+    #main .book a {
+      display: block; }
+      #main .book a img {
+        width: 100%;
+        height: auto; }
+
+/* ---------------------- section #footer - styles sass --------------------- */
+#footer {
+  text-align: center;
+  color: white;
+  height: 20px;
+  background-color: #3d3d3d; }

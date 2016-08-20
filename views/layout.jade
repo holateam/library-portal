@@ -5,20 +5,33 @@ html
 		link(rel='stylesheet',href='/css/libs.min.css')
 		link(rel='stylesheet', href='/css/style.css')
 	body
+
 		section#header
-			div.container
-				div.row
-					div.col-xs-12.col-md-3
-						div.logo LOGO-img
-					div.col-xs-12.col-md-9
-					form.navbar-form.navbar-left
-						div.form-group
-							input.form-control#search(type="text" placeholder="Search")
-						button.btn.btn-default(type="submit") Submit
+			nav.navbar.navbar-default
+				.container
+					.navbar-header
+						button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1', aria-expanded='false')
+							span.sr-only Toggle navigation
+							span.icon-bar
+							span.icon-bar
+							span.icon-bar
+						a.navbar-brand(href='#')
+							span.sh Ш
+							span.plus ++
+					#bs-example-navbar-collapse-1.collapse.navbar-collapse
+						.col-xs-12.col-sm-9.col-md-9.col-lg-9
+							form.navbar-form.navbar-right
+								.form-group
+									input#search.form-control(type='text', placeholder='Search')
+								button#search_btn.btn.btn-default(type='submit') OK
+						ul.nav.navbar-nav.navbar-right(style="display: none")
+							li
+								a(href='#') Admin
+
 		section#main
 			div.container
 				div.row
-					div.col-xs-12.col-md-3
+					div.col-xs-12.col-md-2
 						div.menu
 							ul.nav.nav-pills.nav-stacked
 								li#filter_new
@@ -27,11 +40,10 @@ html
 									a(href="#") Popular
 								li#filter_all
 									a(href="#") All
-					div.col-xs-12.col-md-9
+					div#showcase_books.col-xs-12.col-md-10
 						block content
-							
+
 		section#footer
-			div.container
-				div.row Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+			div.container-fuild footer by hola-team 2
 		script(src='/js/libs.min.js')
 		script(src='/js/common.js')
