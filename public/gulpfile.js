@@ -59,10 +59,9 @@ gulp.task('img', function(){
 
 gulp.task('watch', ['css-libs','scripts'], function(){
 	gulp.watch('sass/**/*.sass',['sass']);
-
 });
 
-gulp.task('build', ['clean', 'img', 'sass', 'scripts'], function(){
+gulp.task('build', ['clean', 'img', 'css-libs', 'scripts'], function(){
 
   var buildCss= gulp.src([
     'css/style.css',

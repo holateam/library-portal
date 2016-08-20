@@ -5,7 +5,33 @@ html
 		link(rel='stylesheet',href='/css/libs.min.css')
 		link(rel='stylesheet', href='/css/style.css')
 	body
-		block content
-		p	ddfd
+		section#header
+			div.container
+				div.row
+					div.col-xs-12.col-md-3
+						div.logo LOGO-img
+					div.col-xs-12.col-md-9
+					form.navbar-form.navbar-left
+						div.form-group
+							input.form-control#search(type="text" placeholder="Search")
+						button.btn.btn-default(type="submit") Submit
+		section#main
+			div.container
+				div.row
+					div.col-xs-12.col-md-3
+						div.menu
+							ul.nav.nav-pills.nav-stacked
+								li#filter_new
+									a(href="#") New
+								li#filter_popular
+									a(href="#") Popular
+								li#filter_all
+									a(href="#") All
+					div.col-xs-12.col-md-9
+						block content
+							
+		section#footer
+			div.container
+				div.row Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 		script(src='/js/libs.min.js')
 		script(src='/js/common.js')
