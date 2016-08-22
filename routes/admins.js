@@ -39,17 +39,16 @@ adminRouter.route('/books')
             "filter" : "",
             "books" : [
                 {
-                          "id": 33,
-                          "title": "...",
-                          "authors": "...",
-                          "busy": false,
-                          "year" : 2015,
-                          "new" : true
+                    "id": 33,
+                    "title": "...",
+                    "authors": "...",
+                    "busy": false,
+                    "year" : 2015,
+                    "new" : true
                 },
             ]
         }
-    }
-;
+    };
 
     res.json(test);
 });
