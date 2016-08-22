@@ -1,23 +1,33 @@
 /* ----------------------------- begin view ----------------------------------*/
 var view = {
-    addBook: function(data) {
+    addBookItem: function(data) {
         // something to do here
     }
 };
 /* ------------------------------- end view ----------------------------------*/
 
-/* ------------------------------ begin model --------------------------------*/
-var model = {
-    giveMeBookIDWithID: function(data) {
-        // something to do here
-    }
-};
-/* ------------------------------- end model ---------------------------------*/
-
 /* --------------------------- begin controller ------------------------------*/
 var controller = {
-    pressClickBtnBook: function(event) {
+    clickWantToReadBtn: function(event) {
         // something to do here event
+    },
+    clickSideBarItem: function(event){
+      console.log('Work');
+      var _this = $(this);
+      $('.menu_nav li').removeClass("active");
+        _this.closest('li').addClass("active");
+        doAjaxQuery('get','/api/v1/books/:'+filter+'',data)
+
+    },
+    doAjaxQuery: function(method,url,data,callback){
+      $.ajax({
+            type: method,
+            url: url,
+            contentType: 'application/json',
+            dataType: 'json',
+            data: JSON.stringify(data),
+            success: callback
+        });
     }
 };
 /* --------------------------- end controller --------------------------------*/
@@ -38,8 +48,8 @@ var controller = {
         },
         event: function() { // тут навешиваем слушателей на события
             $(document).ready(function() {
-                $('.want_to_read').click(controller.pressClickBtnBook);
-
+                $('.menu_nav li ').click(controller.clickSideBarItem);
+                $('.want_to_read').click(controller.clickWantToReadBtn);
 
             });
         }

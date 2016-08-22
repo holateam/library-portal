@@ -1,5 +1,20 @@
 body
   background-color: white
+  a:focus, a:hover
+    text-decoration: none
+.size_text
+  white-space: nowrap
+  overflow: hidden
+  padding: 5px
+  // position: relative
+  &::after
+    content: ''
+    position: absolute
+    right: 0
+    top: 0
+    width: 40px
+    height: 100%
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.2), #fff 100%)
 
 /* ------------------ section #header - styles sass ------------------------- */
 #header
@@ -27,29 +42,108 @@ body
 
 /* ----------------------- section #main  - styles sass --------------------- */
 #main
-  margin: 100px 0
+  margin: 160px 0
+  .menu
+    border-bottom-width: 0
+    border-right-width: 2px
+    border-right-style: solid
+    border-right-color: rgba(34,36,38,.15)
+    .menu_nav
+      padding-left: 0
+      margin:
+        top: 10px
+        bottom: 10px
+      li
+        float: none
+        list-style: none
+        a
+          color: #27ae60
+          padding: 10px 15px
+          display: block
+          &:hover
+            background-color: white
+            font-weight: bold
+            text-decoration: none
+      .active
+        border-color: #27ae60
+        border-right-style: solid
+        margin: 0 -2px 0 0
+        border-right-width: 2px
+  .menu_fixed_middle
+    top: 160px
+    position: fixed
+    z-index: 1029
+    width: 13%
   #showcase_books
-    border-left: 1px solid #e4dcdc
-    padding: 0 50px
-  .book
-    text-align: center
-    margin-bottom: 60px
-    padding: 20px 10px
-    &:hover
-      box-shadow: 0px 6px 16px 1px rgba(0, 0, 0, 0.75)
-    .title
-      padding: 5px 0 0 0
-      color: #27ae60
-      font-size: 14px
-      font-weight: bold
-    .author
-      color: #2c3e50
     a
       display: block
       img
         width: 100%
         height: auto
-
+        cursor: pointer
+    .book_item
+      text-align: center
+      margin-bottom: 60px
+      padding: 20px 10px
+      &:hover
+        box-shadow: 0px 6px 16px 1px rgba(0, 0, 0, 0.75)
+      //   // .size_text
+      //   //   white-space: normal
+      //   //   &::after
+      //   //     background: none
+      .title
+        padding: 5px 0 0 0
+        color: #27ae60
+        font-size: 14px
+        font-weight: bold
+        cursor: pointer
+        &::before
+          content: attr(data-book-title)
+          position: absolute
+          left: 15%
+          top: 30%
+          z-index: 1029
+          background: rgba(255, 255, 255, 0.9)
+          font-family: Arial, sans-serif
+          font-size: 11px
+          padding: 5px 10px
+          border: 1px dashed #27ae60
+          border-radius: 20px
+          width: 70%
+          white-space: normal
+          box-sizing: border-box
+          transition: .25s ease-in-out
+          opacity: 0
+          display: none
+        &:hover::before
+          opacity: 1
+          top: 40%
+          display: block
+      .author
+        cursor: pointer
+        color: #2c3e50
+        &::before
+          content: attr(data-book-author)
+          position: absolute
+          left: 15%
+          top: 30%
+          z-index: 1029
+          background: rgba(255, 255, 255, 0.9)
+          font-family: Arial, sans-serif
+          font-size: 11px
+          padding: 5px 10px
+          border: 1px dashed #27ae60
+          border-radius: 20px
+          width: 70%
+          white-space: normal
+          box-sizing: border-box
+          transition: .25s ease-in-out
+          opacity: 0
+          display: none
+        &:hover::before
+          opacity: 1
+          top: 40%
+          display: block
 /* ---------------------- section #footer - styles sass --------------------- */
 #footer
   text-align: center

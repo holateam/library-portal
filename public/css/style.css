@@ -1,5 +1,22 @@
 body {
   background-color: white; }
+  body a:focus, body a:hover {
+    text-decoration: none; }
+
+.size_text {
+  white-space: nowrap;
+  overflow: hidden;
+  padding: 5px; }
+  .size_text::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 40px;
+    height: 100%;
+    background: -webkit-gradient(linear, left top, right top, from(rgba(255, 255, 255, 0.2)), to(#fff));
+    background: -webkit-linear-gradient(left, rgba(255, 255, 255, 0.2), #fff 100%);
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.2), #fff 100%); }
 
 /* ------------------ section #header - styles sass ------------------------- */
 #header .navbar {
@@ -28,29 +45,109 @@ body {
 
 /* ----------------------- section #main  - styles sass --------------------- */
 #main {
-  margin: 100px 0; }
-  #main #showcase_books {
-    border-left: 1px solid #e4dcdc;
-    padding: 0 50px; }
-  #main .book {
+  margin: 160px 0; }
+  #main .menu {
+    border-bottom-width: 0;
+    border-right-width: 2px;
+    border-right-style: solid;
+    border-right-color: rgba(34, 36, 38, 0.15); }
+    #main .menu .menu_nav {
+      padding-left: 0;
+      margin-top: 10px;
+      margin-bottom: 10px; }
+      #main .menu .menu_nav li {
+        float: none;
+        list-style: none; }
+        #main .menu .menu_nav li a {
+          color: #27ae60;
+          padding: 10px 15px;
+          display: block; }
+          #main .menu .menu_nav li a:hover {
+            background-color: white;
+            font-weight: bold;
+            text-decoration: none; }
+      #main .menu .menu_nav .active {
+        border-color: #27ae60;
+        border-right-style: solid;
+        margin: 0 -2px 0 0;
+        border-right-width: 2px; }
+  #main .menu_fixed_middle {
+    top: 160px;
+    position: fixed;
+    z-index: 1029;
+    width: 13%; }
+  #main #showcase_books a {
+    display: block; }
+    #main #showcase_books a img {
+      width: 100%;
+      height: auto;
+      cursor: pointer; }
+  #main #showcase_books .book_item {
     text-align: center;
     margin-bottom: 60px;
     padding: 20px 10px; }
-    #main .book:hover {
+    #main #showcase_books .book_item:hover {
       -webkit-box-shadow: 0px 6px 16px 1px rgba(0, 0, 0, 0.75);
               box-shadow: 0px 6px 16px 1px rgba(0, 0, 0, 0.75); }
-    #main .book .title {
+    #main #showcase_books .book_item .title {
       padding: 5px 0 0 0;
       color: #27ae60;
       font-size: 14px;
-      font-weight: bold; }
-    #main .book .author {
+      font-weight: bold;
+      cursor: pointer; }
+      #main #showcase_books .book_item .title::before {
+        content: attr(data-book-title);
+        position: absolute;
+        left: 15%;
+        top: 30%;
+        z-index: 1029;
+        background: rgba(255, 255, 255, 0.9);
+        font-family: Arial, sans-serif;
+        font-size: 11px;
+        padding: 5px 10px;
+        border: 1px dashed #27ae60;
+        -webkit-border-radius: 20px;
+                border-radius: 20px;
+        width: 70%;
+        white-space: normal;
+        -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+        -webkit-transition: .25s ease-in-out;
+        transition: .25s ease-in-out;
+        opacity: 0;
+        display: none; }
+      #main #showcase_books .book_item .title:hover::before {
+        opacity: 1;
+        top: 40%;
+        display: block; }
+    #main #showcase_books .book_item .author {
+      cursor: pointer;
       color: #2c3e50; }
-    #main .book a {
-      display: block; }
-      #main .book a img {
-        width: 100%;
-        height: auto; }
+      #main #showcase_books .book_item .author::before {
+        content: attr(data-book-author);
+        position: absolute;
+        left: 15%;
+        top: 30%;
+        z-index: 1029;
+        background: rgba(255, 255, 255, 0.9);
+        font-family: Arial, sans-serif;
+        font-size: 11px;
+        padding: 5px 10px;
+        border: 1px dashed #27ae60;
+        -webkit-border-radius: 20px;
+                border-radius: 20px;
+        width: 70%;
+        white-space: normal;
+        -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+        -webkit-transition: .25s ease-in-out;
+        transition: .25s ease-in-out;
+        opacity: 0;
+        display: none; }
+      #main #showcase_books .book_item .author:hover::before {
+        opacity: 1;
+        top: 40%;
+        display: block; }
 
 /* ---------------------- section #footer - styles sass --------------------- */
 #footer {
