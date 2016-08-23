@@ -8,3 +8,25 @@ library portal helps admins to manage all readers and helps readers to see what 
 * Konstantin Russo (<kstn.russo@gmail.com>)
 * Serhii Kobzin (<serhii.kobzin@gmail.com>)
 * Andrey Chudinovskyh (<andron989@gmail.com>)
+
+## Getting Started
+
+To get started with the library do the following steps:
+
+#### Download
+
+Clone the project, use the next command: 
+`git clone https://github.com/holateam/library-portal.git`
+
+#### Install dependencies
+
+First, install nodejs if you had not already done. 
+`https://nodejs.org/en/`
+
+To install necessary packages open the root project folder in terminal, and use the next commant:
+`npm i`
+
+#### Expand the database
+
+... script
+
