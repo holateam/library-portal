@@ -2,8 +2,9 @@
 var view = {
     addBookItem: function(book) {
         console.log(book.title);
+
     },
-    addBooksItems: function(data){
+    addBooksItems: function(err,data){
       for (var i in data.books) {
         addBookItem(i);
       }
@@ -23,7 +24,7 @@ var controller = {
       console.log(name_filter);
       $('.menu_nav li').removeClass("active");
         _this.closest('li').addClass("active");
-        doAjaxQuery('get','/api/v1/books/:'+filter+'',NULL,view.addBooksItems)
+        doAjaxQuery('get','/api/v1/books/:'+filter+'',NULL,view.addBooksItems);
 
     },
     doAjaxQuery: function(method,url,data,callback){
@@ -55,7 +56,7 @@ var controller = {
         },
         event: function() { // тут навешиваем слушателей на события
             $(document).ready(function() {
-                $('.menu_nav li ').click(controller.clickSideBarItem);
+                // $('.menu_nav li ').click(controller.clickSideBarItem);
                 $('.want_to_read').click(controller.clickWantToReadBtn);
 
             });
