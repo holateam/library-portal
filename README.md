@@ -16,15 +16,21 @@ To get started with the library do the following steps:
 #### Download
 
 Clone the project, use the next command: 
-`git clone https://github.com/holateam/library-portal.git`
+```bash
+git clone https://github.com/holateam/library-portal.git
+```
 
 #### Install dependencies
 
 First, install nodejs if you had not already done. 
-`https://nodejs.org/en/`
+```bash
+https://nodejs.org/en/
+```
 
 To install necessary packages open the root project folder in terminal, and use the next commant:
-`npm i`
+```bash 
+npm i 
+```
 
 #### Expand the database
 
