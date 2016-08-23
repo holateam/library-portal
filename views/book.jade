@@ -1,3 +1,23 @@
 extends layout
+
 block content
-  p work
+  p #{data.id}
+  p #{data.title}
+  p #{data.authors}
+  p #{data.description}
+  p #{data.busy}
+  p #{data.year}
+  p #{data.new}
+  p #{data.pages}
+  
+
+    div.container
+        div.row
+            div.col-md-4
+                img(src='img/books/'+data.id+'.jpg', width='200', height='200')
+            div.col-md-4
+                h2 Title
+                h4 Awesome author
+        div.row
+            div.col.md-12
+                p #data.description
