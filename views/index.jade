@@ -1,7 +1,4 @@
 extends layout.jade
 block content
     div.row
-        - for(var i = 0; i < 8; ++i)
-            - var title = i
-            - var authors = '1 2 3 4 5'
-            include book_item
+        include book_item
