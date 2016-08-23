@@ -1,7 +1,12 @@
 /* ----------------------------- begin view ----------------------------------*/
 var view = {
-    addBookItem: function(data) {
-        // something to do here
+    addBookItem: function(book) {
+        console.log(book.title);
+    },
+    addBooksItems: function(data){
+      for (var i in data.books) {
+        addBookItem(i);
+      }
     }
 };
 /* ------------------------------- end view ----------------------------------*/
@@ -14,9 +19,11 @@ var controller = {
     clickSideBarItem: function(event){
       console.log('Work');
       var _this = $(this);
+      var name_filter = _this.attr('data-filter');
+      console.log(name_filter);
       $('.menu_nav li').removeClass("active");
         _this.closest('li').addClass("active");
-        doAjaxQuery('get','/api/v1/books/:'+filter+'',data)
+        doAjaxQuery('get','/api/v1/books/:'+filter+'',NULL,view.addBooksItems)
 
     },
     doAjaxQuery: function(method,url,data,callback){
