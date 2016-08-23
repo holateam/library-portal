@@ -4,7 +4,7 @@ var basicAuth = require('basic-auth');
 
 var dbLayer = require('../models/DB_MYSQL.js');
 
-//middleware
+// middleware
 var auth = function (req, res, next) {
     function unauthorized(res) {
         res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
