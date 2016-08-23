@@ -2,13 +2,10 @@ var mysql= require('mysql');
 
 var pool  = mysql.createPool({
     host     : 'localhost',
-<<<<<<< HEAD
     user     : 'root',
     password : '1q2w3e4r',
-=======
     user     : 'librarian',
     password : 'readbooks',
->>>>>>> 9dba93f111f4758dec39d1e89e93fbd124352509
     database : 'library'
 });
 
