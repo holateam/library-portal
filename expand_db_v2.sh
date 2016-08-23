@@ -15,7 +15,6 @@ OPTIONS:
    -b      Database name
    -u      DB username
    -p      DB user password
-   -v      Verbose
 EOF
 }
 
