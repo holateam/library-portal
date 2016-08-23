@@ -27,7 +27,7 @@ First, install nodejs if you had not already done.
 https://nodejs.org/en/
 ```
 
-To install necessary packages open the root project folder in terminal, and use the next commant:
+To install necessary packages open the root project folder in terminal, and use the next command:
 ```bash 
 npm i 
 ```
