@@ -2,7 +2,7 @@ var express = require('express');
 var adminRouter = express.Router();
 var basicAuth = require('basic-auth');
 
-var dbLayer = require('../libDateBase.js');
+var dbLayer = require('../models/DB_MYSQL.js');
 
 //middleware
 var auth = function (req, res, next) {
