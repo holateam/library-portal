@@ -138,3 +138,34 @@ module.exports.takeBook = function (book,callback) {
         });
     });
 };
+
+module.exports.getBooksTest = function (filter, callback) {
+
+	if (filter == 0) {
+        var err = new Error('This will crash');
+		callback(err);
+	} else {
+        var result = {
+            "success": true,
+            "data": {
+                "total" : 100,
+                "offset" : 111,
+                "limit" : 22,
+                "filter" : filter,
+                "books" : [
+                    {
+                        "id": 33,
+                        "title": "...",
+                        "authors": "...",
+                        "busy": false,
+                        "year" : 2015,
+                        "new" : true
+                    },
+                ]
+            }
+        };
+
+//        var res = JSON.stringify(result);
+    	callback(null, result);
+	}
+};
