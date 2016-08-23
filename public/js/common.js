@@ -4,9 +4,9 @@ var view = {
         console.log(book.title);
 
     },
-    addBooksItems: function(err,data){
-      for (var i in data.books) {
-        addBookItem(i);
+    addBooksItems: function(books){
+      for (var book in books) {
+        addBookItem(book);
       }
     }
 };
