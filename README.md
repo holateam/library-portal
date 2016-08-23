@@ -34,5 +34,8 @@ npm i
 
 #### Expand the database
 
-... script
+To expand the database enter this command in the root of project:
+```bash
+sudo bash expand_db_v2.sh -b <library> -u <librarian> -p <password>
+```
 
