@@ -65,6 +65,7 @@ $MYSQL -uroot -p -e "$SQL"
 
 echo "Database $DBNAME and user $USER created with a password $PASSWD"
 
+
 cat > configDB.js <<EOF
 var configDB = {};
 
