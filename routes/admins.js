@@ -2,6 +2,8 @@ var express = require('express');
 var adminRouter = express.Router();
 var basicAuth = require('basic-auth');
 
+var dbLayer = require('../libDateBase.js');
+
 //middleware
 var auth = function (req, res, next) {
     function unauthorized(res) {
@@ -30,27 +32,13 @@ adminRouter.get('/', auth, function(req, res, next) {
 adminRouter.route('/books')
 .get(auth, function(req, res, next) {
 
-    var test = {
-        "success": true,
-        "data": {
-            "total" : 100,
-            "offset" : 111,
-            "limit" : 22,
-            "filter" : "",
-            "books" : [
-                {
-                    "id": 33,
-                    "title": "...",
-                    "authors": "...",
-                    "busy": false,
-                    "year" : 2015,
-                    "new" : true
-                },
-            ]
+    dbLayer.getBooksTest(req.query.filter, function(err, resp) {
+        if (err) {
+            res.json({ success: false, msg: 'we have a problem' });
+        } else {
+            res.json(resp);
         }
-    };
-
-    res.json(test);
+    });
 });
 
 module.exports = adminRouter;
