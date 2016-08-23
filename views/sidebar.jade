@@ -1,11 +1,11 @@
-div.sidebar.col-xs-2.col-sm-2.col-md-2.col-lg-2
+div#sidebar.col-xs-2.col-sm-2.col-md-2.col-lg-2
     div.menu.menu_fixed_middle
         ul.menu_nav
-            li#filter_new.active
+            li.active(data-filter = 'new')
                 a(href="#") New
-            li#filter_popular
+            li(data-filter = 'popular')
                 a(href="#") Popular
-            li#filter_all
+            li(data-filter = 'all')
                 a(href="#") All
 
 script(src='/js/sidebar.js' defer)
