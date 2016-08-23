@@ -4,8 +4,18 @@
 body
   height: 100%
   background-color: white
+  color: #2c3e50
   a:focus, a:hover
     text-decoration: none
+  h1,h2,h3,h4,h5
+    color: #2c3e50
+.btn-success
+  color: #fff
+  background-color: #27ae60
+  border-color: #31b167
+  &:hover
+    background-color: #2cc56d
+    border-color: #34b96c
 .size_text
   white-space: nowrap
   overflow: hidden
@@ -79,6 +89,41 @@ body
     z-index: 1029
     width: 13%
   #showcase_books
+
+    .bookDescription
+      padding: 40px 15px
+      h4
+        font-weight: 500
+      p
+        text-align: justify
+        text-indent: 1.5em
+        line-height: 24px
+      P:first-letter
+        font-size: 22px
+        color: #27ae60
+    .bookID
+      .bookImg img
+        width: 220px
+        height: auto
+        box-shadow: 10px 10px 5px -9px rgba(0, 0, 0, 0.75)
+      .bookInfo
+        padding: 0 30px
+        .titleBook
+          font-weight: 500
+          font-size: 22px
+          line-height: 32px
+          letter-spacing: .01em
+          margin-bottom: 10px
+        span
+          display: inline-block
+          color: #888
+          width: 60px
+          padding-right: 19px
+          padding-bottom: 8px
+        .btnBookID
+          // margin-right: 42%
+          float: right
+
     a
       display: block
       img
@@ -112,7 +157,7 @@ body
           font-size: 11px
           padding: 5px 10px
           border: 1px dashed #27ae60
-          border-radius: 20px
+          border-radius: 5px
           width: 70%
           white-space: normal
           box-sizing: border-box

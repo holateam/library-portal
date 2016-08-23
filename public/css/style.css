@@ -4,9 +4,20 @@
 
 body {
   height: 100%;
-  background-color: white; }
+  background-color: white;
+  color: #2c3e50; }
   body a:focus, body a:hover {
     text-decoration: none; }
+  body h1, body h2, body h3, body h4, body h5 {
+    color: #2c3e50; }
+
+.btn-success {
+  color: #fff;
+  background-color: #27ae60;
+  border-color: #31b167; }
+  .btn-success:hover {
+    background-color: #2cc56d;
+    border-color: #34b96c; }
 
 .size_text {
   white-space: nowrap;
@@ -81,6 +92,38 @@ body {
     position: fixed;
     z-index: 1029;
     width: 13%; }
+  #main #showcase_books .bookDescription {
+    padding: 40px 15px; }
+    #main #showcase_books .bookDescription h4 {
+      font-weight: 500; }
+    #main #showcase_books .bookDescription p {
+      text-align: justify;
+      text-indent: 1.5em;
+      line-height: 24px; }
+    #main #showcase_books .bookDescription P:first-letter {
+      font-size: 22px;
+      color: #27ae60; }
+  #main #showcase_books .bookID .bookImg img {
+    width: 220px;
+    height: auto;
+    -webkit-box-shadow: 10px 10px 5px -9px rgba(0, 0, 0, 0.75);
+            box-shadow: 10px 10px 5px -9px rgba(0, 0, 0, 0.75); }
+  #main #showcase_books .bookID .bookInfo {
+    padding: 0 30px; }
+    #main #showcase_books .bookID .bookInfo .titleBook {
+      font-weight: 500;
+      font-size: 22px;
+      line-height: 32px;
+      letter-spacing: .01em;
+      margin-bottom: 10px; }
+    #main #showcase_books .bookID .bookInfo span {
+      display: inline-block;
+      color: #888;
+      width: 60px;
+      padding-right: 19px;
+      padding-bottom: 8px; }
+    #main #showcase_books .bookID .bookInfo .btnBookID {
+      float: right; }
   #main #showcase_books a {
     display: block; }
     #main #showcase_books a img {
@@ -111,8 +154,8 @@ body {
         font-size: 11px;
         padding: 5px 10px;
         border: 1px dashed #27ae60;
-        -webkit-border-radius: 20px;
-                border-radius: 20px;
+        -webkit-border-radius: 5px;
+                border-radius: 5px;
         width: 70%;
         white-space: normal;
         -webkit-box-sizing: border-box;
