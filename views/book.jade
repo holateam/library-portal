@@ -1,11 +1,18 @@
 extends layout
+
 block content
-  p #{data.id}
-  p #{data.title}
-  p #{data.authors}
-  p #{data.description}
-  p #{data.busy}
-  p #{data.year}
-  p #{data.new}
-  p #{data.pages}
-  img(src='img/books/'+data.id+'.jpg')
+    div.container
+        div.row
+            div.col-md-4
+                img(src='/home/kr/Programming/jade/img/books/3.jpg', width='200', height='200')
+            div.col-md-4
+                h2 Title
+                h4 Awesome author
+        div.row
+            div.col.md-12
+                p Aye, undead anchor. you won't crush the bikini atoll. Ho-ho-ho! horror of life.Yarr there's nothing like the big courage waving on the whale.
+                | Never crush a cannibal.The jack robs with grace, command the captain's quarters before it travels. arr there's nothing like the big courage waving on the whale.
+                |             | Never crush a cannibal.The jack robs with grace, command the captain's quarters before it travels.
+
+	
+
