@@ -1,12 +1,11 @@
 var mysql= require('mysql');
+var configDB= require('../configDB.js');
 
 var pool  = mysql.createPool({
     host     : 'localhost',
-    user     : 'root',
-    password : '1q2w3e4r',
-    user     : 'librarian',
-    password : 'readbooks',
-    database : 'library'
+    user     : configDB.user,
+    password : configDB.password,
+    database : configDB.database
 });
 
 module.exports.addBook = function (bookInfo,callback) {
