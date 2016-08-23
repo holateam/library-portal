@@ -87,20 +87,20 @@ body {
       width: 100%;
       height: auto;
       cursor: pointer; }
-  #main #showcase_books .book_item {
+  #main #showcase_books .book {
     text-align: center;
     margin-bottom: 60px;
     padding: 20px 10px; }
-    #main #showcase_books .book_item:hover {
+    #main #showcase_books .book:hover {
       -webkit-box-shadow: 0px 6px 16px 1px rgba(0, 0, 0, 0.75);
               box-shadow: 0px 6px 16px 1px rgba(0, 0, 0, 0.75); }
-    #main #showcase_books .book_item .title {
+    #main #showcase_books .book .title {
       padding: 5px 0 0 0;
       color: #27ae60;
       font-size: 14px;
       font-weight: bold;
       cursor: pointer; }
-      #main #showcase_books .book_item .title::before {
+      #main #showcase_books .book .title::before {
         content: attr(data-book-title);
         position: absolute;
         left: 15%;
@@ -121,14 +121,14 @@ body {
         transition: .25s ease-in-out;
         opacity: 0;
         display: none; }
-      #main #showcase_books .book_item .title:hover::before {
+      #main #showcase_books .book .title:hover::before {
         opacity: 1;
         top: 40%;
         display: block; }
-    #main #showcase_books .book_item .author {
+    #main #showcase_books .book .author {
       cursor: pointer;
       color: #2c3e50; }
-      #main #showcase_books .book_item .author::before {
+      #main #showcase_books .book .author::before {
         content: attr(data-book-author);
         position: absolute;
         left: 15%;
@@ -149,7 +149,7 @@ body {
         transition: .25s ease-in-out;
         opacity: 0;
         display: none; }
-      #main #showcase_books .book_item .author:hover::before {
+      #main #showcase_books .book .author:hover::before {
         opacity: 1;
         top: 40%;
         display: block; }
