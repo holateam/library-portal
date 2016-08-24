@@ -47,7 +47,11 @@ module.exports.getBooks = function (filter,callback) {
             connection.release();
             if(err) callback(err);
             //var res = JSON.stringify(result);
-            callback(null, result);
+            var data = {};
+            data.filter = filter;
+            data.books = result;
+
+            callback(null, data);
         });
     });
 };
