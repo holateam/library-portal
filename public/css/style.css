@@ -19,21 +19,6 @@ body {
     background-color: #2cc56d;
     border-color: #34b96c; }
 
-.size_text {
-  white-space: nowrap;
-  overflow: hidden;
-  padding: 5px; }
-  .size_text::after {
-    content: '';
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 40px;
-    height: 100%;
-    background: -webkit-gradient(linear, left top, right top, from(rgba(255, 255, 255, 0.2)), to(#fff));
-    background: -webkit-linear-gradient(left, rgba(255, 255, 255, 0.2), #fff 100%);
-    background: linear-gradient(to right, rgba(255, 255, 255, 0.2), #fff 100%); }
-
 /* ------------------ section #header - styles sass ------------------------- */
 #header .navbar {
   border-bottom: 5px solid #27ae60; }
@@ -92,6 +77,8 @@ body {
     position: fixed;
     z-index: 1029;
     width: 13%; }
+  #main #pattern {
+    display: none; }
   #main #content .bookDescription {
     padding: 40px 15px; }
     #main #content .bookDescription h4 {
@@ -127,75 +114,22 @@ body {
   #main #content a {
     display: block; }
     #main #content a img {
-      width: 100%;
-      height: auto;
+      width: auto;
+      height: 220px;
       cursor: pointer; }
   #main #content .book {
     text-align: center;
-    margin-bottom: 60px;
     padding: 20px 10px; }
     #main #content .book:hover {
-      -webkit-box-shadow: 0px 6px 16px 1px rgba(0, 0, 0, 0.75);
-              box-shadow: 0px 6px 16px 1px rgba(0, 0, 0, 0.75); }
+      -webkit-box-shadow: 0px 3px 7px 1px rgba(195, 195, 195, 0.27);
+              box-shadow: 0px 3px 7px 1px rgba(195, 195, 195, 0.27); }
     #main #content .book .title {
-      padding: 5px 0 0 0;
+      padding: 10px 0 5px 0;
       color: #27ae60;
       font-size: 14px;
-      font-weight: bold;
-      cursor: pointer; }
-      #main #content .book .title::before {
-        content: attr(data-book-title);
-        position: absolute;
-        left: 15%;
-        top: 30%;
-        z-index: 1029;
-        background: rgba(255, 255, 255, 0.9);
-        font-family: Arial, sans-serif;
-        font-size: 11px;
-        padding: 5px 10px;
-        border: 1px dashed #27ae60;
-        -webkit-border-radius: 5px;
-                border-radius: 5px;
-        width: 70%;
-        white-space: normal;
-        -webkit-box-sizing: border-box;
-                box-sizing: border-box;
-        -webkit-transition: .25s ease-in-out;
-        transition: .25s ease-in-out;
-        opacity: 0;
-        display: none; }
-      #main #content .book .title:hover::before {
-        opacity: 1;
-        top: 40%;
-        display: block; }
+      font-weight: bold; }
     #main #content .book .author {
-      cursor: pointer;
       color: #2c3e50; }
-      #main #content .book .author::before {
-        content: attr(data-book-author);
-        position: absolute;
-        left: 15%;
-        top: 30%;
-        z-index: 1029;
-        background: rgba(255, 255, 255, 0.9);
-        font-family: Arial, sans-serif;
-        font-size: 11px;
-        padding: 5px 10px;
-        border: 1px dashed #27ae60;
-        -webkit-border-radius: 20px;
-                border-radius: 20px;
-        width: 70%;
-        white-space: normal;
-        -webkit-box-sizing: border-box;
-                box-sizing: border-box;
-        -webkit-transition: .25s ease-in-out;
-        transition: .25s ease-in-out;
-        opacity: 0;
-        display: none; }
-      #main #content .book .author:hover::before {
-        opacity: 1;
-        top: 40%;
-        display: block; }
 
 /* ---------------------- section #footer - styles sass --------------------- */
 #footer .content_footer {

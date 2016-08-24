@@ -23,6 +23,7 @@ gulp.task('scripts', function(){
     'libs/jquery/dist/jquery.min.js',
     'libs/magnific-popup/dist/jquery.magnific-popup.min.js',
 		'libs/bootstrap/dist/js/bootstrap.min.js',
+    'libs/matchHeight/dist/jquery.matchHeight-min.js', 
   ])
   .pipe(concat('libs.min.js'))
   .pipe(uglify())

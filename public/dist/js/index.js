@@ -20,3 +20,4 @@ function addBooksItems(books){
 }
 
 console.log ($(location).attr('search'));
+$('.book_item').matcHeight();
