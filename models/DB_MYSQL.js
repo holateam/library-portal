@@ -56,17 +56,33 @@ module.exports.getBooks = function (filter,callback) {
             break;
     }
     pool.getConnection(function(err, connection) {
-        connection.query(quary, function (err, books) {
+        connection.query(quary, function (err, result) {
             if(err) callback(err);
             connection.query(queryTotal, function (err, total) {
                 connection.release();
                 if(err) callback(err);
                 //var res = JSON.stringify(result);
+                var books=[];
+                result.forEach(function(item, i, result) {
+                    books.push(
+                        {
+                            "id": result[i].book_id,
+                            "title": result[i].title,
+                            "author": result[i].author,
+                            "description": result[i].description,
+                            "year": result[i].year,
+                            "cover": result[i].cover,
+                            "pages": result[i].pages,
+                            "status": result[i].status,
+                            "event": result[i].event
+                        }
+                    );
+                });
                 var data = {};
                 data.filter = filter;
                 data.books = books;
                 data.total = total[0]['amount'];
-                callback(null,data);
+                callback(null, data);
             });
         });
     });
