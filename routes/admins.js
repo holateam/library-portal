@@ -12,13 +12,24 @@ adminRouter.get('/', auth, function(req, res, next) {
 });
 
 adminRouter.route('/api/v1/books')
-.get(auth, function(req, res, next) {
-
-    dbLayer.getBooksTest(req.query.filter, function(err, resp) {
+.get(function(req, res, next) {
+    dbLayer.getBooks(req.query.filter, function(err, resp) {
         if (err) {
-            res.json({ success: false, msg: 'we have a problem' });
+            res.json({ success: false, msg: err });
         } else {
-            res.json(resp);
+            res.json({ success: true, data: resp});
+        }
+    });
+});
+
+adminRouter.route('/api/v1/books/:book_id')
+.get(function(req, res, next) {
+
+    dbLayer.getBook(req.params.book_id, function(err, resp) {
+        if (err) {
+            res.json({ success: false, msg: err });
+        } else {
+            res.json({ success: true, data: resp});
         }
     });
 });
