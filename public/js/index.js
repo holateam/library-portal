@@ -1,5 +1,4 @@
 function addBookItem(book) {
-    console.log(book);
     $('#pattern').clone().removeAttr('id').attr('book-id', book.id)
         .find('img').attr('src', '/img/books/' + book.id + '.jpg').end()
         .find('.title').attr('data-book-title', book.title).html(book.title).end()

@@ -14,8 +14,6 @@ sidebarItems.click(function (event) {
                 return;
             }
             addBooksItems(res.data.books);
-            $('.book').matchHeight();
-            // console.log("woekr");
         });
     }
 });
