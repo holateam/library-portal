@@ -27,7 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
-app.use('/book', book);
+//app.use('/book', book);
 app.use('/admin/api/v1', adminRouter);
 app.use('/api/v1/books', booksRouter);
 
