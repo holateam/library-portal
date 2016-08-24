@@ -18,9 +18,9 @@ module.exports.addBook = function (bookInfo,callback) {
     });
 };
 
-module.exports.getBook = function (book,callback) {
+module.exports.getBook = function (book_id,callback) {
     pool.getConnection(function(err, connection) {
-        connection.query("SELECT * FROM books WHERE book_id = ?", [book.book_id] , function (err, result) {
+        connection.query("SELECT * FROM books WHERE book_id = ?", [book_id] , function (err, result) {
             connection.release();
             if(err) callback(err);
             callback(null,result);
