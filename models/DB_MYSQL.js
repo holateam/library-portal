@@ -23,62 +23,41 @@ module.exports.getBook = function (book_id,callback) {
         connection.query("SELECT * FROM books WHERE book_id = ?", [book_id] , function (err, result) {
             connection.release();
             if(err) callback(err);
-            var book = {
-                "id": result[0].book_id,
-                "title": result[0].title,
-                "author": result[0].author,
-                "description": result[0].description,
-                "year": result[0].year,
-                "cover": result[0].cover,
-                "pages": result[0].pages,
-                "status": result[0].status,
-                "event": result[0].event
-            };
-            callback(null, book);
+            callback(null,result);
         });
     });
 };
 
 module.exports.getBooks = function (filter,callback) {
     var quary;
+    var queryTotal;
     switch (filter) {
         case "new":
             quary = "SELECT * FROM books WHERE status = 1;";
+            queryTotal = "SELECT COUNT (book_id) AS amount FROM books WHERE status = 1;";
             break;
         case "popular":
             quary = "SELECT * FROM books WHERE status = 0;";
+            queryTotal = "SELECT COUNT (book_id) AS amount FROM books WHERE status = 0;";
             break;
         default:
             quary = "SELECT * FROM books;";
+            queryTotal = "SELECT COUNT (book_id) AS amount FROM books";
             break;
     }
     pool.getConnection(function(err, connection) {
-        connection.query(quary, function (err, result) {
-            connection.release();
+        connection.query(quary, function (err, books) {
             if(err) callback(err);
-            //var res = JSON.stringify(result);
-            var books=[];
-            result.forEach(function(item, i, result) {
-                books.push(
-                    {
-                        "id": result[i].book_id,
-                        "title": result[i].title,
-                        "author": result[i].author,
-                        "description": result[i].description,
-                        "year": result[i].year,
-                        "cover": result[i].cover,
-                        "pages": result[i].pages,
-                        "status": result[i].status,
-                        "event": result[i].event
-                    }
-                );
+            connection.query(queryTotal, function (err, total) {
+                connection.release();
+                if(err) callback(err);
+                //var res = JSON.stringify(result);
+                var data = {};
+                data.filter = filter;
+                data.books = books;
+                data.total = total[0]['amount'];
+                callback(null,data);
             });
-
-            var data = {};
-            data.filter = filter;
-            data.books = books;
-
-            callback(null, data);
         });
     });
 };
@@ -134,7 +113,7 @@ module.exports.getQueue = function (book,callback) {
         connection.query("SELECT email FROM queue WHERE book_id = ?", [book.book_id] , function (err, result) {
             connection.release();
             if(err) callback(err);
-            callback(null,JSON.stringify(result));
+            callback(null,result);
         });
     });
 };
@@ -169,16 +148,6 @@ module.exports.takeBook = function (book,callback) {
             if(err) callback(err);
             var res = result["affectedRows"]? true : false;
             callback(null,res);
-        });
-    });
-};
-
-module.exports.totalBooks = function (callback) {
-    pool.getConnection(function(err, connection) {
-        connection.query("SELECT COUNT (book_id) AS amount FROM books", function (err, result) {
-            connection.release();
-            if(err) callback(err);
-            callback(null,{"total": result[0]['amount'].toString()});
         });
     });
 };
