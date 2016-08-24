@@ -23,7 +23,17 @@ module.exports.getBook = function (book_id,callback) {
         connection.query("SELECT * FROM books WHERE book_id = ?", [book_id] , function (err, result) {
             connection.release();
             if(err) callback(err);
-            callback(null,result);
+            var book = {"id": result[0].book_id,
+                    "title": result[0].title,
+                    "author": result[0].author,
+                    "description": result[0].description,
+                    "year": result[0].year,
+                    "cover": result[0].cover,
+                    "pages": result[0].pages,
+                    "status": result[0].status,
+                "event": result[0].event
+            };
+            callback(null, book);
         });
     });
 };
