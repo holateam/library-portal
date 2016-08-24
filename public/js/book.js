@@ -6,6 +6,16 @@ function fillBookInfo(book) {
     $('#pages').html(book.pages);
     $('#isbn').html(book.isbn);
     $('.bookDescriptionText').html(book.description);
+
+
+    console.log("Status: " + book.status);
+    if(book.status=='1'){
+      $('.busyBook').css('display','block');
+    } else {
+      $('.busyBook').css('display','block');
+    }
+
+    
 }
 
 doAjaxQuery('GET', '/api/v1/books/' + $(location).attr('pathname').substr(6), null, function (res) {

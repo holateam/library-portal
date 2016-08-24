@@ -4,7 +4,7 @@ block content
     div.row.bookID
         div.col-md-3.bookImg
             img(src='')
-        div.col-md-7.bookInfo
+        div.col-md-6.bookInfo
             h4.titleBook
             div
                 span.properties author:
@@ -18,8 +18,29 @@ block content
             div
                 span.properties ISBN:
                 span#isbn
-            div
-                button.btnBookID.btn.btn-success(type='button') Want to read!
+        div.orderBlock.col-md-3
+            div.busyBook
+              h3 The book is busy
+              br
+              p Hello to you not so lucky, the book's busy now but you can take her when she's free.
+              p To do this, enter your email and click on the button "Want to read!"
+              p
+              .input-group
+                .input-group-addon @
+                input#orderEmail.form-control(type='text', placeholder='email')
+              br
+              button.btnBookID.btn.btn-success(type='button') Want to read!
+            div.freeBook
+              h3 Book is not busy
+              br
+              p Hi you are very lucky, the book is now free and you can take her to read.
+              p To do this, enter your email and click on the button "Want to read!"
+              p
+              .input-group
+                .input-group-addon @
+                input#orderEmail.form-control(type='text', placeholder='email')
+              br
+              button.btnBookID.btn.btn-success(type='button') Want to read!
     div.row.bookDescription
         div.col-md-12
             h4 О книге
