@@ -26,10 +26,10 @@ var auth = function (req, res, next) {
 
 /* GET adminka. */
 adminRouter.get('/', auth, function(req, res, next) {
-    res.send(200, 'Authenticated');
+    res.render('admin_index', { title: 'Adminka' });
 });
 
-adminRouter.route('/books')
+adminRouter.route('/api/v1/books')
 .get(auth, function(req, res, next) {
 
     dbLayer.getBooksTest(req.query.filter, function(err, resp) {
