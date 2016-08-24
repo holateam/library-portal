@@ -1,2 +1,138 @@
+* {
+  margin: 0;
+  padding: 0; }
+
 body {
-  background-color: white; }
+  height: 100%;
+  background-color: white;
+  color: #2c3e50; }
+  body a:focus, body a:hover {
+    text-decoration: none; }
+  body h1, body h2, body h3, body h4, body h5 {
+    color: #2c3e50; }
+
+.btn-success {
+  color: #fff;
+  background-color: #27ae60;
+  border-color: #31b167; }
+  .btn-success:hover {
+    background-color: #2cc56d;
+    border-color: #34b96c; }
+
+/* ------------------ section #header - styles sass ------------------------- */
+#header .navbar {
+  border-bottom: 5px solid #27ae60; }
+
+#header .sh {
+  color: black; }
+
+#header .plus {
+  color: #27ae60; }
+
+#header .sh, #header .plus {
+  font-family: arial;
+  font-size: 40px;
+  font-weight: bold;
+  line-height: 20px; }
+
+.navbar-form {
+  width: 60%; }
+  .navbar-form .form-group {
+    width: 80%; }
+  .navbar-form #search {
+    width: 100%; }
+  .navbar-form #search_btn {
+    margin-left: 10px; }
+
+/* ----------------------- section #main  - styles sass --------------------- */
+#main {
+  margin: 160px 0; }
+  #main .menu {
+    border-bottom-width: 0;
+    border-right-width: 2px;
+    border-right-style: solid;
+    border-right-color: rgba(34, 36, 38, 0.15); }
+    #main .menu .menu_nav {
+      padding-left: 0;
+      margin-top: 10px;
+      margin-bottom: 10px; }
+      #main .menu .menu_nav li {
+        float: none;
+        list-style: none; }
+        #main .menu .menu_nav li a {
+          color: #27ae60;
+          padding: 10px 15px;
+          display: block; }
+          #main .menu .menu_nav li a:hover {
+            background-color: white;
+            font-weight: bold;
+            text-decoration: none; }
+      #main .menu .menu_nav .active {
+        border-color: #27ae60;
+        border-right-style: solid;
+        margin: 0 -2px 0 0;
+        border-right-width: 2px; }
+  #main .menu_fixed_middle {
+    top: 160px;
+    position: fixed;
+    z-index: 1029;
+    width: 13%; }
+  #main #content .bookDescription {
+    padding: 40px 15px; }
+    #main #content .bookDescription h4 {
+      font-weight: 500; }
+    #main #content .bookDescription p {
+      text-align: justify;
+      text-indent: 1.5em;
+      line-height: 24px; }
+    #main #content .bookDescription P:first-letter {
+      font-size: 22px;
+      color: #27ae60; }
+  #main #content .bookID .bookImg img {
+    width: 220px;
+    height: auto;
+    -webkit-box-shadow: 10px 10px 5px -9px rgba(0, 0, 0, 0.75);
+            box-shadow: 10px 10px 5px -9px rgba(0, 0, 0, 0.75); }
+  #main #content .bookID .bookInfo {
+    padding: 0 30px; }
+    #main #content .bookID .bookInfo .titleBook {
+      font-weight: 500;
+      font-size: 22px;
+      line-height: 32px;
+      letter-spacing: .01em;
+      margin-bottom: 10px; }
+    #main #content .bookID .bookInfo span {
+      display: inline-block;
+      color: #888;
+      width: 60px;
+      padding-right: 19px;
+      padding-bottom: 8px; }
+    #main #content .bookID .bookInfo .btnBookID {
+      float: right; }
+  #main #content a {
+    display: block; }
+    #main #content a img {
+      width: 100%;
+      height: auto;
+      cursor: pointer; }
+  #main #content .book {
+    text-align: center;
+    margin-bottom: 60px;
+    padding: 20px 10px; }
+    #main #content .book:hover {
+      -webkit-box-shadow: 0px 6px 16px 1px rgba(0, 0, 0, 0.75);
+              box-shadow: 0px 6px 16px 1px rgba(0, 0, 0, 0.75); }
+    #main #content .book .title {
+      padding: 5px 0 0 0;
+      color: #27ae60;
+      font-size: 14px;
+      font-weight: bold; }
+    #main #content .book .author {
+      color: #2c3e50; }
+
+/* ---------------------- section #footer - styles sass --------------------- */
+#footer .content_footer {
+  height: 20px;
+  color: white;
+  text-align: center;
+  background-color: #3d3d3d; }

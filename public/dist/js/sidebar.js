@@ -1,21 +1,21 @@
 var sidebarItems = $('.sidebar_item');
-
-sidebarItems.click(function (event) {
+sidebarItems.click(function () {
     var context = $(this);
 
     sidebarItems.removeClass('active');
     context.closest('li').addClass('active');
 
-    if ($(location).attr('pathname') == '/') {
-        event.preventDefault();
-        doAjaxQuery('GET', '/api/v1/books?filter=' + context.attr('data-filter'), null, function (res) {
+    var filter = context.attr('data-filter');
+
+    if ($(location).attr('pathname') != '/') {
+        $(location).attr('href', '/?filter=' + filter);
+    } else {
+        doAjaxQuery('GET', '/api/v1/books?filter=' + filter, null, function (res) {
             if (!res.success) {
                 alert(res.msg);
                 return;
             }
             addBooksItems(res.data.books);
-            $('.book').matchHeight();
-            // console.log("woekr");
         });
     }
 });

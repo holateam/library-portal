@@ -1,0 +1,39 @@
+extends layout
+
+block content
+  //- p #{data.id}
+  //- p #{data.title}
+  //- p #{data.authors}
+  //- p #{data.description}
+  //- p #{data.busy}
+  //- p #{data.year}
+  //- p #{data.new}
+  //- p #{data.pages}
+  //- img(src='img/books/'+data.id+'.jpg')
+
+    div.container
+      div.row
+        div.col-md-3
+          h3 Title:
+        div.col-md-3
+          input(type='text')
+        div.col-md-6
+          img(src='..img/books/1.jpg', width='300', height='300')
+      div.row
+        div.col-md-3
+          h3 Author:
+        div.col-md-3
+          input(type='text')
+      div.row
+        div.col-md-3
+          h3 Link to ozon:
+        div.col-md-3
+          input(type='text')
+        div.col-md-3
+          h3 Description:
+        div.col-md-3
+          textarea(rows='5')
+          button Add cover  
+          button Save  
+            
+    
