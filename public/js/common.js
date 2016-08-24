@@ -6,21 +6,23 @@ var view = {
 
 /* --------------------------- begin controller ------------------------------*/
 var controller = {
-    doAjaxQuery: function(method,url,data,callback){
-      $.ajax({
-            type: method,
-            url: url,
-            contentType: 'application/json',
-            dataType: 'json',
-            data: JSON.stringify(data),
-            success: callback
-        });
-    }
+    //
 };
 /* --------------------------- end controller --------------------------------*/
 
 
 /* ------------------- anonymous initialize function ------------------------ */
+
+function doAjaxQuery(method,url,data,callback){
+    $.ajax({
+        type: method,
+        url: url,
+        contentType: 'application/json',
+        dataType: 'json',
+        data: JSON.stringify(data),
+        success: callback
+    });
+}
 
 (function() {
 

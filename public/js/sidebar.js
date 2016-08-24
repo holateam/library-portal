@@ -5,11 +5,19 @@ sidebarItems.click(function () {
     sidebarItems.removeClass('active');
     context.closest('li').addClass('active');
 
-    controller.doAjaxQuery('GET', '/api/v1/books?filter=' + context.attr('data-filter'), null, function (res) {
-        if (!res.success) {
-            alert(res.msg);
-            return;
-        }
-        addBooksItems(res.data.books);
-    });
+    var filter = context.attr('data-filter');
+
+    if ($(location).attr('pathname') != '/') {
+        var newURL = $(location).attr('host') + '/?filter=' + filter;
+        console.log(newURL);
+        //$(location).attr('href', newURL);
+    } else {
+        doAjaxQuery('GET', '/api/v1/books?filter=' + filter, null, function (res) {
+            if (!res.success) {
+                alert(res.msg);
+                return;
+            }
+            addBooksItems(res.data.books);
+        });
+    }
 });
