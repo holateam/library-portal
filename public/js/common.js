@@ -1,14 +1,6 @@
 /* ----------------------------- begin view ----------------------------------*/
 var view = {
-    addBookItem: function() {
-        $('#pattern').clone().removeAttr('id').attr('data-id', '1').css('display', 'block').appendTo('#showcase_books .row');
-    },
-    addBooksItems: function(books){
-        $('.book_item:not(#pattern)').remove();
-        for (var book in books) {
-            this.addBookItem(book);
-        }
-    }
+    //
 };
 /* ------------------------------- end view ----------------------------------*/
 
@@ -41,12 +33,8 @@ var controller = {
         main: function() {
             // тут функции при загрузке главной страницы
         },
-        event: function() { // тут навешиваем слушателей на события
-            $(document).ready(function() {
-                // $('.menu_nav li ').click(controller.clickSideBarItem);
-                $('.want_to_read').click(controller.clickWantToReadBtn);
-
-            });
+        event: function() {
+            // тут навешиваем слушателей на события
         }
     };
     app.init();
