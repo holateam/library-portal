@@ -39,6 +39,8 @@ module.exports.getBooks = function (filter,callback) {
             break;
         case "popular":
             quary = "SELECT * FROM books WHERE status = 0;";
+        default:
+            quary = "SELECT * FROM books;";
     }
     pool.getConnection(function(err, connection) {
         connection.query(quary, function (err, result) {
