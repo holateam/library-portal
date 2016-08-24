@@ -8,9 +8,7 @@ sidebarItems.click(function () {
     var filter = context.attr('data-filter');
 
     if ($(location).attr('pathname') != '/') {
-        var newURL = $(location).attr('host') + '/?filter=' + filter;
-        console.log(newURL);
-        //$(location).attr('href', newURL);
+        $(location).attr('href', '/?filter=' + filter);
     } else {
         doAjaxQuery('GET', '/api/v1/books?filter=' + filter, null, function (res) {
             if (!res.success) {

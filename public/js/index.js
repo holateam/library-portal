@@ -1,6 +1,6 @@
 function addBookItem(book) {
     $('#pattern').clone().removeAttr('id').attr('book-id', book.id)
-        .find('img').attr('src', book.id + '.jpg').end()
+        .find('img').attr('src', '/img/books/' + book.id + '.jpg').end()
         .find('.title').html(book.title).end()
         .find('.author').html(book.author).end()
         .css('display', 'block').appendTo('#content .row');
@@ -14,10 +14,8 @@ function addBooksItems(books){
     }
 
     $('.details, .book_item a').click(function () {
-        $(location).attr('href', 'book/' + $(this).closest('.book_item').attr('book-id'));
+        $(location).attr('href', '/book/' + $(this).closest('.book_item').attr('book-id'));
     });
 }
 
-// $(document).ready(function () {
-//
-// });
+console.log ($(location).attr('search'));
