@@ -1,7 +1,7 @@
-var mysql= require('mysql');
-var configDB= require('../configDB.js');
+var mysql = require('mysql');
+var configDB = require('../configDB.js');
 
-var pool  = mysql.createPool({
+var pool = mysql.createPool({
     host     : 'localhost',
     user     : configDB.user,
     password : configDB.password,

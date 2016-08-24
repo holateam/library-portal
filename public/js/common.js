@@ -1,13 +1,12 @@
 /* ----------------------------- begin view ----------------------------------*/
 var view = {
-    addBookItem: function(book) {
-        console.log(book.title);
-
+    addBookItem: function() {
+        $('#pattern').clone().removeAttr('id').attr('data-id', '1').css('display', 'block').appendTo('#showcase_books .row');
     },
     addBooksItems: function(books){
-        console.log($('.book_item:not(#pattern)'));
+        $('.book_item:not(#pattern)').remove();
         for (var book in books) {
-            addBookItem(book);
+            this.addBookItem(book);
         }
     }
 };
@@ -15,9 +14,6 @@ var view = {
 
 /* --------------------------- begin controller ------------------------------*/
 var controller = {
-    clickWantToReadBtn: function(event) {
-        // something to do here event
-    },
     doAjaxQuery: function(method,url,data,callback){
       $.ajax({
             type: method,
