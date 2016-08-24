@@ -83,11 +83,11 @@ body {
     padding: 40px 15px; }
     #main #content .bookDescription h4 {
       font-weight: 500; }
-    #main #content .bookDescription p {
+    #main #content .bookDescription .bookDescriptionText {
       text-align: justify;
       text-indent: 1.5em;
       line-height: 24px; }
-    #main #content .bookDescription P:first-letter {
+    #main #content .bookDescription p:first-letter {
       font-size: 22px;
       color: #27ae60; }
   #main #content .bookID .bookImg img {
@@ -103,7 +103,7 @@ body {
       line-height: 32px;
       letter-spacing: .01em;
       margin-bottom: 10px; }
-    #main #content .bookID .bookInfo span {
+    #main #content .bookID .bookInfo .properties {
       display: inline-block;
       color: #888;
       width: 60px;
