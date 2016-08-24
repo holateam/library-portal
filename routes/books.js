@@ -10,7 +10,7 @@ booksRouter.route('/')
         if (err) {
             res.json({ success: false, msg: err });
         } else {
-            res.json(resp);
+            res.json({ success: true, data: resp});
         }
     });
 });
@@ -22,7 +22,7 @@ booksRouter.route('/:book_id')
         if (err) {
             res.json({ success: false, msg: err });
         } else {
-            res.json(resp);
+            res.json({ success: true, data: resp});
         }
     });
 });
