@@ -11,29 +11,51 @@ block content
   //- p #{data.pages}
   //- img(src='img/books/'+data.id+'.jpg')
 
-    div.container
-      div.row
-        div.col-md-3
-          h3 Title:
-        div.col-md-3
-          input(type='text')
-        div.col-md-6
-          img(src='..img/books/1.jpg', width='300', height='300')
-      div.row
-        div.col-md-3
-          h3 Author:
-        div.col-md-3
-          input(type='text')
-      div.row
-        div.col-md-3
-          h3 Link to ozon:
-        div.col-md-3
-          input(type='text')
-        div.col-md-3
-          h3 Description:
-        div.col-md-3
-          textarea(rows='5')
-          button Add cover  
-          button Save  
+  div.container
+    div.row
+      div.col-md-7
+
+        div.row
+          div.col-md-4
+            h3 Title:  
+          div.col-md-8
+            input.col-md-12.input-lg(type='text')
+
+        div.row
+          div.col-md-4  
+            h3 Author:
+          div.col-md-8
+            input.col-md-12.input-lg(type='text')
+
+        div.row 
+          div.col-md-4 
+            h3 Link to ozon:
+          div.col-md-8
+            input.col-md-12.input-lg(type='text')
             
+        div.row 
+          div.col-md-4 
+            h3 Year:
+          div.col-md-8
+            input.col-md-12.input-lg(type='text')  
+            
+        div.row 
+          div.col-md-4 
+            h3 Number of pages:
+          div.col-md-8
+            input.col-md-12.input-lg(type='text')  
+            
+        div.row 
+          div.col-md-4 
+            h3 Description:
+          div.col-md-8
+            textarea.col-md-12(rows='8')
+
+        div.row
+          div.col-md-4.col-md-offset-4
+            button Add cover  
+            button Save
+      div.col-md-4
+          img(src='..img/books/1.jpg', width='300', height='300')
+
     
