@@ -31,16 +31,15 @@ module.exports.getBook = function (book_id,callback) {
 module.exports.getBooks = function (filter,callback) {
     var quary;
     switch (filter) {
-        case "all":
-            quary = "SELECT * FROM books;";
-            break;
         case "new":
             quary = "SELECT * FROM books WHERE status = 1;";
             break;
         case "popular":
             quary = "SELECT * FROM books WHERE status = 0;";
+            break;
         default:
             quary = "SELECT * FROM books;";
+            break;
     }
     pool.getConnection(function(err, connection) {
         connection.query(quary, function (err, result) {
@@ -142,6 +141,16 @@ module.exports.takeBook = function (book,callback) {
             if(err) callback(err);
             var res = result["affectedRows"]? true : false;
             callback(null,res);
+        });
+    });
+};
+
+module.exports.totalBooks = function (callback) {
+    pool.getConnection(function(err, connection) {
+        connection.query("SELECT COUNT (book_id) AS amount FROM books", function (err, result) {
+            connection.release();
+            if(err) callback(err);
+            callback(null,{"total": result[0]['amount'].toString()});
         });
     });
 };
