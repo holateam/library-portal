@@ -4,6 +4,7 @@ function addBookItem(book) {
         .find('img').attr('src', '/img/books/' + book.id + '.jpg').end()
         .find('.title').html(book.title).end()
         .find('.author').html(book.author).end()
+        .find('a').attr('href', '/book/' + book.id).end()
         .css('display', 'block').appendTo('#content .row');
 }
 
@@ -13,10 +14,12 @@ function addBooksItems(books){
     for (var i in books) {
         addBookItem(books[i]);
     }
-
-    $('.details, .book_item a').click(function () {
-        $(location).attr('href', '/book/' + $(this).closest('.book_item').attr('book-id'));
-    });
 }
 
-console.log ($(location).attr('search'));
+if ($(location).attr('search')) {
+    $('.sidebar_item[data-filter=' + $(location).attr('search').substr(8) + ']').click();
+} else {
+    $('.sidebar_item[data-filter=new]').click();
+}
+
+window.history.replaceState({}, '', $(location).attr('origin'));
