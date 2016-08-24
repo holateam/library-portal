@@ -27,4 +27,18 @@ booksRouter.route('/:book_id')
     });
 });
 
+booksRouter.route('/:book_id/order')
+.get(function(req, res, next) {
+    var data = {};
+    data.book_id = req.params.book_id;
+    data.email = req.query.email;
+    dbLayer.addToQueue(data, function(err, resp) {
+        if (err) {
+            res.json({ success: false, msg: err });
+        } else {
+            res.json({ success: true});
+        }
+    });
+});
+
 module.exports = booksRouter;
