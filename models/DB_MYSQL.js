@@ -46,8 +46,8 @@ module.exports.getBooks = function (filter,callback) {
         connection.query(quary, function (err, result) {
             connection.release();
             if(err) callback(err);
-            var res = JSON.stringify(result);
-            callback(null,res);
+            //var res = JSON.stringify(result);
+            callback(null, result);
         });
     });
 };
