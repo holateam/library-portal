@@ -18,4 +18,10 @@ function addBooksItems(books){
     });
 }
 
-console.log ($(location).attr('search'));
+var filter = $(location).attr('search');
+
+if (filter.indexOf('?filter') == -1) {
+    $('.sidebar_item[data-filter=new]').click();
+} else {
+    $('.sidebar_item[data-filter=' + filter.substr(8) + ']').click();
+}
