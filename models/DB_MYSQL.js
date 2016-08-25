@@ -13,7 +13,9 @@ module.exports.addBook = function (bookInfo,callback) {
         connection.query("INSERT INTO books (book_id, title, author, description, year, pages, cover, status, event) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, NULL)", [bookInfo.title, bookInfo.author, bookInfo.description, bookInfo.year, bookInfo.pages, bookInfo.cover, bookInfo.status], function (err, result) {
             connection.release();
             if(err) callback(err);
-            callback(null,result["insertId"]);
+            var data = {};
+            data.id = result["insertId"];
+            callback(null, data);
         });
     });
 };
@@ -23,7 +25,9 @@ module.exports.getBook = function (book_id,callback) {
         connection.query("SELECT * FROM books WHERE book_id = ?", [book_id] , function (err, result) {
             connection.release();
             if(err) callback(err);
-            var book = {"id": result[0].book_id,
+            var book = {
+                    "id": result[0].book_id,
+                    "isbn": result[0].isbn,
                     "title": result[0].title,
                     "author": result[0].author,
                     "description": result[0].description,
@@ -31,7 +35,7 @@ module.exports.getBook = function (book_id,callback) {
                     "cover": result[0].cover,
                     "pages": result[0].pages,
                     "status": result[0].status,
-                "event": result[0].event
+                    "event": result[0].event
             };
             callback(null, book);
         });
@@ -63,10 +67,12 @@ module.exports.getBooks = function (filter,callback) {
                 if(err) callback(err);
                 //var res = JSON.stringify(result);
                 var books=[];
+                console.log(result);
                 result.forEach(function(item, i, result) {
                     books.push(
                         {
                             "id": result[i].book_id,
+                            "isbn": result[i].isbn,
                             "title": result[i].title,
                             "author": result[i].author,
                             "description": result[i].description,
