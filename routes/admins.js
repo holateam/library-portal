@@ -72,4 +72,17 @@ adminRouter.route('/api/v1/books/remove')
         }
     });
 });
+
+adminRouter.route('/api/v1/queue/:book_id')
+.get(function(req, res, next) {
+
+    dbLayer.getQueueByBookId(req.params.book_id, function(err, resp) {
+        if (err) {
+            res.json({ success: false, msg: err });
+        } else {
+            res.json({ success: true, data: resp});
+        }
+    });
+});
+
 module.exports = adminRouter;

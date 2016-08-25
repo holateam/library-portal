@@ -80,7 +80,7 @@ module.exports.getBooks = function (filter,callback) {
                             "cover": result[i].cover,
                             "pages": result[i].pages,
                             "status": result[i].status,
-                            "busy": result[i].event  == null? false : true
+                            "busy": result[0].event  == null? false : true
                         }
                     );
                 });
@@ -174,6 +174,16 @@ module.exports.addToQueue = function (data,callback) {
 module.exports.getQueue = function (book,callback) {
     pool.getConnection(function(err, connection) {
         connection.query("SELECT email FROM queue WHERE book_id = ?", [book.book_id] , function (err, result) {
+            connection.release();
+            if(err) callback(err);
+            callback(null,result);
+        });
+    });
+};
+
+module.exports.getQueueByBookId = function (book_id, callback) {
+    pool.getConnection(function(err, connection) {
+        connection.query("SELECT email FROM queue WHERE book_id = ?", [book_id] , function (err, result) {
             connection.release();
             if(err) callback(err);
             callback(null,result);
