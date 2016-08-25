@@ -214,3 +214,13 @@ module.exports.getBooksTest = function (filter, callback) {
     	callback(null, result);
 	}
 };
+
+module.exports.getPortionBooks = function (data,callback) {
+    pool.getConnection(function(err, connection) {
+        connection.query("SELECT * FROM books LIMIT ? OFFSET ?", [data.limit, (data.limit * data.portion)] , function (err, result) {
+            connection.release();
+            if(err) callback(err);
+            callback(null,result);
+        });
+    });
+};
