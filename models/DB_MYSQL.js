@@ -268,3 +268,23 @@ module.exports.getPortionBooks = function (data,callback) {
         });
     });
 };
+
+module.exports.getPopular = function (callback) {
+    pool.getConnection(function(err, connection) {
+        connection.query("SELECT book_id, COUNT(book_id) AS cnt FROM events GROUP BY book_id ORDER BY cnt DESC", function (err, result) {
+            connection.release();
+            if(err) callback(err);
+            callback(null,result);
+        });
+    });
+};
+
+module.exports.getNew = function (callback) {
+    pool.getConnection(function(err, connection) {
+        connection.query("SELECT * FROM books WHERE date >= curdate() - 60", function (err, result) {
+            connection.release();
+            if(err) callback(err);
+            callback(null,result);
+        });
+    });
+};
