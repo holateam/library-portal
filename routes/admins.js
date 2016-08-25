@@ -74,9 +74,20 @@ adminRouter.route('/api/v1/books/remove')
 });
 
 adminRouter.route('/api/v1/queue/:book_id')
-.get(function(req, res, next) {
+.get(auth, function(req, res, next) {
 
     dbLayer.getQueueByBookId(req.params.book_id, function(err, resp) {
+        if (err) {
+            res.json({ success: false, msg: err });
+        } else {
+            res.json({ success: true, data: resp});
+        }
+    });
+});
+
+adminRouter.route('/api/v1/readers/add')
+.post(auth, function(req, res, next) {
+    dbLayer.createReader(req.body.reader, function(err, resp) {
         if (err) {
             res.json({ success: false, msg: err });
         } else {

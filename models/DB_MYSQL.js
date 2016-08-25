@@ -192,11 +192,14 @@ module.exports.getQueueByBookId = function (book_id, callback) {
 };
 
 module.exports.createReader = function (readerInfo,callback) {
+    console.log(readerInfo);
     pool.getConnection(function(err, connection) {
         connection.query("INSERT INTO readers (reader_id, name, email, phone) VALUES (NULL, ?, ?, ?);", [readerInfo.name, readerInfo.email, readerInfo.phone] , function (err, result) {
             connection.release();
             if(err) callback(err);
-            callback(null,result["insertId"]);
+            var data = {};
+            data.reader_id = result["insertId"];
+            callback(null, data);
         });
     });
 };
