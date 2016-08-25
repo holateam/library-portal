@@ -105,6 +105,19 @@ module.exports.deleteBook = function (book,callback) {
     });
 };
 
+module.exports.deleteBookById = function (book_id,callback) {
+    pool.getConnection(function(err, connection) {
+        connection.query("DELETE FROM books WHERE book_id = ?", [book_id] , function (err, result) {
+            connection.release();
+            if(err) callback(err);
+            var data={};
+            data.affectedRows = result["affectedRows"];
+            var res = result["affectedRows"]? true : false;
+            callback(null, data);
+        });
+    });
+};
+
 module.exports.updateBook = function (book, changedFields, callback) {
     var query = "UPDATE books SET ";
     for (var key in changedFields) {
