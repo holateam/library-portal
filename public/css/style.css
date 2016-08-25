@@ -120,8 +120,8 @@ body {
             border-radius: 3px; }
     #main #content .bookID .orderBlock .busyBook, #main #content .bookID .orderBlock .freeBook {
       display: none; }
-      #main #content .bookID .orderBlock .busyBook .glyphicon-ok, #main #content .bookID .orderBlock .busyBook .glyphicon-remove, #main #content .bookID .orderBlock .freeBook .glyphicon-ok, #main #content .bookID .orderBlock .freeBook .glyphicon-remove {
-        visibility: hidden; }
+    #main #content .bookID .orderBlock .glyphicon-ok, #main #content .bookID .orderBlock .glyphicon-remove {
+      visibility: hidden; }
   #main #content a {
     display: block; }
     #main #content a img {

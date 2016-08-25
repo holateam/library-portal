@@ -25,26 +25,20 @@ block content
               p Hello to you not so lucky, the book's busy now but you can take her when she's free.
               p To do this, enter your email and click on the button "Want to read!"
               p
-              .input-group
-                .input-group-addon @
-                input.orderEmail.form-control(type='text', placeholder='email')
-                span.glyphicon.glyphicon-ok.form-control-feedback(aria-hidden='true')
-                span.glyphicon.glyphicon-remove.form-control-feedback(aria-hidden='true')
-              br
-              button.btnBookID.btn.btn-success(type='button' disabled='disabled') Want to read!
             div.freeBook
               h3 Book is not busy
               br
               p Hi you are very lucky, the book is now free and you can take her to read.
               p To do this, enter your email and click on the button "Want to read!"
               p
-              .input-group
-                .input-group-addon @
-                input.orderEmail.form-control(type='text', placeholder='email')
-                span.glyphicon.glyphicon-ok.form-control-feedback(aria-hidden='true')
-                span.glyphicon.glyphicon-remove.form-control-feedback(aria-hidden='true')
-              br
-              button.btnBookID.btn.btn-success(type='button' disabled='disabled') Want to read!
+            .input-group
+              .input-group-addon @
+              input.orderEmail.form-control(type='text', placeholder='email' name='email')
+              span.glyphicon.glyphicon-ok.form-control-feedback(aria-hidden='true')
+              span.glyphicon.glyphicon-remove.form-control-feedback(aria-hidden='true')
+            br
+            button.btnBookID.btn.btn-success(type='button' disabled='disabled') Want to read!
+            
     div.row.bookDescription
         div.col-md-12
             h4 О книге

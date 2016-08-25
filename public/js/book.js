@@ -1,4 +1,5 @@
 function fillBookInfo(book) {
+    $('.bookID').attr('book-id',book.id);
     $('.bookImg img').attr('src', '/img/books/' + book.id + '.jpg');
     $('.titleBook').html(book.title);
     $('#author').html(book.author);
@@ -55,16 +56,20 @@ $('.orderEmail').keyup(function(event) {
       $('.btnBookID').attr('disabled','disabled');
     }
   }
+});
 $('.btnBookID').click(function(event) {
   console.log('Click Btn ');
-  var email = $('.orderEmail').val();
-  doAjaxQuery('GET', '/api/v1/books/order?' + email, null, function (res) {
+  var email = $('.orderEmail').val();// $('input.orderEmail').val();
+  var id = $('.bookID').attr('book-id');
+  console.log(id);
+  console.log(email);
+  doAjaxQuery('GET', '/api/v1/books/'+id+'/order?email=' + email, null, function (res) {
       if (!res.success) {
           alert(res.msg);
           return;
       }
+      console.log(JSON.stringify(res));
       console.log("Письмо отправленно " +res.success);
       // fillBookInfo(res.data);
   });
-});
 });
