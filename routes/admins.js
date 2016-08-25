@@ -59,4 +59,17 @@ adminRouter.route('/api/v1/books/remove/:book_id')
         }
     });
 });
+
+// /admin/api/v1/books/remove
+adminRouter.route('/api/v1/books/remove')
+.post(auth, function(req, res, next) {
+
+    dbLayer.deleteBookWithIdInList(req.body.ids, function(err, resp) {
+        if (err) {
+            res.json({ success: false, msg: err });
+        } else {
+            res.json({ success: true, data: resp});
+        }
+    });
+});
 module.exports = adminRouter;

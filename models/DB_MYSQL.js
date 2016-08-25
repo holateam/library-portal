@@ -35,7 +35,7 @@ module.exports.getBook = function (book_id,callback) {
                     "cover": result[0].cover,
                     "pages": result[0].pages,
                     "status": result[0].status,
-                    "busy": result[0].event ? true: false
+                    "busy": result[0].event  == null? false : true
             };
             callback(null, book);
         });
@@ -80,7 +80,7 @@ module.exports.getBooks = function (filter,callback) {
                             "cover": result[i].cover,
                             "pages": result[i].pages,
                             "status": result[i].status,
-                            "busy": result[i].event ? true: false
+                            "busy": result[i].event  == null? false : true
                         }
                     );
                 });
@@ -108,6 +108,24 @@ module.exports.deleteBook = function (book,callback) {
 module.exports.deleteBookById = function (book_id,callback) {
     pool.getConnection(function(err, connection) {
         connection.query("DELETE FROM books WHERE book_id = ?", [book_id] , function (err, result) {
+            connection.release();
+            if(err) callback(err);
+            var data={};
+            data.affectedRows = result["affectedRows"];
+            var res = result["affectedRows"]? true : false;
+            callback(null, data);
+        });
+    });
+};
+
+module.exports.deleteBookWithIdInList = function (ids_array,callback) {
+    pool.getConnection(function(err, connection) {
+        var ids_list = ids_array.join();
+//        var placeholders = '?'.repeat(ids_array.length);
+        var placeholders = Array(ids_array.length).join('?').split('').join();
+        console.log(placeholders);
+        var prequery = "DELETE FROM books WHERE book_id IN (" + placeholders + ")";
+        connection.query(prequery, ids_array, function (err, result) {
             connection.release();
             if(err) callback(err);
             var data={};
