@@ -34,4 +34,17 @@ adminRouter.route('/api/v1/books/:book_id')
     });
 });
 
+///admin/api/v1/books/add
+adminRouter.route('/api/v1/books/add')
+.post(auth, function(req, res, next) {
+
+    dbLayer.addBook(req.body.book, function(err, resp) {
+        if (err) {
+            res.json({ success: false, msg: err });
+        } else {
+            res.json({ success: true, data: resp});
+        }
+    });
+});
+
 module.exports = adminRouter;
