@@ -35,7 +35,7 @@ module.exports.getBook = function (book_id,callback) {
                     "cover": result[0].cover,
                     "pages": result[0].pages,
                     "status": result[0].status,
-                    "event": result[0].event
+                    "busy": result[0].event ? true: false
             };
             callback(null, book);
         });
@@ -80,7 +80,7 @@ module.exports.getBooks = function (filter,callback) {
                             "cover": result[i].cover,
                             "pages": result[i].pages,
                             "status": result[i].status,
-                            "event": result[i].event
+                            "busy": result[i].event ? true: false
                         }
                     );
                 });
