@@ -1,5 +1,11 @@
 /* ----------------------------- begin view ----------------------------------*/
 var view = {
+  showElement: function(element){
+    $(element).css('visibility','visible');
+  },
+  hideElement: function(element){
+    $(element).css('visibility','hidden');
+  }
     //
 };
 /* ------------------------------- end view ----------------------------------*/

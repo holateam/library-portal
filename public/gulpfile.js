@@ -23,11 +23,19 @@ gulp.task('scripts', function(){
     'libs/jquery/dist/jquery.min.js',
     'libs/magnific-popup/dist/jquery.magnific-popup.min.js',
 		'libs/bootstrap/dist/js/bootstrap.min.js',
-    'libs/matchHeight/dist/jquery.matchHeight-min.js', 
+    'libs/matchHeight/dist/jquery.matchHeight-min.js',
   ])
   .pipe(concat('libs.min.js'))
   .pipe(uglify())
   .pipe(gulp.dest('js'));
+});
+
+gulp.task('fonts',function(){
+  return gulp.src([
+    'libs/font-awesome/fonts/**/*',
+    'libs/bootstrap/fonts/**/*',
+  ])
+  .pipe(gulp.dest('fonts'));
 });
 
 gulp.task('css-libs',['sass'], function(){
@@ -58,11 +66,11 @@ gulp.task('img', function(){
   .pipe(gulp.dest('dist/img'));
 });
 
-gulp.task('watch', ['css-libs','scripts'], function(){
+gulp.task('watch', ['css-libs','scripts','fonts'], function(){
 	gulp.watch('sass/**/*.sass',['sass']);
 });
 
-gulp.task('build', ['clean', 'img', 'css-libs', 'scripts'], function(){
+gulp.task('build', ['clean', 'img', 'css-libs', 'scripts','fonts'], function(){
 
   var buildCss= gulp.src([
     'css/style.css',
