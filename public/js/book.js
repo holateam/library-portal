@@ -1,5 +1,5 @@
 function fillBookInfo(book) {
-    $('.bookID').attr('book-id',book.id);
+    $('.bookID').attr('book-id', book.id);
     $('.bookImg img').attr('src', '/img/books/' + book.id + '.jpg');
     $('.titleBook').html(book.title);
     $('#author').html(book.author);
@@ -9,18 +9,18 @@ function fillBookInfo(book) {
     $('.bookDescriptionText').html(book.description);
 
     console.log(JSON.stringify(book)); // log
-
     console.log("Status: " + book.busy); // log
-    if(book.busy=='true'){
-      $('.busyBook').css('display','block');
+
+    if (book.busy === true) {
+        $('.busyBook').css('display', 'block');
     } else {
-      $('.freeBook').css('display','block');
+        $('.freeBook').css('display', 'block');
     }
 
 
 }
 
-doAjaxQuery('GET', '/api/v1/books/' + $(location).attr('pathname').substr(6), null, function (res) {
+doAjaxQuery('GET', '/api/v1/books/' + $(location).attr('pathname').substr(6), null, function(res) {
     if (!res.success) {
         alert(res.msg);
         return;
@@ -28,48 +28,45 @@ doAjaxQuery('GET', '/api/v1/books/' + $(location).attr('pathname').substr(6), nu
     fillBookInfo(res.data);
 });
 
+
+var sendEmailToQueue = function(id, email) {
+    doAjaxQuery('GET', '/api/v1/books/' + id + '/order?email=' + email, null, function(res) {
+        if (!res.success) {
+            alert(res.msg);
+            return;
+        }
+        console.log(JSON.stringify(res));
+        console.log("Письмо отправленно " + res.success);
+        // fillBookInfo(res.data);
+    });
+};
+
 $('.orderEmail').keyup(function(event) {
-  var value = $(this).val();
-  var regex = /^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/;
-  if(value === ''){
-    console.log('пусто'); // log
-    $('.input-group').removeClass('has-error has-success');
-    view.hideElement('.glyphicon-remove');
-    view.hideElement('.glyphicon-ok');
-    $('.btnBookID').attr('disabled','disabled');
-
-  }else {
-    if(regex.test(value)){
-      console.log('email true'); // log
-      $('.input-group').removeClass('has-error has-feedback');
-      view.hideElement('.glyphicon-remove');
-
-      $('.input-group').addClass('has-success has-feedback');
-      view.showElement('.glyphicon-ok');
-      $('.btnBookID').removeAttr('disabled');
-    } else{
-      console.log('email false'); // log
-      $('.input-group').removeClass('has-success has-feedback');
-      view.hideElement('.glyphicon-ok');
-      $('.input-group').addClass('has-error has-feedback');
-      view.showElement('.glyphicon-remove');
-      $('.btnBookID').attr('disabled','disabled');
+    var value = $(this).val();
+    var isEmail = controller.validateEmail(value);
+    if (value === '') {
+        console.log('пусто'); // log
+        $('.input-group').removeClass('has-error has-success');
+        view.hideElement('.glyphicon-remove', '.glyphicon-ok');
+        $('.btnBookID').attr('disabled', 'disabled');
+    } else {
+        if (isEmail) {
+            console.log('email true'); // log
+            view.showSuccessEmail();
+            $('.btnBookID').removeAttr('disabled');
+        } else {
+            console.log('email false'); // log
+            view.showErrEmail();
+            $('.btnBookID').attr('disabled', 'disabled');
+        }
     }
-  }
 });
+
 $('.btnBookID').click(function(event) {
-  console.log('Click Btn ');
-  var email = $('.orderEmail').val();// $('input.orderEmail').val();
-  var id = $('.bookID').attr('book-id');
-  console.log(id);
-  console.log(email);
-  doAjaxQuery('GET', '/api/v1/books/'+id+'/order?email=' + email, null, function (res) {
-      if (!res.success) {
-          alert(res.msg);
-          return;
-      }
-      console.log(JSON.stringify(res));
-      console.log("Письмо отправленно " +res.success);
-      // fillBookInfo(res.data);
-  });
+    var email = $('.orderEmail').val(); // $('input.orderEmail').val();
+    var id = $('.bookID').attr('book-id');
+    console.log('Click Btn ');
+    console.log(id);
+    console.log(email);
+    sendEmailToQueue(id, email);
 });
