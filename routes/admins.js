@@ -8,7 +8,7 @@ var dbLayer = require('../models/DB_MYSQL.js');
 
 /* GET adminka. */
 adminRouter.get('/', auth, function(req, res, next) {
-    res.render('admin_index', { title: 'Adminka' });
+    res.render('admin_index', { title: 'Admin' });
 });
 
 adminRouter.route('/api/v1/books')
