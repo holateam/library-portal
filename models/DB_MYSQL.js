@@ -67,7 +67,6 @@ module.exports.getBooks = function (filter,callback) {
                 if(err) callback(err);
                 //var res = JSON.stringify(result);
                 var books=[];
-                console.log(result);
                 result.forEach(function(item, i, result) {
                     books.push(
                         {
@@ -120,12 +119,10 @@ module.exports.deleteBookById = function (book_id,callback) {
 
 module.exports.deleteBookWithIdInList = function (ids_array,callback) {
     pool.getConnection(function(err, connection) {
-        var ids_list = ids_array.join();
-//        var placeholders = '?'.repeat(ids_array.length);
-        var placeholders = Array(ids_array.length).join('?').split('').join();
-        console.log(placeholders);
-        var prequery = "DELETE FROM books WHERE book_id IN (" + placeholders + ")";
-        connection.query(prequery, ids_array, function (err, result) {
+//        var placeholders = Array(ids_array.length + 1).join('?').split('').join();
+        var placeholders = '?,'.repeat(ids_array.length - 1) + '?';
+        var querystring = "DELETE FROM books WHERE book_id IN (" + placeholders + ")";
+        connection.query(querystring, ids_array, function (err, result) {
             connection.release();
             if(err) callback(err);
             var data={};
