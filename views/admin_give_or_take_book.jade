@@ -1,0 +1,32 @@
+extends admin_layout
+
+block content
+
+  div.container
+  
+    div.row
+      div.col-md-5
+        
+        div.row  
+          div.col-md-6
+            img.img-rounded(src='/img/books/1.jpg', alt='One book', width='100', height='100')
+          div.col-md-6
+            dl 
+              dt Book Title
+                dd Author
+                dd Pages
+                dd Id
+                dd Year
+                dd Busy
+          div.col-md-12  
+            p Description Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.                    
+          div.col-md-6
+            a(href(#)) Edit book        
+      
+      div.col-md-4
+        input.form-control(type='text', placeholder='Full Name')
+        input.form-control(type='text', placeholder='Phone number')  
+        input.form-control(type='text', placeholder='Email')
+        input.form-control(type='text', placeholder='Space of time days')
+        button.btn.btn-success(type='button') Give the book!
+        button.btn.btn-warning(type='button') Take the book!
