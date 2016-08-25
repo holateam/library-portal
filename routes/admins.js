@@ -96,4 +96,15 @@ adminRouter.route('/api/v1/readers/add')
     });
 });
 
+adminRouter.route('/api/v1/books/give/:book_id')
+.post(auth, function(req, res, next) {
+
+    dbLayer.giveBookById(req.params.book_id, req.body.event, function(err, resp) {
+        if (err) {
+            res.json({ success: false, msg: err });
+        } else {
+            res.json({ success: true, data: resp});
+        }
+    });
+});
 module.exports = adminRouter;
