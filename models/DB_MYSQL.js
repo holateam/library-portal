@@ -217,6 +217,21 @@ module.exports.giveBook = function (data,callback) {
     });
 };
 
+module.exports.giveBookById = function (book_id, data, callback) {
+    pool.getConnection(function(err, connection) {
+        connection.query("INSERT INTO events (event_id, book_id, reader_id, date, term, pawn) VALUES (NULL, ?, ?, ?, ?, ?);", [book_id, data.reader_id, data.date, data.term, data.pawn] , function (err, result) {
+            if(err) callback(err);
+            var res = result["insertId"];
+            connection.query("UPDATE books SET event = ? WHERE book_id = ?",  [res, data.book_id], function (err,result){
+                connection.release();
+                var data = {};
+                data.event_id = res;
+                callback(null, data);
+            });
+        });
+    });
+};
+
 module.exports.takeBook = function (book,callback) {
     pool.getConnection(function(err, connection) {
         connection.query("UPDATE books SET event = ? WHERE book_id = ?", [null, book.book_id] , function (err, result) {
