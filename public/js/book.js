@@ -75,7 +75,7 @@ $('.orderEmail').keyup(function(event) {
             view.showErrEmail();
         }
     }
-});
+}); 
 
 /*------------------ Sending email by clicking on the button ----------------*/
 $('.btnBookID').click(function(event) {

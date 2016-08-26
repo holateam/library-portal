@@ -6,7 +6,7 @@ function addBookItem(book) {
         .find('a').attr('href', '/book/' + book.id).end()
         .css('display', 'block').appendTo('#content .row');
 }
-
+ 
 function addBookItemOnScroll(book) {
     $('#pattern').clone().removeAttr('id').attr('book-id', book.id)
         .find('img').attr('src', '/img/books/' + book.id + '.jpg').end()
@@ -66,6 +66,3 @@ $(document).scroll(function(){
         }
     }
 });
-
-
-

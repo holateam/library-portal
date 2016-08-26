@@ -17,6 +17,6 @@ sidebarItems.click(function (event) {
                 return;
             }
             view.addBooksItems(res.data.books);
-        });
+        });  
     }
 });
