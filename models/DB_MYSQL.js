@@ -280,7 +280,7 @@ module.exports.getBooksTest = function (filter, callback) {
                         "busy": false,
                         "year" : 2015,
                         "new" : true
-                    },
+                    }
                 ]
             }
         };
@@ -388,6 +388,17 @@ module.exports.getBooksAlt = function (data, callback) {
                 data.total = total[0]['amount'];
                 callback(null, data);
             });
+        });
+    });
+};
+
+module.exports.find = function (word, callback) {
+    pool.getConnection(function(err, connection) {
+        connection.query("SELECT * FROM books WHERE title LIKE '%"+ word +"%' OR author LIKE '%"+ word +"%' OR description LIKE '%"+ word +"%' OR ISBN LIKE '%"+ word +"%'", function (err, result) {
+            connection.release();
+            console.log(result);
+            if(err) callback(err);
+            callback(null,result);
         });
     });
 };
