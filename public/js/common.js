@@ -2,13 +2,13 @@
 var view = {
     showElement: function(element) {
         for (var i = 0; i < arguments.length; i++) {
-            $(arguments[i]).css('visibility', 'visible');
+            $(arguments[i]).css('display', 'block');
         }
         // $(element).css('visibility','visible');
     },
     hideElement: function(element) {
             for (var i = 0; i < arguments.length; i++) {
-                $(element).css('visibility', 'hidden');
+                $(arguments[i]).css('display', 'none');
             }
             // $(element).css('visibility','hidden');
     },

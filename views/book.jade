@@ -31,13 +31,18 @@ block content
               p Hi you are very lucky, the book is now free and you can take her to read.
               p To do this, enter your email and click on the button "Want to read!"
               p
-            .input-group
+            div.response
+              h3 Congratulations
+              br
+              p Instructions on how to get the book sent to your email:
+                span.youEmail
+            .input-group.form-queue
               .input-group-addon @
               input.orderEmail.form-control(type='text', placeholder='email' name='email')
               span.glyphicon.glyphicon-ok.form-control-feedback(aria-hidden='true')
               span.glyphicon.glyphicon-remove.form-control-feedback(aria-hidden='true')
             br
-            button.btnBookID.btn.btn-success(type='button' disabled='disabled') Want to read!
+            button.btnBookID.btn.btn-success(type='button') Want to read!
             
     div.row.bookDescription
         div.col-md-12

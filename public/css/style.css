@@ -118,10 +118,12 @@ body {
     padding: 30px 20px 35px 20px;
     -webkit-border-radius: 3px;
             border-radius: 3px; }
-    #main #content .bookID .orderBlock .busyBook, #main #content .bookID .orderBlock .freeBook {
+    #main #content .bookID .orderBlock .busyBook, #main #content .bookID .orderBlock .freeBook, #main #content .bookID .orderBlock .response {
       display: none; }
+      #main #content .bookID .orderBlock .busyBook .youEmail, #main #content .bookID .orderBlock .freeBook .youEmail, #main #content .bookID .orderBlock .response .youEmail {
+        color: #27ae60; }
     #main #content .bookID .orderBlock .glyphicon-ok, #main #content .bookID .orderBlock .glyphicon-remove {
-      visibility: hidden; }
+      display: none; }
   #main #content a {
     display: block; }
     #main #content a img {
