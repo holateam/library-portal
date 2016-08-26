@@ -129,4 +129,16 @@ adminRouter.route('/api/v1/books/update/:book_id')
     });
 });
 
+adminRouter.route('/api/v1/books/take/:book_id')
+.get(auth, function(req, res, next) {
+
+    dbLayer.takeBookById(req.params.book_id, function(err, resp) {
+        if (err) {
+            res.json({ success: false, msg: err });
+        } else {
+            res.json({ success: true, data: resp});
+        }
+    });
+});
+
 module.exports = adminRouter;

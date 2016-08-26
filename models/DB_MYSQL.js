@@ -182,6 +182,17 @@ module.exports.takeBook = function (book,callback) {
     });
 };
 
+module.exports.takeBookById = function (book_id, callback) {
+    pool.getConnection(function(err, connection) {
+        connection.query("UPDATE books SET event = ? WHERE book_id = ?", [null, book_id] , function (err, result) {
+            connection.release();
+            if(err) callback(err);
+            var res = result["affectedRows"]? true : false;
+            callback(null,res);
+        });
+    });
+};
+
 module.exports.getPortionBooks = function (data, callback) {
     pool.getConnection(function(err, connection) {
         console.log("data.limit: " + data.limit);
