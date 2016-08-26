@@ -1,28 +1,26 @@
 /* ----------------------------- begin view ----------------------------------*/
 var view = {
     showElement: function(element) {
-        for (var i = 0; i < arguments.length; i++) {
+        for (var i = 0; i < arguments.length; i++)
             $(arguments[i]).css('display', 'block');
-        }
-        // $(element).css('visibility','visible');
     },
     hideElement: function(element) {
-            for (var i = 0; i < arguments.length; i++) {
-                $(arguments[i]).css('display', 'none');
-            }
-            // $(element).css('visibility','hidden');
+        for (var i = 0; i < arguments.length; i++)
+            $(arguments[i]).css('display', 'none');
     },
-    showErrEmail: function(){
-      $('.input-group').removeClass('has-success has-feedback');
-      view.hideElement('.glyphicon-ok');
-      $('.input-group').addClass('has-error has-feedback');
-      view.showElement('.glyphicon-remove');
+    showErrEmail: function() {
+        var c = '.input-group';
+        $(c).removeClass('has-success');
+        $(c).addClass('has-error');
+        view.hideElement('.glyphicon-ok');
+        view.showElement('.glyphicon-remove');
     },
-    showSuccessEmail: function(){
-      $('.input-group').removeClass('has-error has-feedback');
-      view.hideElement('.glyphicon-remove');
-      $('.input-group').addClass('has-success has-feedback');
-      view.showElement('.glyphicon-ok');
+    showSuccessEmail: function() {
+        var c = '.input-group';
+        $(c).removeClass('has-error');
+        $(c).addClass('has-success');
+        view.hideElement('.glyphicon-remove');
+        view.showElement('.glyphicon-ok');
     },
     addBookItem: function(book) {
         $('#pattern').clone().removeAttr('id').attr('book-id', book.id)
@@ -32,7 +30,7 @@ var view = {
             .find('a').attr('href', '/book/' + book.id).end()
             .css('display', 'block').appendTo('#content .row');
     },
-    addBooksItems: function(books){
+    addBooksItems: function(books) {
         $('.book_item:not(#pattern)').remove();
         // $('#content .row *:not(#pattern)').remove();
 
@@ -47,16 +45,15 @@ var view = {
 
 /* --------------------------- begin controller ------------------------------*/
 var controller = {
-  validateEmail: function(value){
-    var regex = /^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/;
-    return regex.test(value);
-  }
-    //
+    validateEmail: function(value) {
+        var regex = /^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,10}$/;
+        return regex.test(value);
+    }
 };
 /* --------------------------- end controller --------------------------------*/
 
 
-/* ------------------- anonymous initialize function ------------------------ */
+/* ------------------------ Jquery Ajax function ---------------------------- */
 
 function doAjaxQuery(method, url, data, callback) {
     $.ajax({
@@ -68,24 +65,3 @@ function doAjaxQuery(method, url, data, callback) {
         success: callback
     });
 }
-
-(function() {
-
-    var app = {
-
-        init: function() {
-            this.main();
-            this.event();
-        },
-        main: function() {
-            // тут функции при загрузке главной страницы
-        },
-        event: function() {
-            // тут навешиваем слушателей на события
-        }
-    };
-    app.init();
-
-}());
-
-/* ----------------- end anonymous initialize function ---------------------- */

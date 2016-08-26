@@ -1,6 +1,6 @@
 var sidebarItems = $('.sidebar_item');
 
-sidebarItems.click(function (event) {
+sidebarItems.click(function(event) {
     var context = $(this);
     sessionStorage.setItem('filter', context.text().toLowerCase());
     offsetCoef = 0;
@@ -11,12 +11,12 @@ sidebarItems.click(function (event) {
 
     if ($(location).attr('pathname') == '/') {
         event.preventDefault();
-        doAjaxQuery('GET', '/api/v1/books?filter=' + context.attr('data-filter'), null, function (res) {
+        doAjaxQuery('GET', '/api/v1/books?filter=' + context.attr('data-filter'), null, function(res) {
             if (!res.success) {
                 alert(res.msg);
                 return;
             }
             view.addBooksItems(res.data.books);
-        });  
+        });
     }
 });

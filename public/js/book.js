@@ -24,7 +24,7 @@ doAjaxQuery('GET', '/api/v1/books/' + $(location).attr('pathname').substr(6), nu
 ----------------------email in the queue for the book ---------------------- */
 var showResultSendEmailToQueue = function(email, result) {
     var busy = $('#bookID').attr('busy');
-    view.hideElement('.form-queue', '.btnBookID', (busy) ? '.busyBook' : '.freeBook');
+    view.hideElement('.form-queue', '.btnBookID', (busy === true) ? '.busyBook' : '.freeBook');
     view.showElement('.response');
     $('span.youEmail').text(' ' + email);
 };

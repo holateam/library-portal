@@ -6,7 +6,7 @@ function addBookItem(book) {
         .find('a').attr('href', '/book/' + book.id).end()
         .css('display', 'block').appendTo('#content .row');
 }
- 
+
 function addBookItemOnScroll(book) {
     $('#pattern').clone().removeAttr('id').attr('book-id', book.id)
         .find('img').attr('src', '/img/books/' + book.id + '.jpg').end()
@@ -18,16 +18,16 @@ function addBookItemOnScroll(book) {
 
 
 function addBooksItemsOnScroll(books) {
-  for (var i in books) {
-      addBookItemOnScroll(books[i]);
-  }
+    for (var i in books) {
+        addBookItemOnScroll(books[i]);
+    }
 
-  $('.details, .book_item a').click(function () {
-      $(location).attr('href', '/book/' + $(this).closest('.book_item').attr('book-id'));
-  });
+    $('.details, .book_item a').click(function() {
+        $(location).attr('href', '/book/' + $(this).closest('.book_item').attr('book-id'));
+    });
 }
 
-function addBooksItems(books){
+function addBooksItems(books) {
     $('.book_item:not(#pattern)').remove();
     for (var i in books) {
         addBookItem(books[i]);
@@ -49,13 +49,13 @@ var viewPortion = 8;
 var offsetCoef = 0;
 var isScrollQuerySended = false;
 
-$(document).scroll(function(){
+$(document).scroll(function() {
     if ($(window).scrollTop() + $(window).height() == $(document).height()) {
-    offsetCoef++;
-    var offset = offsetCoef * viewPortion;
-    var filter = sessionStorage.filter ? sessionStorage.filter : 'all';
+        offsetCoef++;
+        var offset = offsetCoef * viewPortion;
+        var filter = sessionStorage.filter ? sessionStorage.filter : 'all';
         if (!isScrollQuerySended) {
-            doAjaxQuery('GET', '/api/v1/books?filter=' + filter +'&limit=' + viewPortion + '&offset=' + offset, null, function (res) {
+            doAjaxQuery('GET', '/api/v1/books?filter=' + filter + '&limit=' + viewPortion + '&offset=' + offset, null, function(res) {
                 isScrollQuerySended = true;
 
                 if (res.success) {
