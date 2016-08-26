@@ -42,7 +42,8 @@ sudo bash expand_db_v2.sh -b <library> -u <librarian> -p <password>
 
 ## What it takes to design the frontend?
 
-#### 1. Install gulp globally:
+
+### 1. Install gulp globally:
 
 __If you have previously installed a version of gulp globally, please run `npm rm --global gulp`
 to make sure your old version doesn't collide with gulp-cli.__
