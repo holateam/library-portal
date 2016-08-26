@@ -37,7 +37,8 @@ module.exports.getBook = function (book_id,callback) {
                     "cover": result[0].cover,
                     "pages": result[0].pages,
                     "status": result[0].status,
-                    "busy": result[0].event  == null? false : true
+                    "busy": result[0].event  == null? false : true,
+                    "event": result[0].event
             };
             callback(null, book);
         });
@@ -171,6 +172,18 @@ module.exports.giveBookById = function (book_id, data, callback) {
     });
 };
 
+module.exports.getEventById = function (event_id, callback) {
+    pool.getConnection(function(err, connection) {
+        connection.query("SELECT * FROM events WHERE event_id = ?", [event_id] , function (err, result) {
+            connection.release();
+            if(err) callback(err);
+            var data = {};
+            data.event = result[0];
+            callback(null, data);
+        });
+    });
+};
+
 module.exports.takeBook = function (book,callback) {
     pool.getConnection(function(err, connection) {
         connection.query("UPDATE books SET event = ? WHERE book_id = ?", [null, book.book_id] , function (err, result) {
@@ -299,7 +312,8 @@ module.exports.getBooksAlt = function (data, callback) {
                             "cover": result[i].cover,
                             "pages": result[i].pages,
                             "status": result[i].status,
-                            "busy": result[i].event  == null? false : true
+                            "busy": result[i].event  == null? false : true,
+                            "event": result[i].event
                         }
                     );
                 });

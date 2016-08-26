@@ -141,4 +141,16 @@ adminRouter.route('/api/v1/books/take/:book_id')
     });
 });
 
+adminRouter.route('/api/v1/events/:event_id')
+.get(auth, function(req, res, next) {
+
+    dbLayer.getEventById(req.params.event_id, function(err, resp) {
+        if (err) {
+            res.json({ success: false, msg: err });
+        } else {
+            res.json({ success: true, data: resp});
+        }
+    });
+});
+
 module.exports = adminRouter;
