@@ -326,7 +326,7 @@ module.exports.getNew = function (callback) {
 
 
 module.exports.getBooksAlt = function (data, callback) {
-    var maxlimit = parseInt(18446744073709551615);
+    var maxlimit = parseInt(1000000000); //18446744073709551615
     var limit = maxlimit;
 
     var offset = parseInt(0);
@@ -354,8 +354,8 @@ module.exports.getBooksAlt = function (data, callback) {
             queryTotal = "SELECT * FROM books WHERE date >= curdate() - 60";
             break;
         case "popular":
-            quary = "SELECT book_id, COUNT(book_id) AS cnt FROM events GROUP BY book_id ORDER BY cnt DESC LIMIT ? OFFSET ?";
-            queryTotal = "SELECT book_id, COUNT(book_id) AS cnt FROM events GROUP BY book_id ORDER BY cnt DESC;";
+            quary = "SELECT b.*, count(e.event_id) as cnt FROM books AS b LEFT JOIN events AS e USING(book_id) GROUP BY b.book_id ORDER BY cnt DESC LIMIT ? OFFSET ?";
+            queryTotal = "SELECT b.*, count(e.event_id) as cnt FROM books AS b LEFT JOIN events AS e USING(book_id) GROUP BY b.book_id ORDER BY cnt DESC;";
             break;
         default:
             quary = "SELECT * FROM books LIMIT ? OFFSET ?";
@@ -364,7 +364,7 @@ module.exports.getBooksAlt = function (data, callback) {
     }
 
     pool.getConnection(function(err, connection) {
-
+        console.log(limit);
         connection.query(quary, [limit, offset], function (err, result) {
             if(err) callback(err);
             connection.query(queryTotal, function (err, total) {

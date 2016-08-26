@@ -18,7 +18,7 @@ adminRouter.route('/api/v1/books')
     data.limit = req.query.limit;
     data.offset = req.query.offset;
 
-    dbLayer.getBooks(data, function(err, resp) {
+    dbLayer.getBooksAlt(data, function(err, resp) {
         if (err) {
             res.json({ success: false, msg: err });
         } else {
