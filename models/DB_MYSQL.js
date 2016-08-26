@@ -42,7 +42,9 @@ module.exports.getBook = function (book_id,callback) {
     });
 };
 
-module.exports.getBooks = function (filter,callback) {
+module.exports.getBooks = function (data,callback) {
+    var filter = data.filter;
+
     var quary;
     var queryTotal;
     switch (filter) {
