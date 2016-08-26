@@ -1,4 +1,6 @@
 var mysql = require('mysql');
+const escapeStringRegexp = require('escape-string-regexp');
+
 var configDB = require('../configDB.js');
 
 var pool = mysql.createPool({
@@ -180,6 +182,17 @@ module.exports.takeBook = function (book,callback) {
     });
 };
 
+module.exports.takeBookById = function (book_id, callback) {
+    pool.getConnection(function(err, connection) {
+        connection.query("UPDATE books SET event = ? WHERE book_id = ?", [null, book_id] , function (err, result) {
+            connection.release();
+            if(err) callback(err);
+            var res = result["affectedRows"]? true : false;
+            callback(null,res);
+        });
+    });
+};
+
 module.exports.getPortionBooks = function (data, callback) {
     pool.getConnection(function(err, connection) {
         console.log("data.limit: " + data.limit);
@@ -237,7 +250,10 @@ module.exports.getBooksAlt = function (data, callback) {
     };
 
     if (data.search) {
-        search ="'" + data.search.replace(/ /g,"|") + "'"; // or searchString.split(' ').join('|');
+        const escSearch = escapeStringRegexp(data.search);
+//        var escSearch = new RegExp(escapedString);
+        console.log("escSearch: " + escSearch);
+        search ="'" + escSearch.replace(/ /g,"|") + "'"; // or searchString.split(' ').join('|');
     };
     var searchStatement = search == "" ?  '1=1' : 'b.title REGEXP ' + search + ' OR b.author REGEXP ' + search + ' OR b.description REGEXP ' + search + ' OR b.ISBN REGEXP ' + search;
     console.log("searchStatement: " + searchStatement);

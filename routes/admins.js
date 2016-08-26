@@ -8,7 +8,11 @@ var dbLayer = require('../models/DB_MYSQL.js');
 
 /* GET adminka. */
 adminRouter.get('/', auth, function(req, res, next) {
-    res.render('admin_index', { title: 'Admin' });
+    res.render('admin_index', { title: 'Admin Panel' });
+});
+
+adminRouter.get('/addbook', auth, function(req, res, next) {
+    res.render('admin_add_book', { title: 'Add book' });
 });
 
 adminRouter.route('/api/v1/books')
@@ -117,6 +121,18 @@ adminRouter.route('/api/v1/books/give/:book_id')
 adminRouter.route('/api/v1/books/update/:book_id')
 .post(auth, function(req, res, next) {
     dbLayer.updateBookById(req.params.book_id, req.body.changes, function(err, resp) {
+        if (err) {
+            res.json({ success: false, msg: err });
+        } else {
+            res.json({ success: true, data: resp});
+        }
+    });
+});
+
+adminRouter.route('/api/v1/books/take/:book_id')
+.get(auth, function(req, res, next) {
+
+    dbLayer.takeBookById(req.params.book_id, function(err, resp) {
         if (err) {
             res.json({ success: false, msg: err });
         } else {

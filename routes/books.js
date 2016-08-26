@@ -11,10 +11,17 @@ booksRouter.route('/')
     data.offset = req.query.offset;
     data.search = req.query.search;
 
+<<<<<<< a1727392eb0907e2976a16cbbbeba5ea3921e80e
     dbLayer.getBooksAlt(data, function(err, resp) {
+=======
+    console.log('data limit',data.limit);
+
+    dbLayer.getBooks(data, function(err, resp) {
+>>>>>>> add elements on scrolling
         if (err) {
             res.json({ success: false, msg: err });
         } else {
+            console.log(resp);
             res.json({ success: true, data: resp});
         }
     });

@@ -33,6 +33,7 @@ function addBooksItems(books){
         addBookItem(books[i]);
     }
 }
+//add elements on scrolling
 
 if ($(location).attr('search')) {
     $('.sidebar_item[data-filter=' + $(location).attr('search').substr(8) + ']').click();
