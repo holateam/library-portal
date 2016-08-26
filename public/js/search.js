@@ -7,7 +7,7 @@ var requestBooksSearch = function() {
                 alert(res.msg);
                 return;
             } else {
-                addBooksItems(res.data.books);
+                view.addBooksItems(res.data.books);
                 console.log(JSON.stringify(res));
                 console.log("Запрос по поиску выполнен: " + res.success);
             }

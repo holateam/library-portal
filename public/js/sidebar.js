@@ -13,7 +13,7 @@ sidebarItems.click(function (event) {
                 alert(res.msg);
                 return;
             }
-            addBooksItems(res.data.books);
+            view.addBooksItems(res.data.books);
         });
     }
 });
