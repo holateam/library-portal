@@ -1,4 +1,6 @@
 var mysql = require('mysql');
+const escapeStringRegexp = require('escape-string-regexp');
+
 var configDB = require('../configDB.js');
 
 var pool = mysql.createPool({
@@ -237,7 +239,10 @@ module.exports.getBooksAlt = function (data, callback) {
     };
 
     if (data.search) {
-        search ="'" + data.search.replace(/ /g,"|") + "'"; // or searchString.split(' ').join('|');
+        const escSearch = escapeStringRegexp(data.search);
+//        var escSearch = new RegExp(escapedString);
+        console.log("escSearch: " + escSearch);
+        search ="'" + escSearch.replace(/ /g,"|") + "'"; // or searchString.split(' ').join('|');
     };
     var searchStatement = search == "" ?  '1=1' : 'b.title REGEXP ' + search + ' OR b.author REGEXP ' + search + ' OR b.description REGEXP ' + search + ' OR b.ISBN REGEXP ' + search;
     console.log("searchStatement: " + searchStatement);
