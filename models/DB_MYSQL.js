@@ -42,7 +42,9 @@ module.exports.getBook = function (book_id,callback) {
     });
 };
 
-module.exports.getBooks = function (filter,callback) {
+module.exports.getBooks = function (data,callback) {
+    var filter = data.filter;
+
     var quary;
     var queryTotal;
     switch (filter) {
@@ -322,15 +324,18 @@ module.exports.getNew = function (callback) {
     });
 };
 
-module.exports.getBooksAlt = function (data, callback) {
-    var whereStatement;
 
-    var limit = 18446744073709551615;
-    var offset = 0;
+module.exports.getBooksAlt = function (data, callback) {
+    var maxlimit = parseInt(18446744073709551615);
+    var limit = maxlimit;
+
+    var offset = parseInt(0);
+    var minoffset = parseInt(0);
+
     var filter = "all";
 
     if (data.filter) {
-        filter = parseInt(data.filter);
+        filter = data.filter;
     };
 
     if (data.limit) {
@@ -341,21 +346,22 @@ module.exports.getBooksAlt = function (data, callback) {
         offset = parseInt(data.offset);
     };
 
+    var quary;
+    var queryTotal;
     switch (filter) {
         case "new":
-            whereStatement = "WHERE status = 1";
+            quary = "SELECT * FROM books WHERE date >= curdate() - 60  LIMIT ? OFFSET ?";
+            queryTotal = "SELECT * FROM books WHERE date >= curdate() - 60";
             break;
         case "popular":
-            whereStatement = "WHERE status = 0";
+            quary = "SELECT book_id, COUNT(book_id) AS cnt FROM events GROUP BY book_id ORDER BY cnt DESC LIMIT ? OFFSET ?";
+            queryTotal = "SELECT book_id, COUNT(book_id) AS cnt FROM events GROUP BY book_id ORDER BY cnt DESC;";
             break;
         default:
-            whereStatement = "";
+            quary = "SELECT * FROM books LIMIT ? OFFSET ?";
+            queryTotal = "SELECT * FROM books;";
             break;
     }
-
-    var quary = "SELECT * FROM books " + whereStatement + " LIMIT ? OFFSET ?";
-
-    var queryTotal = "SELECT COUNT (book_id) AS amount FROM books " + whereStatement + ";";
 
     pool.getConnection(function(err, connection) {
 
