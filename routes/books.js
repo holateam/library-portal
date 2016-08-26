@@ -5,8 +5,12 @@ var dbLayer = require('../models/DB_MYSQL.js');
 
 booksRouter.route('/')
 .get(function(req, res, next) {
+    var data = {};
+    data.filter = req.query.filter;
+    data.limit = req.query.limit;
+    data.offset = req.query.offset;
 
-    dbLayer.getBooks(req.query.filter, function(err, resp) {
+    dbLayer.getBooksAlt(data, function(err, resp) {
         if (err) {
             res.json({ success: false, msg: err });
         } else {

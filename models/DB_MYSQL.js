@@ -150,6 +150,25 @@ module.exports.updateBook = function (book, changedFields, callback) {
     });
 };
 
+module.exports.updateBookById = function (book_id, changedFields, callback) {
+    var query = "UPDATE books SET ";
+    for (var key in changedFields) {
+        query += key + " = " + changedFields[key] + ", ";
+    }
+    query = query.substring(0, query.length - 2);
+    query += " WHERE book_id = " + book_id + ";";
+    pool.getConnection(function(err, connection) {
+        connection.query(query, function (err, result) {
+            connection.release();
+            if(err) callback(err);
+            var data={};
+            data.affectedRows = result["affectedRows"];
+//            var res = result["affectedRows"]? true : false;
+            callback(null, data);
+        });
+    });
+};
+
 module.exports.addToQueue = function (data,callback) {
     pool.getConnection(function(err, connection) {
         connection.query("SELECT * FROM queue WHERE book_id = ? AND email = ?", [data.book_id, data.email] , function (err, result) {
@@ -271,8 +290,10 @@ module.exports.getBooksTest = function (filter, callback) {
 	}
 };
 
-module.exports.getPortionBooks = function (data,callback) {
+module.exports.getPortionBooks = function (data, callback) {
     pool.getConnection(function(err, connection) {
+        console.log("data.limit: " + data.limit);
+        console.log("data.offset: " + data.offset);
         connection.query("SELECT * FROM books LIMIT ? OFFSET ?", [data.limit, data.offset] , function (err, result) {
             connection.release();
             if(err) callback(err);
@@ -297,6 +318,76 @@ module.exports.getNew = function (callback) {
             connection.release();
             if(err) callback(err);
             callback(null,result);
+        });
+    });
+};
+
+module.exports.getBooksAlt = function (data, callback) {
+    var whereStatement;
+
+    var limit = 18446744073709551615;
+    var offset = 0;
+    var filter = "all";
+
+    if (data.filter) {
+        filter = parseInt(data.filter);
+    };
+
+    if (data.limit) {
+        limit = parseInt(data.limit);
+    };
+
+    if (data.offset) {
+        offset = parseInt(data.offset);
+    };
+
+    switch (filter) {
+        case "new":
+            whereStatement = "WHERE status = 1";
+            break;
+        case "popular":
+            whereStatement = "WHERE status = 0";
+            break;
+        default:
+            whereStatement = "";
+            break;
+    }
+
+    var quary = "SELECT * FROM books " + whereStatement + " LIMIT ? OFFSET ?";
+
+    var queryTotal = "SELECT COUNT (book_id) AS amount FROM books " + whereStatement + ";";
+
+    pool.getConnection(function(err, connection) {
+
+        connection.query(quary, [limit, offset], function (err, result) {
+            if(err) callback(err);
+            connection.query(queryTotal, function (err, total) {
+                connection.release();
+                if(err) callback(err);
+                //var res = JSON.stringify(result);
+                var books=[];
+                result.forEach(function(item, i, result) {
+                    books.push(
+                        {
+                            "id": result[i].book_id,
+                            "isbn": result[i].isbn,
+                            "title": result[i].title,
+                            "author": result[i].author,
+                            "description": result[i].description,
+                            "year": result[i].year,
+                            "cover": result[i].cover,
+                            "pages": result[i].pages,
+                            "status": result[i].status,
+                            "busy": result[0].event  == null? false : true
+                        }
+                    );
+                });
+                var data = {};
+                data.filter = filter;
+                data.books = books;
+                data.total = total[0]['amount'];
+                callback(null, data);
+            });
         });
     });
 };

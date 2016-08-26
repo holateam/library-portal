@@ -13,7 +13,12 @@ adminRouter.get('/', auth, function(req, res, next) {
 
 adminRouter.route('/api/v1/books')
 .get(function(req, res, next) {
-    dbLayer.getBooks(req.query.filter, function(err, resp) {
+    var data = {};
+    data.filter = req.query.filter;
+    data.limit = req.query.limit;
+    data.offset = req.query.offset;
+
+    dbLayer.getBooksAlt(data, function(err, resp) {
         if (err) {
             res.json({ success: false, msg: err });
         } else {
@@ -107,4 +112,16 @@ adminRouter.route('/api/v1/books/give/:book_id')
         }
     });
 });
+
+adminRouter.route('/api/v1/books/update/:book_id')
+.post(auth, function(req, res, next) {
+    dbLayer.updateBookById(req.params.book_id, req.body.changes, function(err, resp) {
+        if (err) {
+            res.json({ success: false, msg: err });
+        } else {
+            res.json({ success: true, data: resp});
+        }
+    });
+});
+
 module.exports = adminRouter;
