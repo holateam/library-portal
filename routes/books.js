@@ -9,8 +9,9 @@ booksRouter.route('/')
     data.filter = req.query.filter;
     data.limit = req.query.limit;
     data.offset = req.query.offset;
+    data.search = req.query.search;
 
-    dbLayer.getBooks(data, function(err, resp) {
+    dbLayer.getBooksAlt(data, function(err, resp) {
         if (err) {
             res.json({ success: false, msg: err });
         } else {

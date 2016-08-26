@@ -73,7 +73,7 @@ module.exports.getBooks = function (data,callback) {
                     books.push(
                         {
                             "id": result[i].book_id,
-                            "isbn": result[i].isbn,
+                            "isbn": result[i].ISBN,
                             "title": result[i].title,
                             "author": result[i].author,
                             "description": result[i].description,
@@ -326,13 +326,15 @@ module.exports.getNew = function (callback) {
 
 
 module.exports.getBooksAlt = function (data, callback) {
-    var maxlimit = parseInt(18446744073709551615);
+    var maxlimit = parseInt(1000000000); //18446744073709551615
     var limit = maxlimit;
 
     var offset = parseInt(0);
     var minoffset = parseInt(0);
 
     var filter = "all";
+
+    var search = "";
 
     if (data.filter) {
         filter = data.filter;
@@ -346,24 +348,33 @@ module.exports.getBooksAlt = function (data, callback) {
         offset = parseInt(data.offset);
     };
 
+    if (data.search) {
+        search ="'" + data.search.replace(/ /g,"|") + "'"; // or searchString.split(' ').join('|');
+    };
+    var searchStatement = search == "" ?  '1=1' : 'b.title REGEXP ' + search + ' OR b.author REGEXP ' + search + ' OR b.description REGEXP ' + search + ' OR b.ISBN REGEXP ' + search;
+    console.log("searchStatement: " + searchStatement);
+
     var quary;
     var queryTotal;
     switch (filter) {
         case "new":
-            quary = "SELECT * FROM books WHERE date >= curdate() - 60  LIMIT ? OFFSET ?";
-            queryTotal = "SELECT * FROM books WHERE date >= curdate() - 60";
+            quary = "SELECT b.* FROM books AS b WHERE b.date >= curdate() - 60 AND " + searchStatement + " LIMIT ? OFFSET ?";
+            queryTotal = "SELECT COUNT(b.book_id) AS amount FROM books AS b WHERE b.date >= curdate() - 60 AND " + searchStatement;
             break;
         case "popular":
-            quary = "SELECT book_id, COUNT(book_id) AS cnt FROM events GROUP BY book_id ORDER BY cnt DESC LIMIT ? OFFSET ?";
-            queryTotal = "SELECT book_id, COUNT(book_id) AS cnt FROM events GROUP BY book_id ORDER BY cnt DESC;";
+            quary = "SELECT b.*, count(e.event_id) as cnt FROM books AS b LEFT JOIN events AS e USING(book_id) WHERE " + searchStatement + " GROUP BY b.book_id ORDER BY cnt DESC LIMIT ? OFFSET ?";
+            queryTotal = "SELECT COUNT(b.book_id) AS amount, b.*, count(e.event_id) as cnt FROM books AS b LEFT JOIN events AS e USING(book_id) WHERE " + searchStatement + " GROUP BY b.book_id ORDER BY cnt DESC;";
             break;
         default:
-            quary = "SELECT * FROM books LIMIT ? OFFSET ?";
-            queryTotal = "SELECT * FROM books;";
+            quary = "SELECT b.* FROM books AS b WHERE " + searchStatement + " LIMIT ? OFFSET ?";
+            queryTotal = "SELECT COUNT(b.book_id) AS amount FROM books AS b WHERE " + searchStatement;
             break;
     }
 
     pool.getConnection(function(err, connection) {
+        console.log(limit);
+        console.log("quary: " + quary);
+        console.log("queryTotal: " + queryTotal);
 
         connection.query(quary, [limit, offset], function (err, result) {
             if(err) callback(err);
@@ -376,7 +387,7 @@ module.exports.getBooksAlt = function (data, callback) {
                     books.push(
                         {
                             "id": result[i].book_id,
-                            "isbn": result[i].isbn,
+                            "isbn": result[i].ISBN,
                             "title": result[i].title,
                             "author": result[i].author,
                             "description": result[i].description,
@@ -384,14 +395,15 @@ module.exports.getBooksAlt = function (data, callback) {
                             "cover": result[i].cover,
                             "pages": result[i].pages,
                             "status": result[i].status,
-                            "busy": result[0].event  == null? false : true
+                            "busy": result[i].event  == null? false : true
                         }
                     );
                 });
                 var data = {};
                 data.filter = filter;
                 data.books = books;
-                data.total = total[0]['amount'];
+                //data.total = total[0]['amount'];
+                data.total = total[0];
                 callback(null, data);
             });
         });
