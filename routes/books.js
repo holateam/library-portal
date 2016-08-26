@@ -10,10 +10,13 @@ booksRouter.route('/')
     data.limit = req.query.limit;
     data.offset = req.query.offset;
 
+    console.log('data limit',data.limit);
+
     dbLayer.getBooks(data, function(err, resp) {
         if (err) {
             res.json({ success: false, msg: err });
         } else {
+            console.log(resp);
             res.json({ success: true, data: resp});
         }
     });
