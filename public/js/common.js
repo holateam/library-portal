@@ -33,7 +33,8 @@ var view = {
             .css('display', 'block').appendTo('#content .row');
     },
     addBooksItems: function(books){
-        $('.book_item:not(#pattern)').remove();
+        // $('.book_item:not(#pattern)').remove();
+        $('#content .row *:not(#pattern)').remove();
 
         for (var i in books) {
             view.addBookItem(books[i]);
