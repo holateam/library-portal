@@ -83,33 +83,33 @@ body {
     padding: 40px 15px; }
     #main #content .bookDescription h4 {
       font-weight: 500; }
-    #main #content .bookDescription .bookDescriptionText {
+    #main #content .bookDescription #bookDescriptionText {
       text-align: justify;
       text-indent: 1.5em;
       line-height: 24px; }
     #main #content .bookDescription p:first-letter {
       font-size: 22px;
       color: #27ae60; }
-  #main #content .bookID .bookImg img {
+  #main #content #bookID #bookImg img {
     width: 220px;
     height: auto;
     -webkit-box-shadow: 10px 10px 5px -9px rgba(0, 0, 0, 0.75);
             box-shadow: 10px 10px 5px -9px rgba(0, 0, 0, 0.75); }
-  #main #content .bookID .bookInfo {
+  #main #content #bookID .bookInfo {
     padding: 0 30px; }
-    #main #content .bookID .bookInfo .titleBook {
+    #main #content #bookID .bookInfo #titleBook {
       font-weight: 500;
       font-size: 22px;
       line-height: 32px;
       letter-spacing: .01em;
       margin-bottom: 10px; }
-    #main #content .bookID .bookInfo .properties {
+    #main #content #bookID .bookInfo .properties {
       display: inline-block;
       color: #888;
       width: 60px;
       padding-right: 19px;
       padding-bottom: 8px; }
-  #main #content .bookID .orderBlock {
+  #main #content #bookID .orderBlock {
     text-align: center;
     background-color: #fff;
     border: 1px solid #e1e1e1;
@@ -118,11 +118,11 @@ body {
     padding: 30px 20px 35px 20px;
     -webkit-border-radius: 3px;
             border-radius: 3px; }
-    #main #content .bookID .orderBlock .busyBook, #main #content .bookID .orderBlock .freeBook, #main #content .bookID .orderBlock .response {
+    #main #content #bookID .orderBlock .busyBook, #main #content #bookID .orderBlock .freeBook, #main #content #bookID .orderBlock .response {
       display: none; }
-      #main #content .bookID .orderBlock .busyBook .youEmail, #main #content .bookID .orderBlock .freeBook .youEmail, #main #content .bookID .orderBlock .response .youEmail {
+      #main #content #bookID .orderBlock .busyBook .youEmail, #main #content #bookID .orderBlock .freeBook .youEmail, #main #content #bookID .orderBlock .response .youEmail {
         color: #27ae60; }
-    #main #content .bookID .orderBlock .glyphicon-ok, #main #content .bookID .orderBlock .glyphicon-remove {
+    #main #content #bookID .orderBlock .glyphicon-ok, #main #content #bookID .orderBlock .glyphicon-remove {
       display: none; }
   #main #content a {
     display: block; }
