@@ -9,17 +9,16 @@ booksRouter.route('/')
     data.filter = req.query.filter;
     data.limit = req.query.limit;
     data.offset = req.query.offset;
+    data.search = req.query.search;
 
-    console.log('data limit',data.limit);
-
-    dbLayer.getBooks(data, function(err, resp) {
+    dbLayer.getBooksAlt(data, function(err, resp) {
         if (err) {
             res.json({ success: false, msg: err });
         } else {
-            console.log(resp);
             res.json({ success: true, data: resp});
         }
     });
+
 });
 
 booksRouter.route('/:book_id')
