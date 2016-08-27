@@ -206,14 +206,13 @@ module.exports.getNew = function (callback) {
 
 
 module.exports.getBooksAlt = function (data, callback) {
-    var maxlimit = parseInt(1000000000); //18446744073709551615
+    var maxlimit = 1000000000; //18446744073709551615
     var limit = maxlimit;
 
-    var offset = parseInt(0);
-    var minoffset = parseInt(0);
+    var offset = 0;
+    var minoffset = 0;
 
     var filter = "all";
-
     var search = "";
 
     if (data.filter) {
