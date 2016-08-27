@@ -39,3 +39,38 @@ To expand the database enter this command in the root of project:
 sudo bash expand_db_v2.sh -b <library> -u <librarian> -p <password>
 ```
 
+
+## What it takes to design the frontend?
+
+
+#### 1. Install gulp globally:
+
+__If you have previously installed a version of gulp globally, please run `npm rm --global gulp`
+to make sure your old version doesn't collide with gulp-cli.__
+
+```sh
+$ npm install --global gulp-cli
+```
+
+#### 2. Enter the public directory and run the gulp install:
+
+```bash
+cd public && gulp install
+```
+#### 3. Install bower globally:
+
+```sh
+$ npm install -g bower
+```
+
+#### 4. install dependencies listed in bower.json:
+
+```bash
+$ bower install
+```
+
+#### 5. Run function gulp watch:
+
+```bash
+$ gulp watch
+```
