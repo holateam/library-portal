@@ -3,7 +3,7 @@
   "description": "frontend library-portal",
   "main": "common.js",
   "authors": [
-    "lex <info.tehnokot@gmail.com>"
+    "Alex Belokon <info.tehnokot@gmail.com>"
   ],
   "license": "ISC",
   "homepage": "https://github.com/holateam/library-portal",
@@ -12,6 +12,11 @@
     "node_modules",
     "bower_components",
     "libs/",
+    "libs",
+    "dist",
+    "css",
+    "fonts",
+    "js/libs.min.js",
     "test",
     "tests"
   ],
