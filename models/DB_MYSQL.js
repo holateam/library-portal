@@ -188,7 +188,7 @@ module.exports.getPopular = function (callback) {
 
 module.exports.getNew = function (callback) {
     pool.getConnection(function(err, connection) {
-        connection.query("SELECT * FROM books WHERE date >= curdate() - 60", function (err, result) {
+        connection.query("SELECT * FROM books WHERE date >= DATE(NOW()) - INTERVAL 2 MONTH", function (err, result) {
             connection.release();
             if(err) callback(err);
             callback(null,result);
@@ -229,8 +229,8 @@ module.exports.getBooks = function (data, callback) {
     var queryTotal;
     switch (filter) {
         case "new":
-            quary = "SELECT b.* FROM books AS b WHERE b.date >= curdate() - 60 AND " + searchStatement + " LIMIT ? OFFSET ?";
-            queryTotal = "SELECT COUNT(b.book_id) AS amount FROM books AS b WHERE b.date >= curdate() - 60 AND " + searchStatement;
+            quary = "SELECT b.* FROM books AS b WHERE b.date >= DATE(NOW()) - INTERVAL 2 MONTH AND " + searchStatement + " LIMIT ? OFFSET ?";
+            queryTotal = "SELECT COUNT(b.book_id) AS amount FROM books AS b WHERE b.date >= DATE(NOW()) - INTERVAL 2 MONTH AND " + searchStatement;
             break;
         case "popular":
             quary = "SELECT b.*, count(e.event_id) as cnt FROM books AS b LEFT JOIN events AS e USING(book_id) WHERE " + searchStatement + " GROUP BY b.book_id ORDER BY cnt DESC LIMIT ? OFFSET ?";
@@ -304,8 +304,8 @@ module.exports.getBooksForAdmin = function (data, callback) {
     var queryTotal;
     switch (filter) {
         case "new":
-            quary = "SELECT b.*, ev.*, r.* FROM books AS b LEFT JOIN events AS ev ON b.event=ev.event_id LEFT JOIN readers AS r ON ev.reader_id = r.reader_id WHERE b.date >= curdate() - 60 AND " + searchStatement + " LIMIT ? OFFSET ?";
-            queryTotal = "SELECT COUNT(b.book_id) AS amount FROM books AS b WHERE b.date >= curdate() - 60 AND " + searchStatement;
+            quary = "SELECT b.*, ev.*, r.* FROM books AS b LEFT JOIN events AS ev ON b.event=ev.event_id LEFT JOIN readers AS r ON ev.reader_id = r.reader_id WHERE b.date >= DATE(NOW()) - INTERVAL 2 MONTH AND " + searchStatement + " LIMIT ? OFFSET ?";
+            queryTotal = "SELECT COUNT(b.book_id) AS amount FROM books AS b WHERE b.date >= DATE(NOW()) - INTERVAL 2 MONTH AND " + searchStatement;
             break;
         case "popular":
             quary = "SELECT b.*, ev.*, r.*, count(e.event_id) as cnt FROM books AS b LEFT JOIN events AS e USING(book_id) LEFT JOIN events AS ev ON b.event=ev.event_id LEFT JOIN readers AS r ON ev.reader_id = r.reader_id WHERE " + searchStatement + " GROUP BY b.book_id ORDER BY cnt DESC LIMIT ? OFFSET ?";
