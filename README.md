@@ -52,10 +52,10 @@ to make sure your old version doesn't collide with gulp-cli.__
 $ npm install --global gulp-cli
 ```
 
-#### 2. Enter the public directory and run the gulp install:
+#### 2. Enter the public directory and run the npm install:
 
 ```bash
-cd public && gulp install
+cd public && npm install
 ```
 #### 3. Install bower globally:
 
