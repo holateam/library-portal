@@ -8,7 +8,7 @@ sidebarItems.click(function(event) {
 
     var pathname = $(location).attr('pathname');
 
-    if ((pathname == '/admin') || (pathname == '/admin/')) {
+    if (pathname == '/admin') {
         event.preventDefault();
         doAjaxQuery('GET', '/admin/api/v1/books?filter=' + context.attr('data-filter'), null, function(res) {
             if (!res.success) {

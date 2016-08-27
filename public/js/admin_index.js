@@ -1,13 +1,16 @@
+function nullToString(string) {
+    return (((string == null) || (string == 0)) ? '-' : string);
+}
+
 function addBookListRow(book) {
     $('#pattern').clone().removeAttr('id').attr('book-id', book.id)
         .html('<td>' + book.title + '</td><td>' + book.author + '</td><td>' + nullToString(book.name) + '</td><td>' +
             nullToString(book.email) + '</td><td>' + nullToString(book.phone) + '</td><td>' + nullToString(book.term) +
             '</td><td>' + nullToString(book.pawn) + '</td><td>' + nullToString(book.status) + '</td>')
-        .css('display', 'table-row').appendTo('.table tbody');
-}
-
-function nullToString(string) {
-    return (((string == null) || (string == 0)) ? '-' : string);
+        .click(function () {
+            $(location).attr('href', 'admin/book/' + book.id);
+        })
+        .css('display', 'table-row').css('cursor', 'pointer').appendTo('.table tbody');
 }
 
 function addBooksList(books) {
