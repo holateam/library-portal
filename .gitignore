@@ -42,3 +42,9 @@ jspm_packages
 
 # Config files
 configDB.js
+
+# Frontend dev files
+public/libs
+public/fonts
+public/css
+public/js/libs.min.js
