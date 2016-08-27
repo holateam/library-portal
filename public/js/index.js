@@ -35,8 +35,10 @@ function addBooksItems(books) {
 }
 //add elements on scrolling
 
-if ($(location).attr('search')) {
-    $('.sidebar_item[data-filter=' + $(location).attr('search').substr(8) + ']').click();
+var search = $(location).attr('search');
+
+if (search) {
+    $('.sidebar_item[data-filter=' + search.substr(8) + ']').click();
 } else {
     $('.sidebar_item[data-filter=new]').click();
 }
