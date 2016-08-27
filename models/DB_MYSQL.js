@@ -14,7 +14,7 @@ module.exports.addBook = function (bookInfo,callback) {
     pool.getConnection(function(err, connection) {
         connection.query("INSERT INTO books (book_id, ISBN, title, author, description, year, pages, cover, status, event) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, NULL)", [bookInfo.isbn, bookInfo.title, bookInfo.author, bookInfo.description, bookInfo.year, bookInfo.pages, bookInfo.cover, bookInfo.status], function (err, result) {
             connection.release();
-            if(err) callback(err);
+            if (err) return callback(err);
             var data = {};
             data.id = result["insertId"];
             callback(null, data);
@@ -26,20 +26,15 @@ module.exports.getBook = function (book_id,callback) {
     pool.getConnection(function(err, connection) {
         connection.query("SELECT * FROM books WHERE book_id = ?", [book_id] , function (err, result) {
             connection.release();
-            if(err) callback(err);
-            var book = {
-                    "id": result[0].book_id,
-                    "isbn": result[0].isbn,
-                    "title": result[0].title,
-                    "author": result[0].author,
-                    "description": result[0].description,
-                    "year": result[0].year,
-                    "cover": result[0].cover,
-                    "pages": result[0].pages,
-                    "status": result[0].status,
-                    "busy": result[0].event  == null? false : true,
-                    "event": result[0].event
-            };
+            if (err) return callback(err);
+
+            var book = result[0];
+                book.id = book.book_id;
+                book.isbn = book.ISBN;
+
+            delete book.book_id;
+            delete book.ISBN;
+
             callback(null, book);
         });
     });
@@ -49,7 +44,7 @@ module.exports.deleteBookById = function (book_id,callback) {
     pool.getConnection(function(err, connection) {
         connection.query("DELETE FROM books WHERE book_id = ?", [book_id] , function (err, result) {
             connection.release();
-            if(err) callback(err);
+            if (err) return callback(err);
             var data={};
             data.affectedRows = result["affectedRows"];
             var res = result["affectedRows"]? true : false;
@@ -65,7 +60,7 @@ module.exports.deleteBookWithIdInList = function (ids_array,callback) {
         var querystring = "DELETE FROM books WHERE book_id IN (" + placeholders + ")";
         connection.query(querystring, ids_array, function (err, result) {
             connection.release();
-            if(err) callback(err);
+            if (err) return callback(err);
             var data={};
             data.affectedRows = result["affectedRows"];
             var res = result["affectedRows"]? true : false;
@@ -84,7 +79,7 @@ module.exports.updateBookById = function (book_id, changedFields, callback) {
     pool.getConnection(function(err, connection) {
         connection.query(query, function (err, result) {
             connection.release();
-            if(err) callback(err);
+            if (err) return callback(err);
             var data={};
             data.affectedRows = result["affectedRows"];
 //            var res = result["affectedRows"]? true : false;
@@ -96,11 +91,11 @@ module.exports.updateBookById = function (book_id, changedFields, callback) {
 module.exports.addToQueue = function (data,callback) {
     pool.getConnection(function(err, connection) {
         connection.query("SELECT * FROM queue WHERE book_id = ? AND email = ?", [data.book_id, data.email] , function (err, result) {
-            if(err) callback(err);
-            if(result == false){
+            if (err) return callback(err);
+            if (result == false) {
                 connection.query("INSERT INTO queue(book_id, email) VALUES (?,?)", [data.book_id, data.email] , function (err, result) {
                     connection.release();
-                    if(err) callback(err);
+                    if (err) return callback(err);
                     callback(null,true);
                 });
             }else{
@@ -115,18 +110,17 @@ module.exports.getQueueByBookId = function (book_id, callback) {
     pool.getConnection(function(err, connection) {
         connection.query("SELECT email FROM queue WHERE book_id = ?", [book_id] , function (err, result) {
             connection.release();
-            if(err) callback(err);
+            if (err) return callback(err);
             callback(null,result);
         });
     });
 };
 
 module.exports.createReader = function (readerInfo,callback) {
-    console.log(readerInfo);
     pool.getConnection(function(err, connection) {
         connection.query("INSERT INTO readers (reader_id, name, email, phone) VALUES (NULL, ?, ?, ?);", [readerInfo.name, readerInfo.email, readerInfo.phone] , function (err, result) {
             connection.release();
-            if(err) callback(err);
+            if (err) return callback(err);
             var data = {};
             data.reader_id = result["insertId"];
             callback(null, data);
@@ -137,7 +131,7 @@ module.exports.createReader = function (readerInfo,callback) {
 module.exports.giveBookById = function (book_id, data, callback) {
     pool.getConnection(function(err, connection) {
         connection.query("INSERT INTO events (event_id, book_id, reader_id, date, term, pawn) VALUES (NULL, ?, ?, ?, ?, ?);", [book_id, data.reader_id, data.date, data.term, data.pawn] , function (err, result) {
-            if(err) callback(err);
+            if (err) return callback(err);
             var res = result["insertId"];
             connection.query("UPDATE books SET event = ? WHERE book_id = ?",  [res, book_id], function (err,result){
                 connection.release();
@@ -174,8 +168,6 @@ module.exports.takeBookById = function (book_id, callback) {
 
 module.exports.getPortionBooks = function (data, callback) {
     pool.getConnection(function(err, connection) {
-        console.log("data.limit: " + data.limit);
-        console.log("data.offset: " + data.offset);
         connection.query("SELECT * FROM books LIMIT ? OFFSET ?", [data.limit, data.offset] , function (err, result) {
             connection.release();
             if(err) callback(err);
@@ -205,7 +197,7 @@ module.exports.getNew = function (callback) {
 };
 
 
-module.exports.getBooksAlt = function (data, callback) {
+module.exports.getBooks = function (data, callback) {
     var maxlimit = 1000000000; //18446744073709551615
     var limit = maxlimit;
 
@@ -229,12 +221,9 @@ module.exports.getBooksAlt = function (data, callback) {
 
     if (data.search) {
         const escSearch = escapeStringRegexp(data.search);
-//        var escSearch = new RegExp(escapedString);
-        console.log("escSearch: " + escSearch);
         search ="'" + escSearch.replace(/ /g,"|") + "'"; // or searchString.split(' ').join('|');
     };
     var searchStatement = search == "" ?  '1=1' : 'b.title REGEXP ' + search + ' OR b.author REGEXP ' + search + ' OR b.description REGEXP ' + search + ' OR b.ISBN REGEXP ' + search;
-    console.log("searchStatement: " + searchStatement);
 
     var quary;
     var queryTotal;
@@ -254,39 +243,104 @@ module.exports.getBooksAlt = function (data, callback) {
     }
 
     pool.getConnection(function(err, connection) {
-        console.log(limit);
-        console.log("quary: " + quary);
-        console.log("queryTotal: " + queryTotal);
 
         connection.query(quary, [limit, offset], function (err, result) {
-            if(err) callback(err);
+            if (err) return callback(err);
             connection.query(queryTotal, function (err, total) {
                 connection.release();
-                if(err) callback(err);
-                //var res = JSON.stringify(result);
-                var books=[];
-                result.forEach(function(item, i, result) {
-                    books.push(
-                        {
-                            "id": result[i].book_id,
-                            "isbn": result[i].ISBN,
-                            "title": result[i].title,
-                            "author": result[i].author,
-                            "description": result[i].description,
-                            "year": result[i].year,
-                            "cover": result[i].cover,
-                            "pages": result[i].pages,
-                            "status": result[i].status,
-                            "busy": result[i].event  == null? false : true,
-                            "event": result[i].event
-                        }
-                    );
+                if (err) return callback(err);
+
+                var books = result;
+                books.forEach(function(item, i, books) {
+
+                    item.id = item.book_id;
+                    item.isbn = item.ISBN;
+
+                    delete item.book_id;
+                    delete item.ISBN;
                 });
-                var data = {};
-                data.filter = filter;
-                data.books = books;
-                //data.total = total[0]['amount'];
-                data.total = total[0];
+
+                var data = {
+                    filter: filter,
+                    books: books,
+                    total: total[0]
+                };
+
+                callback(null, data);
+            });
+        });
+    });
+};
+
+module.exports.getBooksForAdmin = function (data, callback) {
+    var maxlimit = 1000000000; //18446744073709551615
+    var limit = maxlimit;
+
+    var offset = 0;
+    var minoffset = 0;
+
+    var filter = "all";
+    var search = "";
+
+    if (data.filter) {
+        filter = data.filter;
+    };
+
+    if (data.limit) {
+        limit = parseInt(data.limit);
+    };
+
+    if (data.offset) {
+        offset = parseInt(data.offset);
+    };
+
+    if (data.search) {
+        const escSearch = escapeStringRegexp(data.search);
+        search ="'" + escSearch.replace(/ /g,"|") + "'"; // or searchString.split(' ').join('|');
+    };
+    var searchStatement = search == "" ?  '1=1' : 'b.title REGEXP ' + search + ' OR b.author REGEXP ' + search + ' OR b.description REGEXP ' + search + ' OR b.ISBN REGEXP ' + search;
+
+    var quary;
+    var queryTotal;
+    switch (filter) {
+        case "new":
+            quary = "SELECT b.*, ev.*, r.* FROM books AS b LEFT JOIN events AS ev ON b.event=ev.event_id LEFT JOIN readers AS r ON ev.reader_id = r.reader_id WHERE b.date >= curdate() - 60 AND " + searchStatement + " LIMIT ? OFFSET ?";
+            queryTotal = "SELECT COUNT(b.book_id) AS amount FROM books AS b WHERE b.date >= curdate() - 60 AND " + searchStatement;
+            break;
+        case "popular":
+            quary = "SELECT b.*, ev.*, r.*, count(e.event_id) as cnt FROM books AS b LEFT JOIN events AS e USING(book_id) LEFT JOIN events AS ev ON b.event=ev.event_id LEFT JOIN readers AS r ON ev.reader_id = r.reader_id WHERE " + searchStatement + " GROUP BY b.book_id ORDER BY cnt DESC LIMIT ? OFFSET ?";
+            queryTotal = "SELECT COUNT(b.book_id) AS amount, b.*, count(e.event_id) as cnt FROM books AS b LEFT JOIN events AS e USING(book_id) WHERE " + searchStatement + " GROUP BY b.book_id ORDER BY cnt DESC;";
+            break;
+        default:
+            quary = "SELECT b.*, ev.*, r.* FROM books AS b LEFT JOIN events AS ev ON b.event=ev.event_id LEFT JOIN readers AS r ON ev.reader_id = r.reader_id WHERE " + searchStatement + " LIMIT ? OFFSET ?";
+            queryTotal = "SELECT COUNT(b.book_id) AS amount FROM books AS b WHERE " + searchStatement;
+            break;
+    }
+
+    pool.getConnection(function(err, connection) {
+
+        connection.query(quary, [limit, offset], function (err, result) {
+            if (err) return callback(err);
+            connection.query(queryTotal, function (err, total) {
+                connection.release();
+                if (err) return callback(err);
+
+                var books = result;
+                books.forEach(function(item, i, books) {
+
+                    item.id = item.book_id;
+                    item.isbn = item.ISBN;
+
+                    delete item.book_id;
+                    delete item.ISBN;
+                });
+
+                var data = {
+                    filter: filter,
+                    books: books,
+                    total: total[0]
+                };
+
                 callback(null, data);
             });
         });
@@ -297,7 +351,6 @@ module.exports.find = function (word, callback) {
     pool.getConnection(function(err, connection) {
         connection.query("SELECT * FROM books WHERE title LIKE '%"+ word +"%' OR author LIKE '%"+ word +"%' OR description LIKE '%"+ word +"%' OR ISBN LIKE '%"+ word +"%'", function (err, result) {
             connection.release();
-            console.log(result);
             if(err) callback(err);
             callback(null,result);
         });
