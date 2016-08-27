@@ -311,6 +311,18 @@ module.exports.getBooksForAdmin = function (data, callback) {
             quary = "SELECT b.*, ev.*, r.*, count(e.event_id) as cnt FROM books AS b LEFT JOIN events AS e USING(book_id) LEFT JOIN events AS ev ON b.event=ev.event_id LEFT JOIN readers AS r ON ev.reader_id = r.reader_id WHERE " + searchStatement + " GROUP BY b.book_id ORDER BY cnt DESC LIMIT ? OFFSET ?";
             queryTotal = "SELECT COUNT(b.book_id) AS amount, b.*, count(e.event_id) as cnt FROM books AS b LEFT JOIN events AS e USING(book_id) WHERE " + searchStatement + " GROUP BY b.book_id ORDER BY cnt DESC;";
             break;
+        case "free":
+            quary = "SELECT b.*, ev.*, r.* FROM books AS b LEFT JOIN events AS ev ON b.event=ev.event_id LEFT JOIN readers AS r ON ev.reader_id = r.reader_id WHERE b.event IS NULL AND " + searchStatement + " LIMIT ? OFFSET ?";
+            queryTotal = "SELECT COUNT(b.book_id) AS amount FROM books AS b WHERE b.event IS NULL AND " + searchStatement;
+            break;
+        case "onhand":
+            quary = "SELECT b.*, ev.*, r.* FROM books AS b LEFT JOIN events AS ev ON b.event=ev.event_id LEFT JOIN readers AS r ON ev.reader_id = r.reader_id WHERE b.event IS NOT NULL AND " + searchStatement + " LIMIT ? OFFSET ?";
+            queryTotal = "SELECT COUNT(b.book_id) AS amount FROM books AS b WHERE b.event IS NOT NULL AND " + searchStatement;
+            break;
+        case "expired":
+            quary = "SELECT b.*, ev.*, r.* FROM books AS b LEFT JOIN events AS ev ON b.event=ev.event_id LEFT JOIN readers AS r ON ev.reader_id = r.reader_id WHERE DATE(NOW()) > ev.date + INTERVAL ev.term MONTH AND " + searchStatement + " LIMIT ? OFFSET ?";
+            queryTotal = "SELECT COUNT(b.book_id) AS amount FROM books AS b LEFT JOIN events AS ev ON b.event=ev.event_id WHERE DATE(NOW()) > ev.date + INTERVAL ev.term MONTH AND " + searchStatement;
+            break;
         default:
             quary = "SELECT b.*, ev.*, r.* FROM books AS b LEFT JOIN events AS ev ON b.event=ev.event_id LEFT JOIN readers AS r ON ev.reader_id = r.reader_id WHERE " + searchStatement + " LIMIT ? OFFSET ?";
             queryTotal = "SELECT COUNT(b.book_id) AS amount FROM books AS b WHERE " + searchStatement;
