@@ -15,6 +15,10 @@ adminRouter.get('/addbook', auth, function(req, res, next) {
     res.render('admin_add_book', { title: 'Add book' });
 });
 
+adminRouter.get('/book/:id', auth, function(req, res, next) {
+    res.render('admin_book', { title: 'book' });
+});
+
 adminRouter.route('/api/v1/books')
 .get(function(req, res, next) {
     var data = {};
