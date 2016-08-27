@@ -38,7 +38,8 @@ function addBooksItems(books) {
 var search = $(location).attr('search');
 
 if (search) {
-    $('.sidebar_item[data-filter=' + search.substr(8) + ']').click();
+    var filterPosition = search.indexOf('=') + 1;
+    $('.sidebar_item[data-filter=' + search.substr(filterPosition) + ']').click();
 } else {
     $('.sidebar_item[data-filter=new]').click();
 }
