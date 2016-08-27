@@ -321,8 +321,8 @@ module.exports.getBooksForAdmin = function (data, callback) {
             queryTotal = "SELECT COUNT(b.book_id) AS amount FROM books AS b WHERE b.event IS NOT NULL AND " + searchStatement;
             break;
         case "expired":
-            quary = "SELECT b.*, ev.*, r.* FROM books AS b LEFT JOIN events AS ev ON b.event=ev.event_id LEFT JOIN readers AS r ON ev.reader_id = r.reader_id WHERE DATE(NOW()) > ev.date + INTERVAL ev.term MONTH AND " + searchStatement + " LIMIT ? OFFSET ?";
-            queryTotal = "SELECT COUNT(b.book_id) AS amount FROM books AS b LEFT JOIN events AS ev ON b.event=ev.event_id WHERE DATE(NOW()) > ev.date + INTERVAL ev.term MONTH AND " + searchStatement;
+            quary = "SELECT b.*, ev.*, r.* FROM books AS b LEFT JOIN events AS ev ON b.event=ev.event_id LEFT JOIN readers AS r ON ev.reader_id = r.reader_id WHERE DATE(NOW()) > ev.date + INTERVAL ev.term DAY AND " + searchStatement + " LIMIT ? OFFSET ?";
+            queryTotal = "SELECT COUNT(b.book_id) AS amount FROM books AS b LEFT JOIN events AS ev ON b.event=ev.event_id WHERE DATE(NOW()) > ev.date + INTERVAL ev.term DAY AND " + searchStatement;
             break;
         default:
             quary = "SELECT b.*, ev.*, r.* FROM books AS b LEFT JOIN events AS ev ON b.event=ev.event_id LEFT JOIN readers AS r ON ev.reader_id = r.reader_id WHERE " + searchStatement + " LIMIT ? OFFSET ?";
