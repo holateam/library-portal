@@ -111,16 +111,6 @@ module.exports.addToQueue = function (data,callback) {
     });
 };
 
-module.exports.getQueue = function (book,callback) {
-    pool.getConnection(function(err, connection) {
-        connection.query("SELECT email FROM queue WHERE book_id = ?", [book.book_id] , function (err, result) {
-            connection.release();
-            if(err) callback(err);
-            callback(null,result);
-        });
-    });
-};
-
 module.exports.getQueueByBookId = function (book_id, callback) {
     pool.getConnection(function(err, connection) {
         connection.query("SELECT email FROM queue WHERE book_id = ?", [book_id] , function (err, result) {
@@ -140,19 +130,6 @@ module.exports.createReader = function (readerInfo,callback) {
             var data = {};
             data.reader_id = result["insertId"];
             callback(null, data);
-        });
-    });
-};
-
-module.exports.giveBook = function (data,callback) {
-    pool.getConnection(function(err, connection) {
-        connection.query("INSERT INTO events (event_id, book_id, reader_id, date, term, pawn) VALUES (NULL, ?, ?, ?, ?, ?);", [data.book_id, data.reader_id, data.date, data.term, data.pawn] , function (err, result) {
-            if(err) callback(err);
-            var res = result["insertId"];
-            connection.query("UPDATE books SET event = ? WHERE book_id = ?",  [res, data.book_id], function (err,result){
-                connection.release();
-                callback(null,res);
-            });
         });
     });
 };
@@ -180,17 +157,6 @@ module.exports.getEventById = function (event_id, callback) {
             var data = {};
             data.event = result[0];
             callback(null, data);
-        });
-    });
-};
-
-module.exports.takeBook = function (book,callback) {
-    pool.getConnection(function(err, connection) {
-        connection.query("UPDATE books SET event = ? WHERE book_id = ?", [null, book.book_id] , function (err, result) {
-            connection.release();
-            if(err) callback(err);
-            var res = result["affectedRows"]? true : false;
-            callback(null,res);
         });
     });
 };
