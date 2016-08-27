@@ -3,7 +3,6 @@ var adminRouter = express.Router();
 var basicAuth = require('basic-auth');
 
 var auth = require('../authenticate.js');
-
 var dbLayer = require('../models/DB_MYSQL.js');
 
 /* GET adminka. */

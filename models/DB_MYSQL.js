@@ -1,4 +1,5 @@
 var mysql = require('mysql');
+
 const escapeStringRegexp = require('escape-string-regexp');
 
 var configDB = require('../configDB.js');
