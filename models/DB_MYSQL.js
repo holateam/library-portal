@@ -26,12 +26,11 @@ module.exports.addBook = function (bookInfo,callback) {
 
 module.exports.getBook = function (book_id,callback) {
     pool.getConnection(function(err, connection) {
-        connection.query("SELECT b.*, ev.*, r.* FROM books AS b LEFT JOIN events AS ev ON b.event=ev.event_id LEFT JOIN readers AS r ON ev.reader_id = r.reader_id WHERE b.book_id = ?", [book_id] , function (err, result) {
+        connection.query("SELECT b.book_id as id, b.*, ev.*, r.* FROM books AS b LEFT JOIN events AS ev ON b.event=ev.event_id LEFT JOIN readers AS r ON ev.reader_id = r.reader_id WHERE b.book_id = ?", [book_id] , function (err, result) {
             connection.release();
             if (err) return callback(err);
 
             var book = result[0];
-                book.id = book.book_id;
                 book.isbn = book.ISBN;
 
             delete book.book_id;
