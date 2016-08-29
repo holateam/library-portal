@@ -1,23 +1,23 @@
-function fillBookInfo(book) {
-    $('#bookID').attr('book-id', book.id);
-    $('#bookImg img').attr('src', '/img/books/' + book.id + '.jpg');
-    $('#titleBook').html(book.title);
-    $('#author').html(book.author);
-    $('#year').html(book.year);
-    $('#pages').html(book.pages);
-    $('#isbn').html(book.isbn);
-    $('#bookDescriptionText').html(book.description);
-    $('#bookID').attr('busy', book.busy);
-
-    var nameClassIsBook = (book.busy) ? '.busyBook' : '.freeBook';
-    $(nameClassIsBook).css('display', 'block');
-}
+// function fillBookInfo(book) {
+//     $('#bookID').attr('book-id', book.id);
+//     $('#bookImg img').attr('src', '/img/books/' + book.id + '.jpg');
+//     $('#titleBook').html(book.title);
+//     $('#author').html(book.author);
+//     $('#year').html(book.year);
+//     $('#pages').html(book.pages);
+//     $('#isbn').html(book.isbn);
+//     $('#bookDescriptionText').html(book.description);
+//     $('#bookID').attr('busy', book.busy);
+//
+//     var nameClassIsBook = (book.busy) ? '.busyBook' : '.freeBook';
+//     $(nameClassIsBook).css('display', 'block');
+// }
 
 doAjaxQuery('GET', '/api/v1/books/' + $(location).attr('pathname').substr(6), null, function(res) {
     if (!res.success) {
         alert(res.msg); // to replace the normal popup
     }
-    fillBookInfo(res.data);
+    view.fillBookInfo(res.data);
 });
 
 /* --------------------Show the result, for sending the -----------------------
