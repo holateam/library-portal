@@ -52,6 +52,7 @@ var view = {
         return (((string == null) || (string == 0)) ? '-' : string);
     },
     addBookListRow: function(book) {
+        console.log(book);
         $('#pattern').clone().removeAttr('id').attr('book-id', book.id)
             .html('<td>' + book.title + '</td><td>' + book.author + '</td><td>' + view.nullToDash(book.name) + '</td><td>' +
                 view.nullToDash(book.email) + '</td><td>' + view.nullToDash(book.phone) + '</td><td>' + view.nullToDash(book.term) +
