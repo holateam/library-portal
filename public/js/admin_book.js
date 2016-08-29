@@ -8,9 +8,9 @@ var fillActionBook = function(data){
   $('.emailOfDebtor').val(data.email);
   $('.dateOfDebtor').val(data.date);
   $('.pawnOfDebtor').val(data.pawn);
-  var obj = (data.event==null)?{name:'Give the book',data: 'give'}: {name:'Pick up the book',data: 'pick'};
+  var obj = (data.event==null)?{name:'Give the book',data_busy: false }: {name:'Pick up the book',data_busy: true};
 
-  $('.btnBookAction').text(obj.name).attr('data',obj.data);
+  $('.btnBookAction').text(obj.name).attr('data',obj.data_busy);
 
 };
 
@@ -28,5 +28,15 @@ doAjaxQuery('GET', '/admin/api/v1/books/' +pathNameUrl[3] , null, function(res) 
 $('.btnBookAction').click(function(event) {
   var status = $('.btnBookAction').attr('data');
   console.log(status);
-  // if()
+  var obj ={
+    id: $('.nameOfDebtor').val(),
+    reader: {
+      name: $('.nameOfDebtor').val(),
+    }
+  };
+  if(status){
+    console.log("Занята");
+  }else{
+    console.log('свободна');
+  }
 });
