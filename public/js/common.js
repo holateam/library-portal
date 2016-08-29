@@ -44,6 +44,7 @@ var view = {
       }else {
         $('#content .row .book_list_row:not(#pattern)').remove();
       }
+      $('#zero_search').remove();
       var textZeroSearch = '<div id="zero_search"><div class="col-md-2 col-sm-2 col-lg-2"><img src="../img/zero_search.jpg"></div><div class="col-md-10 col-sm-10 col-lg-10"><h3>Find "'+searchText+'" was harder than we thought</h3> <p>Please ensure that the request is correct or reframe it.</p></div></div></div>';
       $('#content .row').append(textZeroSearch);
     },

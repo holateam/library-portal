@@ -1,32 +1,93 @@
 extends admin_layout
 
 block content
+  div.row#bookID
+      div.col-md-3#bookImg
+          img(src='')
+      div.col-md-5.bookInfo
+          h4#titleBook
+          div
+              span.properties author:
+              span#author 
+          div
+              span.properties year:
+              span#year
+          div
+              span.properties pages:
+              span#pages
+          div
+              span.properties ISBN:
+              span#isbn
+      div.orderBlock.col-md-4
+          div.actionBook
+            h3 The condition of the book
+            br
+            p Hello to you not so lucky, the book's busy now but you can take her when she's free.
+          div.response
+            h3 Congratulations
+            br
+            p Instructions on how to get the book sent to your email:
+              span.youEmail
+          .input-group.form-queue
+            .input-group-addon
+              i.fa.fa-user.fa-1x(aria-hidden="true")
+            input.nameOfDebtor.form-control(type='text', placeholder='name' name='name')
+          .input-group.form-queue
+            .input-group-addon
+              i.fa.fa-mobile.fa-1x(aria-hidden="true")
+            input.phoneOfDebtor.form-control(type='text', placeholder='phone' name='phone')
+          .input-group.form-queue
+            .input-group-addon
+              i.fa.fa-at.fa-1x(aria-hidden="true")
+            input.nameOfDebtor.form-control(type='text', placeholder='email' name='email')
+            span.glyphicon.glyphicon-ok.form-control-feedback(aria-hidden='true')
+            span.glyphicon.glyphicon-remove.form-control-feedback(aria-hidden='true')
+          .input-group.form-queue.dateD-group
+            .input-group-addon
+              i.fa.fa-calendar-check-o.fa-1x(aria-hidden="true")
+            input.dateOfDebtor.form-control(type='text', placeholder='days' name='date')
+          .input-group.form-queue.depositD-group
+            .input-group-addon
+              i.fa.fa-money.fa-1x(aria-hidden="true")
+            input.dateOfDebtor.form-control(type='text', placeholder='deposit $' name='date')
+          .input-group.form-queue
+          div.updateBookAction
+            span update action book
+            input#inlineCheckbox1(type='checkbox', value='option1')
 
-  div.container
-  
-    div.row
-      div.col-md-5
-        
-        div.row  
-          div.col-md-6
-            img.img-rounded(src='/img/books/1.jpg', alt='One book', width='100', height='100')
-          div.col-md-6
-            dl 
-              dt Book Title
-                dd Author
-                dd Pages
-                dd Id
-                dd Year
-                dd Busy
-          div.col-md-12  
-            p Description Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.                    
-          div.col-md-6
-            a(href(#)) Edit book        
-      
-      div.col-md-4
-        input.form-control(type='text', placeholder='Full Name')
-        input.form-control(type='text', placeholder='Phone number')  
-        input.form-control(type='text', placeholder='Email')
-        input.form-control(type='text', placeholder='Space of time days')
-        button.btn.btn-success(type='button') Give the book!
-        button.btn.btn-warning(type='button') Take the book!
+
+          br
+          button.btnBookID.btn.btn-success(type='button') Give the book!
+          
+      div.bookDescription
+          div.col-md-12
+              h4 О книге
+              hr
+              
+              p#bookDescriptionText
+
+    //- div#content.row
+    //-   div.col-md-5
+    //-     div.row  
+    //-       div.col-md-6
+    //-         img.img-rounded(src='/img/books/1.jpg', alt='One book', width='100', height='100')
+    //-       div.col-md-6
+    //-         dl 
+    //-           dt Book Title
+    //-             dd Author
+    //-             dd Pages
+    //-             dd Id
+    //-             dd Year
+    //-             dd Busy
+    //-       div.col-md-12  
+    //-         p Description Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.                    
+    //-       div.col-md-6
+    //-         a(href(#)) Edit book        
+    //-   
+    //-   div.col-md-4
+    //-     input.form-control(type='text', placeholder='Full Name')
+    //-     input.form-control(type='text', placeholder='Phone number')  
+    //-     input.form-control(type='text', placeholder='Email')
+    //-     input.form-control(type='text', placeholder='Space of time days')
+    //-     button.btn.btn-success(type='button') Give the book!
+    //-     button.btn.btn-warning(type='button') Take the book!
