@@ -2,7 +2,7 @@ var mysql = require('mysql');
 
 const escapeStringRegexp = require('escape-string-regexp');
 
-var configDB = require('../configDB.js');
+var configDB = require('../configDB.json');
 
 var pool = mysql.createPool({
     host     : 'localhost',
@@ -25,7 +25,7 @@ module.exports.addBook = function (bookInfo,callback) {
 
 module.exports.getBook = function (book_id,callback) {
     pool.getConnection(function(err, connection) {
-        connection.query("SELECT * FROM books WHERE book_id = ?", [book_id] , function (err, result) {
+        connection.query("SELECT b.*, ev.*, r.* FROM books AS b LEFT JOIN events AS ev ON b.event=ev.event_id LEFT JOIN readers AS r ON ev.reader_id = r.reader_id WHERE b.book_id = ?", [book_id] , function (err, result) {
             connection.release();
             if (err) return callback(err);
 
