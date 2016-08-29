@@ -12,8 +12,10 @@
 //     var nameClassIsBook = (book.busy) ? '.busyBook' : '.freeBook';
 //     $(nameClassIsBook).css('display', 'block');
 // }
+var pathname = $(location).attr('pathname');
+var bookIdPosition = pathname.lastIndexOf('/') + 1;
 
-doAjaxQuery('GET', '/api/v1/books/' + $(location).attr('pathname').substr(6), null, function(res) {
+doAjaxQuery('GET', '/api/v1/books/' + pathname.substr(bookIdPosition), null, function(res) {
     if (!res.success) {
         alert(res.msg); // to replace the normal popup
     }

@@ -21,6 +21,10 @@ adminRouter.get('/addbook', verify.auth, function(req, res, next) {
     res.render('admin_add_edit_book', { title: 'Add book' });
 });
 
+adminRouter.get('/editbook/:id', verify.auth, function(req, res, next) {
+    res.render('admin_add_edit_book', { title: 'Add book' });
+});
+
 adminRouter.get('/add_book', verify.auth, function(req, res, next) {
     res.render('admin_addbook', { title: 'Add book' });
 });
