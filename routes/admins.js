@@ -33,6 +33,9 @@ adminRouter.get('/book/:id', verify.auth, function(req, res, next) {
     res.render('admin_book', { title: 'book' });
 });
 
+adminRouter.get('/book/update/:id', verify.auth, function(req, res, next) {
+    res.render('admin_add_edit_book', { title: 'Update book' });
+});
 
 adminRouter.get('/cover', function(req, res, next) {
     res.render('upload_cover',  { title: 'Upload form' });
