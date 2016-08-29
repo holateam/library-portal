@@ -222,9 +222,9 @@ module.exports.getBooks = function (data, callback) {
 
     if (data.search) {
         const escSearch = escapeStringRegexp(data.search);
-        search ="'" + escSearch.replace(/ /g,"|") + "'"; // or searchString.split(' ').join('|');
+        search ="'" + escSearch.replace(/ /g,"|").toLowerCase() + "'"; // or searchString.split(' ').join('|');
     };
-    var searchStatement = search == "" ?  '1=1' : 'b.title REGEXP ' + search + ' OR b.author REGEXP ' + search + ' OR b.description REGEXP ' + search + ' OR b.ISBN REGEXP ' + search;
+    var searchStatement = search == "" ?  '1=1' : 'LOWER(b.title) REGEXP ' + search + ' OR LOWER(b.author) REGEXP ' + search + ' OR LOWER(b.description) REGEXP ' + search + ' OR LOWER(b.ISBN) REGEXP ' + search;
 
     var query;
     var queryTotal;
