@@ -15,7 +15,7 @@ sidebarItems.click(function(event) {
                 alert(res.msg);
                 return;
             }
-            addBooksList(res.data.books);
+            view.addBooksList(res.data.books);
         });
     }
 });
