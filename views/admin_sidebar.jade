@@ -9,6 +9,7 @@ div#sidebar.col-xs-2.col-sm-2.col-md-2.col-lg-2
                 a(href="/admin?filter=onhand") On hand
             li.sidebar_item(data-filter = 'free')
                 a(href="/admin?filter=free") Free
-        button.btn.btn-success(type='button') Add book 
+        a(href="/admin/addbook")
+            button.btn.btn-success(type='button') Add book
 
 script(src='/js/admin_sidebar.js' defer)
