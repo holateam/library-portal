@@ -5,7 +5,7 @@ $('#admin_add_book_img_upload').change(function(event) {
 });
 
 
-$('#save_new_book').click(function() {
+$('#admin_add_book_save').click(function() {
     var ii = '#admin_add_book_input_';
     var newBook = {
         title: $(ii + 'title').val(),
@@ -14,10 +14,11 @@ $('#save_new_book').click(function() {
         year:$(ii + 'year').val(),
         cover:$('#admin_add_book_img').src,
         pages:$(ii + 'title').val(),
+        isbn: $(ii + 'isbn').val(),
         date: $.now()
     };
 
-    $.post('//ff', newBook, function() {
+    $.post('api/v1/books/add', newBook, function() {
         console.log('the book was successfully added');
     });
 });
