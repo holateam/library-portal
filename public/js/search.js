@@ -7,7 +7,11 @@ var requestBooksSearch = function() {
             if (!res.success) {
                 alert(res.msg); // to replace the normal popup
             } else {
-                view.addBooksItems(res.data.books);
+                if(res.data.total.amount >0){
+                  view.addBooksItems(res.data.books);
+                }else{
+                  view.showZeroSearch(text);
+                }
             }
         });
 };
