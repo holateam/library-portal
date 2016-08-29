@@ -24,7 +24,7 @@ adminRouter.get('/', verify.auth, function(req, res, next) {
 });
 
 adminRouter.get('/addbook', verify.auth, function(req, res, next) {
-    res.render('admin_add_book', { title: 'Add book' });
+    res.render('admin_add_edit_book', { title: 'Add book' });
 });
 
 adminRouter.get('/add_book', verify.auth, function(req, res, next) {
