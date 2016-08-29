@@ -6,17 +6,9 @@ var verify = require('../verify.js');
 var dbLayer = require('../models/DB_MYSQL.js');
 
 var multer  =   require('multer');
-var mime = require('mime-types')
+var mime = require('mime-types');
 
-var storage =   multer.diskStorage({
-  destination: function (req, file, callback) {
-    callback(null, './public/img/books');
-  },
-  filename: function (req, file, callback) {
-    callback(null, req.body.new_filename + '.' + mime.extension(file.mimetype));
-  }
-});
-var upload = multer({ storage : storage}).single('bookCover');
+var upload = multer({ dest: './public/img/books' });
 
 /* GET adminka. */
 adminRouter.get('/', verify.auth, function(req, res, next) {
@@ -72,8 +64,8 @@ adminRouter.route('/api/v1/books/:book_id')
 ///admin/api/v1/books/add
 adminRouter.route('/api/v1/books/add')
 .post(verify.auth, function(req, res, next) {
-    console.log('req.body', req.body);
-    dbLayer.addBook(req.body, function(err, resp) {
+
+    dbLayer.addBook(req.body.book, function(err, resp) {
         if (err) {
             res.json({ success: false, msg: err });
         } else {
