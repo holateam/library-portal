@@ -47,21 +47,21 @@ var view = {
       var textZeroSearch = '<div id="zero_search"><div class="col-md-2 col-sm-2 col-lg-2"><img src="../img/zero_search.jpg"></div><div class="col-md-10 col-sm-10 col-lg-10"><h3>Find "'+searchText+'" was harder than we thought</h3> <p>Please ensure that the request is correct or reframe it.</p></div></div></div>';
       $('#content .row').append(textZeroSearch);
     },
-    nullToString: function(string) {
+    nullToDash: function(string) {
         return (((string == null) || (string == 0)) ? '-' : string);
     },
     addBookListRow: function(book) {
         $('#pattern').clone().removeAttr('id').attr('book-id', book.id)
-            .html('<td>' + book.title + '</td><td>' + book.author + '</td><td>' + view.nullToString(book.name) + '</td><td>' +
-                view.nullToString(book.email) + '</td><td>' + view.nullToString(book.phone) + '</td><td>' + view.nullToString(book.term) +
-                '</td><td>' + view.nullToString(book.pawn) + '</td><td>' + view.nullToString(book.status) + '</td>')
+            .html('<td>' + book.title + '</td><td>' + book.author + '</td><td>' + view.nullToDash(book.name) + '</td><td>' +
+                view.nullToDash(book.email) + '</td><td>' + view.nullToDash(book.phone) + '</td><td>' + view.nullToDash(book.term) +
+                '</td><td>' + view.nullToDash(book.pawn) + '</td>')
             .click(function () {
                 $(location).attr('href', 'admin/book/' + book.id);
             })
             .css('display', 'table-row').css('cursor', 'pointer').appendTo('.table tbody');
     },
     addBooksList: function(books) {
-        $('#content .row .book_list_row:not(#pattern)').remove();
+        $('.book_list_row:not(#pattern)').remove();
         $('#zero_search').remove();
 
         for (var i in books) {
