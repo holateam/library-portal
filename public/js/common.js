@@ -68,6 +68,20 @@ var view = {
         for (var i in books) {
             view.addBookListRow(books[i]);
         }
+    },
+    fillBookInfo: function(book) {
+        $('#bookID').attr('book-id', book.id);
+        $('#bookImg img').attr('src', '/img/books/' + book.id + '.jpg');
+        $('#titleBook').html(book.title);
+        $('#author').html(book.author);
+        $('#year').html(book.year);
+        $('#pages').html(book.pages);
+        $('#isbn').html(book.isbn);
+        $('#bookDescriptionText').html(book.description);
+        $('#bookID').attr('busy', book.busy);
+
+        var nameClassIsBook = (book.busy) ? '.busyBook' : '.freeBook';
+        $(nameClassIsBook).css('display', 'block');
     }
 
 
