@@ -74,6 +74,34 @@ adminRouter.route('/api/v1/books/add')
     });
 });
 
+adminRouter.route('/api/v1/books/addAlt')
+.post(verify.auth, upload.single('bookCover'), function(req, res, next) {
+    console.log('req.body', req.body);
+    var book = {
+        title: req.body.title,
+        author: req.body.author,
+        description: req.body.description,
+        year: parseInt(req.body.year),
+        pages: parseInt(req.body.pages),
+        isbn : req.body.isbn
+    };
+    console.log(book);
+    dbLayer.addBook(book, function(err, resp) {
+        if (err) {
+            res.json({ success: false, msg: err });
+        } else {
+            var storage =   multer.diskStorage({
+              destination: function (req, file, callback) {
+                callback(null, './public/img/books');
+              },
+              filename: function (req, file, callback) {
+                callback(null, resp.data.id + '.' + mime.extension(file.mimetype));
+              }
+            });
+            res.json({ success: true, data: resp});
+        }
+    });
+});
 ///admin/api/v1/books/remove:book_id
 adminRouter.route('/api/v1/books/remove/:book_id')
 .get(verify.auth, function(req, res, next) {
