@@ -1,12 +1,12 @@
 function nullToString(string) {
-    return (((string == null) || (string == 0)) ? '-' : string);
+    return ((string == null) ? '-' : string);
 }
 
 function addBookListRow(book) {
     $('#pattern').clone().removeAttr('id').attr('book-id', book.id)
         .html('<td>' + book.title + '</td><td>' + book.author + '</td><td>' + nullToString(book.name) + '</td><td>' +
             nullToString(book.email) + '</td><td>' + nullToString(book.phone) + '</td><td>' + nullToString(book.term) +
-            '</td><td>' + nullToString(book.pawn) + '</td><td>' + nullToString(book.status) + '</td>')
+            '</td><td>' + nullToString(book.pawn) + '</td><td>')
         .click(function () {
             $(location).attr('href', 'admin/book/' + book.id);
         })
