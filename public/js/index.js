@@ -1,11 +1,11 @@
-function addBookItem(book) {
-    $('#pattern').clone().removeAttr('id').attr('book-id', book.id)
-        .find('img').attr('src', '/img/books/' + book.id + '.jpg').end()
-        .find('.title').attr('data-book-title', book.title).html(book.title).end()
-        .find('.author').attr('data-book-author', book.author).html(book.author).end()
-        .find('a').attr('href', '/book/' + book.id).end()
-        .css('display', 'block').appendTo('#content .row');
-}
+// function addBookItem(book) {
+//     $('#pattern').clone().removeAttr('id').attr('book-id', book.id)
+//         .find('img').attr('src', '/img/books/' + book.id + '.jpg').end()
+//         .find('.title').attr('data-book-title', book.title).html(book.title).end()
+//         .find('.author').attr('data-book-author', book.author).html(book.author).end()
+//         .find('a').attr('href', '/book/' + book.id).end()
+//         .css('display', 'block').appendTo('#content .row');
+// }
 
 function addBookItemOnScroll(book) {
     $('#pattern').clone().removeAttr('id').attr('book-id', book.id)
@@ -27,12 +27,12 @@ function addBooksItemsOnScroll(books) {
     });
 }
 
-function addBooksItems(books) {
-    $('.book_item:not(#pattern)').remove();
-    for (var i in books) {
-        addBookItem(books[i]);
-    }
-}
+// function addBooksItems(books) {
+//     $('.book_item:not(#pattern)').remove();
+//     for (var i in books) {
+//         addBookItem(books[i]);
+//     }
+// }
 //add elements on scrolling
 
 var search = $(location).attr('search');

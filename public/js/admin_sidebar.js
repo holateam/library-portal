@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+
+
+=======
 var sidebarItems = $('.sidebar_item');
 
 sidebarItems.click(function(event) {
@@ -19,3 +23,4 @@ sidebarItems.click(function(event) {
         });
     }
 });
+>>>>>>> f43e02ce9c079c9915376fa8e143d45a3fa758e0

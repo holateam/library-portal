@@ -51,8 +51,8 @@ adminRouter.route('/api/v1/books/:book_id')
 ///admin/api/v1/books/add
 adminRouter.route('/api/v1/books/add')
 .post(verify.auth, function(req, res, next) {
-
-    dbLayer.addBook(req.body.book, function(err, resp) {
+    console.log('req.body', req.body);
+    dbLayer.addBook(req.body, function(err, resp) {
         if (err) {
             res.json({ success: false, msg: err });
         } else {

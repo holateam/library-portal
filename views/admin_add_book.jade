@@ -19,43 +19,53 @@ block content
           div.col-md-4
             h3 Title:  
           div.col-md-8
-            input.col-md-12.input-lg(type='text')
+            input#admin_add_book_input_title.col-md-12.input-lg(type='text')
 
         div.row
           div.col-md-4  
             h3 Author:
           div.col-md-8
-            input.col-md-12.input-lg(type='text')
+            input#admin_add_book_input_author.col-md-12.input-lg(type='text')
 
         div.row 
           div.col-md-4 
             h3 Link to ozon:
           div.col-md-8
-            input.col-md-12.input-lg(type='text')
+            input#admin_add_book_input_link_ozon.col-md-12.input-lg(type='text')
             
         div.row 
           div.col-md-4 
             h3 Year:
           div.col-md-8
-            input.col-md-12.input-lg(type='text')  
+            input#admin_add_book_input_year.col-md-12.input-lg(type='text')
             
         div.row 
           div.col-md-4 
             h3 Number of pages:
           div.col-md-8
-            input.col-md-12.input-lg(type='text')  
-            
+            input#admin_add_book_input_pages.col-md-12.input-lg(type='text')
+
+        div.row
+          div.col-md-4
+            h3 ISBN:
+          div.col-md-8
+            input#admin_add_book_input_isbn.col-md-12.input-lg(type='text')
+
         div.row 
           div.col-md-4 
             h3 Description:
           div.col-md-8
-            textarea.col-md-12(rows='8')
+            textarea#admin_add_book_input_description.col-md-12(rows='8')
 
         div.row
           div.col-md-4.col-md-offset-4
-            button Add cover  
-            button Save
-      div.col-md-4
-          img(src='..img/books/1.jpg', width='300', height='300')
+            input#admin_add_book_img_upload(type='file')
+            button#admin_add_book_save(type='submit') Save
 
+      div.col-md-4
+          img#admin_add_book_img(src='', width='300', height='300')
+
+
+
+  script(src='/js/admin_add_book.js' defer)
     
