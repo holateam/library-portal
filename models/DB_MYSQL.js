@@ -31,7 +31,7 @@ module.exports.getBook = function (book_id,callback) {
             if (err) return callback(err);
 
             var book = result[0];
-                book.isbn = book.ISBN;
+            book.isbn = book.ISBN;
 
             delete book.book_id;
             delete book.ISBN;
