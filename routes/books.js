@@ -1,6 +1,7 @@
 var express = require('express');
 var booksRouter = express.Router();
 
+var verify = require('../verify.js');
 var dbLayer = require('../models/DB_MYSQL.js');
 
 booksRouter.route('/')
@@ -11,7 +12,7 @@ booksRouter.route('/')
     data.offset = req.query.offset;
     data.search = req.query.search;
 
-    dbLayer.getBooksAlt(data, function(err, resp) {
+    dbLayer.getBooks(data, function(err, resp) {
         if (err) {
             res.json({ success: false, msg: err });
         } else {
