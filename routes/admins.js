@@ -5,6 +5,19 @@ var basicAuth = require('basic-auth');
 var verify = require('../verify.js');
 var dbLayer = require('../models/DB_MYSQL.js');
 
+var multer  =   require('multer');
+var mime = require('mime-types')
+
+var storage =   multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, './public/img/books');
+  },
+  filename: function (req, file, callback) {
+    callback(null, req.body.new_filename + '.' + mime.extension(file.mimetype));
+  }
+});
+var upload = multer({ storage : storage}).single('bookCover');
+
 /* GET adminka. */
 adminRouter.get('/', verify.auth, function(req, res, next) {
     res.render('admin_index', { title: 'Admin Panel' });
@@ -18,6 +31,10 @@ adminRouter.get('/book/:id', verify.auth, function(req, res, next) {
     res.render('admin_book', { title: 'book' });
 });
 
+
+adminRouter.get('/cover', function(req, res, next) {
+    res.render('upload_cover',  { title: 'Upload form' });
+});
 
 adminRouter.route('/api/v1/books')
 .get(function(req, res, next) {
@@ -159,5 +176,15 @@ adminRouter.route('/api/v1/events/:event_id')
 
 adminRouter.route('/api/v1/verify/islogin')
 .get(verify.isLogin);
+
+adminRouter.route('/api/v1/cover/upload')
+.post(verify.auth, function(req, res) {
+    upload(req, res, function(err) {
+        if (err) {
+            return res.end("Error uploading file.");
+        }
+        res.end("File is uploaded");
+    });
+});
 
 module.exports = adminRouter;
