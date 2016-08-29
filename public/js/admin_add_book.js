@@ -10,10 +10,10 @@ $('#admin_add_book_save').click(function() {
     var newBook = {
         title: $(ii + 'title').val(),
         author: $(ii + 'author').val(),
-        description:$(ii + 'description').val(),
-        year:$(ii + 'year').val(),
-        cover:$('#admin_add_book_img').src,
-        pages:$(ii + 'title').val(),
+        description: $(ii + 'description').val(),
+        year: $(ii + 'year').val(),
+        cover: $('#admin_add_book_img').attr('src'),
+        pages: $(ii + 'title').val(),
         isbn: $(ii + 'isbn').val(),
         date: $.now()
     };
