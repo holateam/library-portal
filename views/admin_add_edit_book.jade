@@ -1,0 +1,37 @@
+extends admin_layout
+
+block content
+    div.row
+        form.col-md-12(method='POST' action='/admin/api/v1/books/add' enctype="multipart/form-data")
+            div.row
+                div.col-md-8
+                    div.row
+                        label.col-md-3(for='book_title') Title:
+                        input#book_title.col-md-9(type='text')
+                    div.row
+                        label.col-md-3(for='book_author') Author:
+                        input#book_author.col-md-9(type='text')
+                    div.row
+                        label.col-md-3(for='book_year') Year:
+                        input#book_year.col-md-9(type='text')
+                    div.row
+                        label.col-md-3(for='book_pages') Number of pages:
+                        input#book_pages.col-md-9(type='text')
+                    div.row
+                        label.col-md-3(for='book_isbn') ISBN:
+                        input#book_isbn.col-md-9(type='text')
+                    div.row
+                        label.col-md-3(for='book_description') Description:
+                        textarea#book_description.col-md-9(rows='6')
+                div.col-md-4
+                    div.row
+                        img#book_img(src='/img/books/no-cover.jpg', width='200', height='300')
+                    div.row
+                        input#book_img_upload(type='file')
+
+            div.row
+                div.col-md-10.col-md-offset-2
+                    button#book_save(type='submit') Save
+
+    script(src='/js/admin_add_edit_book.js' defer)
+    
