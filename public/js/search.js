@@ -25,6 +25,7 @@ var requestBooksSearch = function() {
                 if(res.data.total.amount >0){
                   (pathUrl==='') ? view.addBooksItems(res.data.books) : view.addBooksList(res.data.books);
                 }else{
+                  console.log("zero");
                   view.showZeroSearch(text,pathUrl);
                 }
             }
