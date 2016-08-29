@@ -1,6 +1,6 @@
-$('#fileupload').change(function(event) {
-    var fileName = $('#fileupload').val().replace(/C:\\fakepath\\/i, '');
-    $('#img_admin_add').attr('src', '/img/books/' + fileName);
+$('#admin_add_book_img_upload').change(function(event) {
+    var fileName = $('#admin_add_book_img_upload').val().replace(/C:\\fakepath\\/i, '');
+    $('#admin_add_book_img').attr('src', '/img/books/' + fileName);
     console.log(fileName);
 });
 
@@ -12,7 +12,7 @@ $('#save_new_book').click(function() {
         author: $(ii + 'author').val(),
         description:$(ii + 'description').val(),
         year:$(ii + 'year').val(),
-        cover:$('#img_admin_add').src,
+        cover:$('#admin_add_book_img').src,
         pages:$(ii + 'title').val(),
         date: $.now()
     };
