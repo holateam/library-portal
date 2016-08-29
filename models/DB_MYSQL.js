@@ -2,7 +2,8 @@ var mysql = require('mysql');
 
 const escapeStringRegexp = require('escape-string-regexp');
 
-var configDB = require('../configDB.json');
+//var configDB = require('../configDB.json'); // todo
+var configDB = require('../configDB.js');
 
 var pool = mysql.createPool({
     host     : 'localhost',
