@@ -1,21 +1,38 @@
+// var verify = doAjaxQuery('GET', 'api/v1/verify/islogin', null,
+//     function(res) {
+//         // if (!res.success) {
+//         //     alert(res.msg); // to replace the normal popup
+//         // } else {
+//             console.log(JSON.stringify(res));
+//             return res.islogin;
+//         // }
+//     });
+
+
+var pathNameUrl = $(location).attr('pathname').split('/');
+var pathUrl = (pathNameUrl[1] == 'admin')? '/admin' : '';
+
+/* ------------------- Get the query in database searching -------------------*/
 var requestBooksSearch = function() {
     var text = $('#search').val();
-    var textEncode = encodeURIComponent(text);
-    console.log(text);
-    doAjaxQuery('GET', '/api/v1/books?search=' + textEncode + '', null,
+    var textEncode = encodeURIComponent(text); // shielding request
+
+    doAjaxQuery('GET', ''+pathUrl+'/api/v1/books?search=' + textEncode + '', null,
         function(res) {
             if (!res.success) {
                 alert(res.msg); // to replace the normal popup
             } else {
                 if(res.data.total.amount >0){
-                  view.addBooksItems(res.data.books);
+                  (pathUrl==='') ? view.addBooksItems(res.data.books) : view.addBooksList(res.data.books);
                 }else{
-                  view.showZeroSearch(text);
+                  console.log("zero");
+                  view.showZeroSearch(text,pathUrl);
                 }
             }
         });
 };
 
+/* ---------- Live search if the search did not introduced n time ----------- */
 $('#search').keydown(function(event) {
     if (event.keyCode === 13) {
         event.preventDefault();
