@@ -31,7 +31,7 @@ $('.btnBookAction').click(function(event) {
   var obj ={
     id: $('.nameOfDebtor').val(),
     reader: {
-      name: 
+      name: $('.nameOfDebtor').val(),
     }
   };
   if(status){
