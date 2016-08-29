@@ -1,6 +1,7 @@
 var express = require('express');
 var booksRouter = express.Router();
 
+var verify = require('../verify.js');
 var dbLayer = require('../models/DB_MYSQL.js');
 
 booksRouter.route('/')
