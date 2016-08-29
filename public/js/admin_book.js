@@ -8,6 +8,10 @@ var fillActionBook = function(data){
   $('.emailOfDebtor').val(data.email);
   $('.dateOfDebtor').val(data.date);
   $('.pawnOfDebtor').val(data.pawn);
+  var obj = (data.event==null)?{name:'Give the book',data: 'give'}: {name:'Pick up the book',data: 'pick'};
+
+  $('.btnBookAction').text(obj.name).attr('data',obj.data);
+
 };
 
 doAjaxQuery('GET', '/admin/api/v1/books/' +pathNameUrl[3] , null, function(res) {
@@ -21,4 +25,8 @@ doAjaxQuery('GET', '/admin/api/v1/books/' +pathNameUrl[3] , null, function(res) 
 });
 
 
-// $()
+$('.btnBookAction').click(function(event) {
+  var status = $('.btnBookAction').attr('data');
+  console.log(status);
+  // if()
+});
