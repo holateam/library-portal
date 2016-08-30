@@ -17,12 +17,10 @@ module.exports.sendMail = function (book_id) {
           transporter.sendMail(mailOptions, function(error, info){
               if(error){
                   console.log(error);
-                  return;
               }
               db.deleteFromQueue(book_id,mailOptions.to,function (err, result) {
                   if(err){
                       console.log(err);
-                      return;
                   }
                   console.log(result);
               })
