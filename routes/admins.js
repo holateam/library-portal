@@ -199,6 +199,7 @@ adminRouter.route('/api/v1/books/:book_id/update')
     });
 });
 
+//deprecated
 adminRouter.route('/api/v1/books/take/:book_id')
 .get(verify.auth, function(req, res, next) {
 
