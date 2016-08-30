@@ -36,7 +36,7 @@ CREATE TABLE `books` (
   `event` int(10) DEFAULT NULL,
   PRIMARY KEY (`book_id`),
   KEY `FK_books` (`event`),
-  CONSTRAINT `FK_books` FOREIGN KEY (`event`) REFERENCES `events` (`event_id`)
+  CONSTRAINT `FK_books` FOREIGN KEY (`event`) REFERENCES `events` (`event_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -67,8 +67,8 @@ CREATE TABLE `comments` (
   `comment` text COLLATE utf8mb4_unicode_ci NOT NULL,
   KEY `book_id` (`book_id`),
   KEY `reader_id` (`reader_id`),
-  CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`book_id`) REFERENCES `books` (`book_id`),
-  CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`reader_id`) REFERENCES `readers` (`reader_id`)
+  CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`book_id`) REFERENCES `books` (`book_id`) ON DELETE CASCADE,
+  CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`reader_id`) REFERENCES `readers` (`reader_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -98,8 +98,8 @@ CREATE TABLE `events` (
   PRIMARY KEY (`event_id`),
   KEY `book_id` (`book_id`),
   KEY `reader_id` (`reader_id`),
-  CONSTRAINT `events_ibfk_1` FOREIGN KEY (`book_id`) REFERENCES `books` (`book_id`),
-  CONSTRAINT `events_ibfk_2` FOREIGN KEY (`reader_id`) REFERENCES `readers` (`reader_id`)
+  CONSTRAINT `events_ibfk_1` FOREIGN KEY (`book_id`) REFERENCES `books` (`book_id`) ON DELETE CASCADE,
+  CONSTRAINT `events_ibfk_2` FOREIGN KEY (`reader_id`) REFERENCES `readers` (`reader_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -124,7 +124,7 @@ CREATE TABLE `queue` (
   `book_id` int(10) NOT NULL,
   `email` text COLLATE utf8mb4_unicode_ci NOT NULL,
   KEY `FK_queue` (`book_id`),
-  CONSTRAINT `FK_queue` FOREIGN KEY (`book_id`) REFERENCES `books` (`book_id`)
+  CONSTRAINT `FK_queue` FOREIGN KEY (`book_id`) REFERENCES `books` (`book_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
