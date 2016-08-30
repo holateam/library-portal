@@ -72,7 +72,7 @@ adminRouter.route('/api/v1/books/:book_id')
 
 ///admin/api/v1/books/add
 adminRouter.route('/api/v1/books/add')
-.post(verify.auth, multer({ dest: '../public/uploads/' }).single('img'), function(req, res, next) {
+.post(verify.auth, multer({ dest: './public/uploads/' }).single('img'), function(req, res, next) {
     req.body.cover = "cover";
     req.body.status = true;
     req.body.year = parseInt(req.body.year);
@@ -82,7 +82,7 @@ adminRouter.route('/api/v1/books/add')
         if (err) {
             res.json({ success: false, msg: err });
         } else {
-            fs.rename('../public/uploads/' + req.file.filename,'../public/img/books/'+ resp.id + path.extname(req.file.originalname) , function (err) {
+            fs.rename('./public/uploads/' + req.file.filename,'./public/img/books/'+ resp.id + path.extname(req.file.originalname) , function (err) {
                 if (err) throw err;
             });
             res.json({ success: true, data: resp});
