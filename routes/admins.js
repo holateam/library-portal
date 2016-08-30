@@ -90,8 +90,20 @@ adminRouter.route('/api/v1/books/add')
      });
 });
 
-///admin/api/v1/books/remove:book_id
+//deprecated
 adminRouter.route('/api/v1/books/remove/:book_id')
+.get(verify.auth, function(req, res, next) {
+
+    dbLayer.deleteBookById(req.params.book_id, function(err, resp) {
+        if (err) {
+            res.json({ success: false, msg: err });
+        } else {
+            res.json({ success: true, data: resp});
+        }
+    });
+});
+
+adminRouter.route('/api/v1/books/:book_id/remove')
 .get(verify.auth, function(req, res, next) {
 
     dbLayer.deleteBookById(req.params.book_id, function(err, resp) {
@@ -139,6 +151,7 @@ adminRouter.route('/api/v1/readers/add')
     });
 });
 
+//deprecated
 adminRouter.route('/api/v1/books/give/:book_id')
 .post(verify.auth, function(req, res, next) {
 
@@ -151,7 +164,31 @@ adminRouter.route('/api/v1/books/give/:book_id')
     });
 });
 
+adminRouter.route('/api/v1/books/:book_id/give')
+.post(verify.auth, function(req, res, next) {
+
+    dbLayer.giveBookById(req.params.book_id, req.body.event, function(err, resp) {
+        if (err) {
+            res.json({ success: false, msg: err });
+        } else {
+            res.json({ success: true, data: resp});
+        }
+    });
+});
+
+//deprecated
 adminRouter.route('/api/v1/books/update/:book_id')
+.post(verify.auth, function(req, res, next) {
+    dbLayer.updateBookById(req.params.book_id, req.body.changes, function(err, resp) {
+        if (err) {
+            res.json({ success: false, msg: err });
+        } else {
+            res.json({ success: true, data: resp});
+        }
+    });
+});
+
+adminRouter.route('/api/v1/books/:book_id/update')
 .post(verify.auth, function(req, res, next) {
     dbLayer.updateBookById(req.params.book_id, req.body.changes, function(err, resp) {
         if (err) {
