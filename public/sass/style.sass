@@ -1,7 +1,9 @@
 *
   margin: 0
   padding: 0
-body
+html,body
+  margin: 0
+  padding: 0
   height: 100%
   background-color: white
   color: #2c3e50
@@ -42,9 +44,11 @@ body
 
 /* ----------------------- section #main  - styles sass --------------------- */
 #main
-  margin: 160px 0
+  position: relative
   min-height: 100%
-  height: auto
+  height: auto !important
+  height: 100%
+  padding: 160px 0 0 0
   .menu
     border-bottom-width: 0
     border-right-width: 2px
@@ -128,8 +132,6 @@ body
         .glyphicon-ok,.glyphicon-remove
           display: none
           .btnBookID
-          // margin-right: 42%
-          // float: right
         .dateD-group
           max-width: 50%
           float: right
@@ -165,6 +167,8 @@ body
         color: #2c3e50
 
 .contacts
+  margin: 160px 0 0px 0
+  width: 100%
   background-color: #ecf0f1
   border-top: 5px solid #27ae60
   .contacts-info
@@ -202,8 +206,9 @@ body
 
 /* ---------------------- section #footer - styles sass --------------------- */
 #footer
+  position: absolute
+  width: 100%
   .content_footer
-    height: 20px
     color: white
     text-align: center
     background-color: #3d3d3d
