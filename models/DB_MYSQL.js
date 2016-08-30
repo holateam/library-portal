@@ -75,7 +75,7 @@ module.exports.deleteBookWithIdInList = function (ids_array,callback) {
 module.exports.updateBookById = function (book_id, changedFields, callback) {
     var query = "UPDATE books SET ";
     for (var key in changedFields) {
-        query += key + " = " + changedFields[key] + ", ";
+        query += key + " = '" + changedFields[key] + "', ";
     }
     query = query.substring(0, query.length - 2);
     query += " WHERE book_id = " + book_id + ";";
