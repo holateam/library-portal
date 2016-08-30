@@ -177,6 +177,36 @@ module.exports.updateEventById = function (event_id, changedFields, callback) {
     });
 };
 
+module.exports.updateEventByBookId = function (book_id, changedFields, callback) {
+    pool.getConnection(function(err, connection) {
+        connection.query("SELECT b.book_id as book_id, ev.event_id as event_id FROM books AS b LEFT JOIN events AS ev ON b.event=ev.event_id WHERE b.book_id = ?;", [book_id] , function (err, result) {
+            if (err) return callback(err);
+            console.log(result[0]);
+            var event_id = result[0].event_id;
+            console.log("event_id: " + event_id);
+            if ( !event_id) {
+                return callback("Attemp to update not exists event");
+            }
+            var query = "UPDATE events SET ";
+            for (var key in changedFields) {
+                query += key + " = " + changedFields[key] + ", ";
+            }
+            query = query.substring(0, query.length - 2);
+            query += " WHERE event_id = " + event_id + ";";
+            console.log("query: " + query);
+            pool.getConnection(function(err, connection) {
+                connection.query(query, function (err, result) {
+                    connection.release();
+                    if (err) return callback(err);
+                    var data={};
+                    data.affectedRows = result["affectedRows"];
+                    callback(null, data);
+                });
+            });
+        });
+    });
+};
+
 module.exports.takeBookById = function (book_id, callback) {
     pool.getConnection(function(err, connection) {
         connection.query("UPDATE books SET event = ? WHERE book_id = ?", [null, book_id] , function (err, result) {
@@ -394,6 +424,19 @@ module.exports.find = function (word, callback) {
         connection.query("SELECT * FROM books WHERE title LIKE '%"+ word +"%' OR author LIKE '%"+ word +"%' OR description LIKE '%"+ word +"%' OR ISBN LIKE '%"+ word +"%'", function (err, result) {
             connection.release();
             if(err) callback(err);
+            callback(null,result);
+        });
+    });
+};
+
+module.exports.deleteFromQueue = function (book_id,email, callback) {
+    pool.getConnection(function(err, connection) {
+        connection.query("DELETE FROM queue WHERE book_id = ? AND email = ?",[book_id,email], function (err, result) {
+            connection.release();
+            if(err) {
+                callback(err);
+                return;
+            }
             callback(null,result);
         });
     });

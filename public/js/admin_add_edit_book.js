@@ -53,6 +53,5 @@ $('#book_save').click(function () {
             return;
         }
         alert('Success');
-        $('.sidebar_item[data-filter=all]').click();
     });
 });
