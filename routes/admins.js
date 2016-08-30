@@ -90,36 +90,20 @@ adminRouter.route('/api/v1/books/add')
      });
 });
 
-adminRouter.route('/api/v1/books/addAlt')
-.post(verify.auth, function(req, res, next) {
-    console.log('req.body', req.body);
-    var book = {
-        title: req.body.title,
-        author: req.body.author,
-        description: req.body.description,
-        year: parseInt(req.body.year),
-        pages: parseInt(req.body.pages),
-        isbn : req.body.isbn
-    };
-    console.log(book);
-    dbLayer.addBook(book, function(err, resp) {
+//deprecated
+adminRouter.route('/api/v1/books/remove/:book_id')
+.get(verify.auth, function(req, res, next) {
+
+    dbLayer.deleteBookById(req.params.book_id, function(err, resp) {
         if (err) {
             res.json({ success: false, msg: err });
         } else {
-            var storage =   multer.diskStorage({
-              destination: function (req, file, callback) {
-                callback(null, './public/img/books');
-              },
-              filename: function (req, file, callback) {
-                callback(null, resp.data.id + '.' + mime.extension(file.mimetype));
-              }
-            });
             res.json({ success: true, data: resp});
         }
     });
 });
-///admin/api/v1/books/remove:book_id
-adminRouter.route('/api/v1/books/remove/:book_id')
+
+adminRouter.route('/api/v1/books/:book_id/remove')
 .get(verify.auth, function(req, res, next) {
 
     dbLayer.deleteBookById(req.params.book_id, function(err, resp) {
@@ -167,6 +151,7 @@ adminRouter.route('/api/v1/readers/add')
     });
 });
 
+//deprecated
 adminRouter.route('/api/v1/books/give/:book_id')
 .post(verify.auth, function(req, res, next) {
 
@@ -179,6 +164,19 @@ adminRouter.route('/api/v1/books/give/:book_id')
     });
 });
 
+adminRouter.route('/api/v1/books/:book_id/give')
+.post(verify.auth, function(req, res, next) {
+
+    dbLayer.giveBookById(req.params.book_id, req.body.event, function(err, resp) {
+        if (err) {
+            res.json({ success: false, msg: err });
+        } else {
+            res.json({ success: true, data: resp});
+        }
+    });
+});
+
+//deprecated
 adminRouter.route('/api/v1/books/update/:book_id')
 .post(verify.auth, function(req, res, next) {
     dbLayer.updateBookById(req.params.book_id, req.body.changes, function(err, resp) {
@@ -190,7 +188,30 @@ adminRouter.route('/api/v1/books/update/:book_id')
     });
 });
 
+adminRouter.route('/api/v1/books/:book_id/update')
+.post(verify.auth, function(req, res, next) {
+    dbLayer.updateBookById(req.params.book_id, req.body.changes, function(err, resp) {
+        if (err) {
+            res.json({ success: false, msg: err });
+        } else {
+            res.json({ success: true, data: resp});
+        }
+    });
+});
+
 adminRouter.route('/api/v1/books/take/:book_id')
+.get(verify.auth, function(req, res, next) {
+
+    dbLayer.takeBookById(req.params.book_id, function(err, resp) {
+        if (err) {
+            res.json({ success: false, msg: err });
+        } else {
+            res.json({ success: true, data: resp});
+        }
+    });
+});
+
+adminRouter.route('/api/v1/books/:book_id/take')
 .get(verify.auth, function(req, res, next) {
 
     dbLayer.takeBookById(req.params.book_id, function(err, resp) {
