@@ -158,6 +158,25 @@ module.exports.getEventById = function (event_id, callback) {
     });
 };
 
+module.exports.updateEventById = function (event_id, changedFields, callback) {
+    var query = "UPDATE events SET ";
+    for (var key in changedFields) {
+        query += key + " = " + changedFields[key] + ", ";
+    }
+    query = query.substring(0, query.length - 2);
+    query += " WHERE event_id = " + event_id + ";";
+    pool.getConnection(function(err, connection) {
+        connection.query(query, function (err, result) {
+            connection.release();
+            if (err) return callback(err);
+            var data={};
+            data.affectedRows = result["affectedRows"];
+//            var res = result["affectedRows"]? true : false;
+            callback(null, data);
+        });
+    });
+};
+
 module.exports.takeBookById = function (book_id, callback) {
     pool.getConnection(function(err, connection) {
         connection.query("UPDATE books SET event = ? WHERE book_id = ?", [null, book_id] , function (err, result) {

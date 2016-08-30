@@ -235,6 +235,17 @@ adminRouter.route('/api/v1/events/:event_id')
     });
 });
 
+adminRouter.route('/api/v1/events/:event_id/update')
+.post(verify.auth, function(req, res, next) {
+    dbLayer.updateEventById(req.params.event_id, req.body.changes, function(err, resp) {
+        if (err) {
+            res.json({ success: false, msg: err });
+        } else {
+            res.json({ success: true, data: resp});
+        }
+    });
+});
+
 adminRouter.route('/api/v1/verify/islogin')
 .get(verify.isLogin);
 
