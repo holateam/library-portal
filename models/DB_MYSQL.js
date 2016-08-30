@@ -179,11 +179,9 @@ module.exports.updateEventById = function (event_id, changedFields, callback) {
 
 module.exports.updateEventByBookId = function (book_id, changedFields, callback) {
     pool.getConnection(function(err, connection) {
-        connection.query("SELECT event as event_id FROM books WHERE book_id = ?;", [book_id] , function (err, result) {
+        connection.query("SELECT event FROM books WHERE book_id = ?;", [book_id] , function (err, result) {
             if (err) return callback(err);
-            console.log(result[0]);
-            var event_id = result[0].event_id;
-            console.log("event_id: " + event_id);
+            var event_id = result[0].event;
             if ( !event_id) {
                 return callback("Attemp to update not exists event");
             }
@@ -193,7 +191,6 @@ module.exports.updateEventByBookId = function (book_id, changedFields, callback)
             }
             query = query.substring(0, query.length - 2);
             query += " WHERE event_id = " + event_id + ";";
-            console.log("query: " + query);
             pool.getConnection(function(err, connection) {
                 connection.query(query, function (err, result) {
                     connection.release();
