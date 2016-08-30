@@ -177,6 +177,34 @@ module.exports.updateEventById = function (event_id, changedFields, callback) {
     });
 };
 
+module.exports.updateEventByBookId = function (book_id, data, callback) {
+    pool.getConnection(function(err, connection) {
+        connection.query("SELECT b.book_id as book_id, ev.event_id as event_id FROM books AS b LEFT JOIN events AS ev ON b.event=ev.event_id WHERE b.book_id = ?;", [book_id] , function (err, result) {
+            if (err) return callback(err);
+            var event_id = result["event_id"];
+            if ( event_id == null ) {
+                var err = new Error("Attemp to update not exists event");
+                return callback(err);
+            }
+            var query = "UPDATE events SET ";
+            for (var key in changedFields) {
+                query += key + " = " + changedFields[key] + ", ";
+            }
+            query = query.substring(0, query.length - 2);
+            query += " WHERE event_id = " + event_id + ";";
+            pool.getConnection(function(err, connection) {
+                connection.query(query, function (err, result) {
+                    connection.release();
+                    if (err) return callback(err);
+                    var data={};
+                    data.affectedRows = result["affectedRows"];
+                    callback(null, data);
+                });
+            });
+        });
+    });
+};
+
 module.exports.takeBookById = function (book_id, callback) {
     pool.getConnection(function(err, connection) {
         connection.query("UPDATE books SET event = ? WHERE book_id = ?", [null, book_id] , function (err, result) {
