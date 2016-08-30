@@ -176,6 +176,18 @@ adminRouter.route('/api/v1/books/:book_id/give')
     });
 });
 
+adminRouter.route('/api/v1/books/:book_id/renewal')
+.post(verify.auth, function(req, res, next) {
+
+    dbLayer.updateEventByBookId(req.params.book_id, req.body.changes, function(err, resp) {
+        if (err) {
+            res.json({ success: false, msg: err });
+        } else {
+            res.json({ success: true, data: resp});
+        }
+    });
+});
+
 //deprecated
 adminRouter.route('/api/v1/books/update/:book_id')
 .post(verify.auth, function(req, res, next) {
