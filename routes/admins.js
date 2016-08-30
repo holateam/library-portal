@@ -87,13 +87,12 @@ adminRouter.route('/api/v1/books/add')
             res.json({ success: false, msg: err });
         } else {
             if(changes.img){
-                var base64Data = req.body.img.replace(/^data:image\/png;base64,/, "");
-
-                fs.writeFile(""+ resp.id +".jpg", base64Data, 'base64', function(err) {
+                var base64Data = changes.img.replace(/^data:image\/jpeg;base64,/, "");
+                fs.writeFile("./public/img/books/"+ resp.id +".jpg", base64Data, 'base64', function(err) {
                     console.log(err);
                 });
             }else{
-                fs.copy("no-cover.jpg", "./public/img/books/" + resp.id + ".jpg")
+                fs.createReadStream('./public/img/books/no-cover.jpg').pipe(fs.createWriteStream("./public/img/books/" + resp.id + ".jpg"));
             }
             res.json({ success: true, data: resp});
          }
