@@ -1,5 +1,3 @@
-
-
 function addBookItemOnScroll(book) {
     $('#pattern').clone().removeAttr('id').attr('book-id', book.id)
         .find('img').attr('src', '/img/books/' + book.id + '.jpg').end()
@@ -8,7 +6,6 @@ function addBookItemOnScroll(book) {
         .find('a').attr('href', '/book/' + book.id).end()
         .css('display', 'block').appendTo('#content .row');
 }
-
 
 function addBooksItemsOnScroll(books) {
     for (var i in books) {
@@ -21,16 +18,16 @@ function addBooksItemsOnScroll(books) {
 }
 
 var search = $(location).attr('search');
+var stringToFind = '?filter=';
+var stringPosition = search.indexOf(stringToFind);
 
-if (search) {
-    var filterPosition = search.indexOf('=') + 1;
-    $('.sidebar_item[data-filter=' + search.substr(filterPosition) + ']').click();
+if (stringPosition == 0) {
+    $('.sidebar_item[data-filter=' + search.substr(stringToFind.length) + ']').click();
 } else {
     $('.sidebar_item[data-filter=new]').click();
 }
 
 window.history.replaceState({}, '', $(location).attr('origin'));
-
 
 // get the next one potion of book_items while scrolling
 var viewPortion = 8;
