@@ -428,3 +428,16 @@ module.exports.find = function (word, callback) {
         });
     });
 };
+
+module.exports.deleteFromQueue = function (book_id,email, callback) {
+    pool.getConnection(function(err, connection) {
+        connection.query("DELETE FROM queue WHERE book_id = ? AND email = ?",[book_id,email], function (err, result) {
+            connection.release();
+            if(err) {
+                callback(err);
+                return;
+            }
+            callback(null,result);
+        });
+    });
+};
