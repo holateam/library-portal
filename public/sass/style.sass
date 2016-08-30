@@ -43,6 +43,8 @@ body
 /* ----------------------- section #main  - styles sass --------------------- */
 #main
   margin: 160px 0
+  min-height: 100%
+  height: auto
   .menu
     border-bottom-width: 0
     border-right-width: 2px
@@ -161,6 +163,43 @@ body
         font-weight: bold
       .author
         color: #2c3e50
+
+.contacts
+  background-color: #ecf0f1
+  border-top: 5px solid #27ae60
+  .contacts-info
+    overflow: auto
+    padding: 35px 0
+    width: 960px
+    margin: 0 auto
+    .contact-row
+      float: left
+      width: 320px
+      text-align: center
+      .contact-icon
+        padding-top: 6px
+        width: 68px
+        height: 72px
+        color: #27ae60
+        position: relative
+        margin-right: 15px
+        margin-left: 55px
+        float: left
+        i
+          color: #27ae60
+      .contact-text
+        font-size: 16px
+        text-align: left
+        color: #333333
+        padding-top: 13px
+        float: left
+        font-weight: 500
+        font-family: 'Open Sans', sans-serif
+        line-height: 1.5
+        a
+          color: #27ae60
+          cursor: pointer
+
 /* ---------------------- section #footer - styles sass --------------------- */
 #footer
   .content_footer
