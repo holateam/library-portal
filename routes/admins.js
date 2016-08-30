@@ -12,6 +12,8 @@ var fs = require('fs');
 
 //var upload = multer({ dest: './public/img/books' });
 
+var mailer = require('../models/mailer');
+
 /* GET adminka. */
 adminRouter.get('/', verify.auth, function(req, res, next) {
     res.render('admin_index', { title: 'Admin Panel' });
@@ -205,6 +207,7 @@ adminRouter.route('/api/v1/books/take/:book_id')
         if (err) {
             res.json({ success: false, msg: err });
         } else {
+            mailer.sendMail(req.params.book_id);
             res.json({ success: true, data: resp});
         }
     });
@@ -217,6 +220,7 @@ adminRouter.route('/api/v1/books/:book_id/take')
         if (err) {
             res.json({ success: false, msg: err });
         } else {
+            mailer.sendMail(req.params.book_id);
             res.json({ success: true, data: resp});
         }
     });
