@@ -179,7 +179,7 @@ module.exports.updateEventById = function (event_id, changedFields, callback) {
 
 module.exports.updateEventByBookId = function (book_id, changedFields, callback) {
     pool.getConnection(function(err, connection) {
-        connection.query("SELECT b.book_id as book_id, ev.event_id as event_id FROM books AS b LEFT JOIN events AS ev ON b.event=ev.event_id WHERE b.book_id = ?;", [book_id] , function (err, result) {
+        connection.query("SELECT event as event_id FROM books WHERE book_id = ?;", [book_id] , function (err, result) {
             if (err) return callback(err);
             console.log(result[0]);
             var event_id = result[0].event_id;
