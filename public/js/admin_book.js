@@ -1,9 +1,18 @@
 var pathNameUrl = $(location).attr('pathname').split('/');
 
 var settingStatusForButton = function(val) {
-    var obj = (val == null) ? { name: 'Give the book', data_busy: false }
-                            : { name: 'Pick up the book',data_busy: true };
+    var obj = (val == null) ? {
+            name: 'Give the book',
+            data_busy: false,
+            disabled: true,
+        } :
+        {
+            name: 'Pick up the book',
+            data_busy: true,
+            disabled: false,
+        };
     $('.btnBookAction').text(obj.name).attr('data', obj.data_busy);
+    $('#renewalOfBook').attr('disabled',obj.disabled);
 };
 
 var fillActionBook = function(data) {
@@ -64,17 +73,17 @@ $('.btnBookAction').click(function(event) {
 });
 
 $('#btnEditBook').click(function(event) {
-  window.location.href ='/admin/book/update/'+pathNameUrl[3]+'';
+    window.location.href = '/admin/book/update/' + pathNameUrl[3] + '';
 });
 
 $('#btnRemoveBook').click(function(event) {
-  var data = {
-    id: $('#bookID').attr('book-id')
-  };
-  doAjaxQuery('GET', '/admin/api/v1/books/remove/'+data.id+'', null, function(res){
-    if (!res.success) {
-        alert(res.msg); // to replace the normal popup
-    }
-        window.location.href ='/admin/';
-  });
+    var data = {
+        id: $('#bookID').attr('book-id')
+    };
+    doAjaxQuery('GET', '/admin/api/v1/books/remove/' + data.id + '', null, function(res) {
+        if (!res.success) {
+            alert(res.msg); // to replace the normal popup
+        }
+        window.location.href = '/admin/';
+    });
 });

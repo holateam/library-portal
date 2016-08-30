@@ -64,8 +64,8 @@ var view = {
             .css('display', 'table-row').css('cursor', 'pointer').appendTo('.table tbody');
     },
     addBooksList: function(books) {
-      console.log('addBooksList');
-        $('.table-hover').css('display','block');
+        console.log('addBooksList');
+        $('.table-hover').css('display', 'block');
         $('#bookID').remove();
         $('.book_list_row:not(#pattern)').remove();
         $('#zero_search').remove();
