@@ -4,11 +4,13 @@ var basicAuth = require('basic-auth');
 
 var verify = require('../verify.js');
 var dbLayer = require('../models/DB_MYSQL.js');
-
 var multer  =   require('multer');
-var mime = require('mime-types');
 
-var upload = multer({ dest: './public/img/books' });
+var path = require('path');
+var fs = require('fs');
+//var mime = require('mime-types');
+
+//var upload = multer({ dest: './public/img/books' });
 
 /* GET adminka. */
 adminRouter.get('/', verify.auth, function(req, res, next) {
@@ -31,6 +33,9 @@ adminRouter.get('/book/:id', verify.auth, function(req, res, next) {
     res.render('admin_book', { title: 'book' });
 });
 
+adminRouter.get('/book/update/:id', verify.auth, function(req, res, next) {
+    res.render('admin_add_edit_book', { title: 'Update book' });
+});
 
 adminRouter.get('/cover', function(req, res, next) {
     res.render('upload_cover',  { title: 'Upload form' });
@@ -67,19 +72,26 @@ adminRouter.route('/api/v1/books/:book_id')
 
 ///admin/api/v1/books/add
 adminRouter.route('/api/v1/books/add')
-.post(verify.auth, function(req, res, next) {
+.post(verify.auth, multer({ dest: '../public/uploads/' }).single('img'), function(req, res, next) {
+    req.body.cover = "cover";
+    req.body.status = true;
+    req.body.year = parseInt(req.body.year);
+    req.body.pages = parseInt(req.body.pages);
 
-    dbLayer.addBook(req.body.book, function(err, resp) {
+    dbLayer.addBook(req.body, function(err, resp) {
         if (err) {
             res.json({ success: false, msg: err });
         } else {
+            fs.rename('../public/uploads/' + req.file.filename,'../public/img/books/'+ resp.id + path.extname(req.file.originalname) , function (err) {
+                if (err) throw err;
+            });
             res.json({ success: true, data: resp});
-        }
-    });
+         }
+     });
 });
 
 adminRouter.route('/api/v1/books/addAlt')
-.post(verify.auth, upload.single('bookCover'), function(req, res, next) {
+.post(verify.auth, function(req, res, next) {
     console.log('req.body', req.body);
     var book = {
         title: req.body.title,
