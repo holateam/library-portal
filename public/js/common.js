@@ -53,12 +53,16 @@ var view = {
         return (((string == null) || (string == 0)) ? '-' : string);
     },
     addBookListRow: function(book) {
-        var date = new Date(book.date);
-        date.setDate(date.getDate() + book.term);
+        var date;
+        if (book.date) {
+            date = new Date(book.date);
+            date.setDate(date.getDate() + book.term);
+            date = date.toDateString();
+        }
         $('#pattern').clone().removeAttr('id').attr('book-id', book.id)
             .html('<td>' + book.title + '</td><td>' + book.author + '</td><td>' + view.nullToDash(book.name) + '</td><td>' +
                 view.nullToDash(book.email) + '</td><td>' + view.nullToDash(book.phone) + '</td><td>' +
-                view.nullToDash(date.toDateString()) + '</td><td>' + view.nullToDash(book.pawn) + '</td>')
+                view.nullToDash(date) + '</td><td>' + view.nullToDash(book.pawn) + '</td>')
             .click(function() {
                 $(location).attr('href', 'admin/book/' + book.id);
             })
