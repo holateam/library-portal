@@ -114,3 +114,25 @@ function doAjaxQuery(method, url, data, callback) {
         success: callback
     });
 }
+
+/* ------------ Hide the element when I toscroll to the desired item -------- */
+function come(elem,val) {
+        var docViewTop = $(window).scrollTop(),
+            docViewBottom = docViewTop + $(window).height(),
+            elemTop = $(elem).offset().top,
+            elemBottom = elemTop - val + $(elem).height();
+        console.log("docViewTop:" +docViewTop+', docViewBottom: '+docViewBottom+ 'elemTop:'+elemTop+', elemBottom:' +elemBottom);
+        return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+    }
+    var isVisible = true;
+
+    $(document).scroll(function() {
+        sidebarBottom = 240; // 240px = 160px margin + 80px height sidebar
+        if (!come(".contacts",sidebarBottom)) {
+            isVisible = true;
+            $('#sidebar').css({'visibility':'visible'});
+        }
+        if (come(".contacts",sidebarBottom) && isVisible) {
+          $('#sidebar').css({'visibility':'hidden'});
+        }
+    });
