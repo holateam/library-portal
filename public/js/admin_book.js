@@ -62,3 +62,19 @@ $('.btnBookAction').click(function(event) {
         });
     }
 });
+
+$('#btnEditBook').click(function(event) {
+  window.location.href ='/admin/book/update/'+pathNameUrl[3]+'';
+});
+
+$('#btnRemoveBook').click(function(event) {
+  var data = {
+    id: $('#bookID').attr('book-id')
+  };
+  doAjaxQuery('GET', '/admin/api/v1/books/remove/'+data.id+'', null, function(res){
+    if (!res.success) {
+        alert(res.msg); // to replace the normal popup
+    }
+        window.location.href ='/admin/';
+  });
+});
