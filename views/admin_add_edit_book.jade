@@ -2,7 +2,7 @@ extends admin_layout
 
 block content
     div.row
-        form.col-md-12(method="post",enctype="multipart/form-data",action='/admin/api/v1/books/add')
+        form.col-md-12
             div.row
                 div.col-md-8
                     div.row
@@ -31,7 +31,7 @@ block content
 
             div.row
                 div.col-md-10.col-md-offset-2
-                    input#book_save(type='submit')
+                    input#book_save(type='button' value='Save')
 
     script(src='/js/admin_add_edit_book.js' defer)
 

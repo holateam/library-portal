@@ -1,5 +1,6 @@
+var fileInBase64;
+
 function fillBookEditor(book) {
-    console.log(book);
     $('#book_title').val(book.title);
     $('#book_author').val(book.author);
     $('#book_year').val(book.year);
@@ -14,7 +15,8 @@ $('#book_img_upload').change(function() {
     var fileReader = new FileReader();
 
     fileReader.onload = function() {
-        $('#book_img').attr('src', fileReader.result);
+        fileInBase64 = fileReader.result;
+        $('#book_img').attr('src', fileInBase64);
     };
 
     fileReader.readAsDataURL(file);
@@ -32,3 +34,25 @@ if (stringPosition == 0) {
         fillBookEditor(res.data);
     });
 }
+
+$('#book_save').click(function () {
+    var data = {
+        changes: {
+            title: $('#book_title').val(),
+            author: $('#book_author').val(),
+            year: $('#book_year').val(),
+            pages: $('#book_pages').val(),
+            isbn: $('#book_isbn').val(),
+            description: $('#book_description').val()
+            //img: fileInBase64
+        }
+    };
+    doAjaxQuery('POST', '/admin/api/v1/books/' + ((stringPosition == 0) ? 'update/' : 'add/') + pathname.substr(stringToFind.length), data, function(res) {
+        if (!res.success) {
+            alert(res.msg); // to replace the normal popup
+            return;
+        }
+        alert('Success');
+        $('.sidebar_item[data-filter=all]').click();
+    });
+});
