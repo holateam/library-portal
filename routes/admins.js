@@ -199,6 +199,7 @@ adminRouter.route('/api/v1/books/:book_id/update')
     });
 });
 
+//deprecated
 adminRouter.route('/api/v1/books/take/:book_id')
 .get(verify.auth, function(req, res, next) {
 
@@ -227,6 +228,17 @@ adminRouter.route('/api/v1/events/:event_id')
 .get(verify.auth, function(req, res, next) {
 
     dbLayer.getEventById(req.params.event_id, function(err, resp) {
+        if (err) {
+            res.json({ success: false, msg: err });
+        } else {
+            res.json({ success: true, data: resp});
+        }
+    });
+});
+
+adminRouter.route('/api/v1/events/:event_id/update')
+.post(verify.auth, function(req, res, next) {
+    dbLayer.updateEventById(req.params.event_id, req.body.changes, function(err, resp) {
         if (err) {
             res.json({ success: false, msg: err });
         } else {
