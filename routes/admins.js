@@ -63,7 +63,7 @@ adminRouter.route('/api/v1/books')
 adminRouter.route('/api/v1/books/:book_id')
 .get(function(req, res, next) {
 
-    dbLayer.getBook(req.params.book_id, function(err, resp) {
+    dbLayer.getBookForAdmin(req.params.book_id, function(err, resp) {
         if (err) {
             res.json({ success: false, msg: err });
         } else {
