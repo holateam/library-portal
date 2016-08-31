@@ -17,7 +17,8 @@ var bookIdPosition = pathname.lastIndexOf('/') + 1;
 
 doAjaxQuery('GET', '/api/v1/books/' + pathname.substr(bookIdPosition), null, function(res) {
     if (!res.success) {
-        alert(res.msg); // to replace the normal popup
+        view.showPopup('Error', res.msg); // to replace the normal popup
+        return;
     }
     view.fillBookInfo(res.data);
 });
@@ -35,7 +36,8 @@ var showResultSendEmailToQueue = function(email, result) {
 var sendEmailToQueue = function(id, email) {
     doAjaxQuery('GET', '/api/v1/books/' + id + '/order?email=' + email, null, function(res) {
         if (!res.success) {
-            alert(res.msg); // to replace the normal popup
+            view.showPopup('Error', res.msg); // to replace the normal popup
+            return;
         } else {
             showResultSendEmailToQueue(email, res.success);
         }

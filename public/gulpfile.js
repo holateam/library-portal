@@ -22,7 +22,7 @@ gulp.task('scripts', function(){
   return gulp.src([
     'libs/jquery/dist/jquery.min.js',
     'libs/magnific-popup/dist/jquery.magnific-popup.min.js',
-		'libs/bootstrap/dist/js/bootstrap.min.js',
+    'libs/bootstrap/dist/js/bootstrap.min.js',
     'libs/matchHeight/dist/jquery.matchHeight-min.js',
     'libs/bootstrap-fileinput/js/fileinput.min.js'
   ])

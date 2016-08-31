@@ -1,33 +1,37 @@
 var pathNameUrl = $(location).attr('pathname').split('/');
 
 var settingStatusForButton = function(val) {
-    var obj = (val == null) ? {
-            name: 'Give the book',
-            data_busy: false,
-            disabled: true,
-        } :
-        {
-            name: 'Pick up the book',
-            data_busy: true,
-            disabled: false,
-        };
+    var obj = (val === null) ? {
+        name: 'Give the book',
+        data_busy: false,
+        disabled: true,
+    } : {
+        name: 'Pick up the book',
+        data_busy: true,
+        disabled: false,
+    };
     $('.btnBookAction').text(obj.name).attr('data', obj.data_busy);
-    $('#renewalOfBook').attr('disabled',obj.disabled);
+    $('#renewalOfBook').attr('disabled', obj.disabled);
 };
 
 var fillActionBook = function(data) {
+    console.log(data.date);
     $('.nameOfDebtor').val(data.name);
     $('.phoneOfDebtor').val(data.phone);
     $('.emailOfDebtor').val(data.email);
-    $('.dateOfDebtor').val(data.date);
+    $('.termOfDebtor').val(data.term);
     $('.pawnOfDebtor').val(data.pawn);
+    $('.dateOfDebtor').val((data.date === null) ?
+        view.normalDateFormat(new Date()) :
+        view.normalDateFormat(new Date(data.date)));
     settingStatusForButton(data.event);
 
 };
 
 doAjaxQuery('GET', '/admin/api/v1/books/' + pathNameUrl[3], null, function(res) {
     if (!res.success) {
-        alert(res.msg); // to replace the normal popup
+        view.showPopup('Error', res.msg); // to replace the normal popup
+        return;
     }
     view.fillBookInfo(res.data);
     fillActionBook(res.data);
@@ -39,22 +43,50 @@ $('.btnBookAction').click(function(event) {
         id: $('#bookID').attr('book-id')
     };
     if (status == 'true') {
-        doAjaxQuery('GET', '/admin/api/v1/books/take/' + data.id + '', null, function(res) {
-            if (!res.success) {
-                alert(res.msg); // to replace the normal popup
+        var isChecked = $('#renewalOfBook').prop('checked');
+        var obj = (isChecked) ? {
+            method: 'POST',
+            url: '/admin/api/v1/books/' + data.id + '/renewal',
+            func: function() {
+                $('#renewalOfBook').prop('checked', false);
+                view.disabledElement(false, '.nameOfDebtor', '.phoneOfDebtor', '.emailOfDebtor', '.pawnOfDebtor');
+                settingStatusForButton(true);
             }
-            $('.orderBlock input').val('');
-            settingStatusForButton(null);
+        } : {
+            method: 'GET',
+            url: '/admin/api/v1/books/take/' + data.id + '',
+            func: function() {
+                $('.orderBlock input').val('');
+                settingStatusForButton(null);
+            }
+        };
+        var updata = {
+            changes: {
+                term: $('.termOfDebtor').val(),
+                pawn: $('.pawnOfDebtor').val()
+            }
+        };
+        doAjaxQuery(obj.method, obj.url, updata, function(res) {
+            if (!res.success) {
+                view.showPopup('Error', res.msg); // to replace the normal popup
+                return;
+            }
+            obj.func();
+            // $('.orderBlock input').val('');
+            // settingStatusForButton(null);
         });
+
     } else {
         data.reader = {
             name: $('.nameOfDebtor').val(),
             email: $('.emailOfDebtor').val(),
             phone: $('.phoneOfDebtor').val(),
         };
+
         doAjaxQuery('POST', '/admin/api/v1/readers/add', data, function(res) {
             if (!res.success) {
-                alert(res.msg); // to replace the normal popup
+                view.showPopup('Error', res.msg); // to replace the normal popup
+                return;
             }
             data.event = {
                 reader_id: res.data.reader_id,
@@ -64,11 +96,13 @@ $('.btnBookAction').click(function(event) {
             };
             doAjaxQuery('POST', '/admin/api/v1/books/give/' + data.id + '', data, function(res) {
                 if (!res.success) {
-                    alert(res.msg); // to replace the normal popup
+                    view.showPopup('Error', res.msg); // to replace the normal popup
+                    return;
                 }
                 settingStatusForButton(true);
             });
         });
+
     }
 });
 
@@ -82,8 +116,25 @@ $('#btnRemoveBook').click(function(event) {
     };
     doAjaxQuery('GET', '/admin/api/v1/books/remove/' + data.id + '', null, function(res) {
         if (!res.success) {
-            alert(res.msg); // to replace the normal popup
+            view.showPopup('Error', res.msg); // to replace the normal popup
+            return;
         }
-        window.location.href = '/admin/';
+        window.location.href = '/admin';
     });
 });
+
+
+$('#renewalOfBook').click(function(event) {
+    var isChecked = $('#renewalOfBook').prop('checked');
+    if (isChecked) {
+        $('.btnBookAction').text('Update').attr('data-update', true);
+        view.disabledElement(true, '.nameOfDebtor', '.phoneOfDebtor', '.emailOfDebtor', '.pawnOfDebtor');
+    } else {
+        view.disabledElement(false, '.nameOfDebtor', '.phoneOfDebtor', '.emailOfDebtor', '.pawnOfDebtor');
+        var isBusy = $('.btnBookAction').attr('data');
+        var val = (isBusy !== 'true') ? null : isBusy;
+        settingStatusForButton(val);
+    }
+});
+
+  showPopup();
