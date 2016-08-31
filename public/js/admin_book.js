@@ -136,3 +136,5 @@ $('#renewalOfBook').click(function(event) {
         settingStatusForButton(val);
     }
 });
+
+  showPopup();
