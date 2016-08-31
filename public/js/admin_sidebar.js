@@ -12,7 +12,7 @@ sidebarItems.click(function(event) {
         event.preventDefault();
         doAjaxQuery('GET', '/admin/api/v1/books?filter=' + context.attr('data-filter'), null, function(res) {
             if (!res.success) {
-                alert(res.msg);
+                view.showPopup('Error', res.msg);
                 return;
             }
             view.addBooksList(res.data.books);

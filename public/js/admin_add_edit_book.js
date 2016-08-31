@@ -33,7 +33,6 @@ $('#book_img_upload').change(function() {
         fileInBase64 = fileReader.result;
         $('#book_img').attr('src', fileInBase64);
     };
-
     fileReader.readAsDataURL(file);
 });
 
@@ -44,7 +43,8 @@ var stringPosition = pathname.indexOf(stringToFind);
 if (stringPosition == 0) {
     doAjaxQuery('GET', '/admin/api/v1/books/' + pathname.substr(stringToFind.length), null, function(res) {
         if (!res.success) {
-            alert(res.msg); // to replace the normal popup
+            view.showPopup('Error', res.msg); // to replace the normal popup
+            return;
         }
         fillBookEditor(res.data);
     });
@@ -70,10 +70,10 @@ $('#book_save').click(function () {
     };
     doAjaxQuery('POST', '/admin/api/v1/books/' + ((stringPosition == 0) ? 'update/' : 'add/') + pathname.substr(stringToFind.length), data, function(res) {
         if (!res.success) {
-            alert(res.msg); // to replace the normal popup
+            view.showPopup('Error', res.msg); // to replace the normal popup
             return;
         }
-        alert('Success');
+        view.showPopup('Success', 'Data is saved');
     });
 });
 
