@@ -92,9 +92,12 @@ var view = {
 
         var nameClassIsBook = (book.busy) ? '.busyBook' : '.freeBook';
         $(nameClassIsBook).css('display', 'block');
+    },
+    showPopup: function(title, text) {
+        $('.modal-title').html(title);
+        $('.modal-body p').html(text);
+        $('#myModal').modal({backdrop: true});
     }
-
-
 };
 /* ------------------------------- end view ----------------------------------*/
 

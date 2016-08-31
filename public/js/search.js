@@ -9,7 +9,7 @@ var requestBooksSearch = function() {
     doAjaxQuery('GET', '' + pathUrl + '/api/v1/books?search=' + textEncode + '', null,
         function(res) {
             if (!res.success) {
-                alert(res.msg); // to replace the normal popup
+                view.showPopup('Error', res.msg); // to replace the normal popup
             } else {
                 if (res.data.total.amount > 0) {
                     (pathUrl === '') ? view.addBooksItems(res.data.books): view.addBooksList(res.data.books);
