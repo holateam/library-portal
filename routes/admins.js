@@ -99,6 +99,32 @@ adminRouter.route('/api/v1/books/add')
      });
 });
 
+adminRouter.route('/api/v1/books/addOne')
+.post(verify.auth, function(req, res, next) {
+    console.log(req.body.changes);
+    var changes = req.body.changes;
+    changes.cover = "cover";
+    changes.status = true;
+    changes.year = parseInt(changes.year);
+    changes.pages = parseInt(changes.pages);
+
+    dbLayer.addBook(changes, function(err, resp) {
+        if (err) {
+            res.json({ success: false, msg: err });
+        } else {
+            if(changes.img){
+                var base64Data = changes.img.replace(/^data:image\/jpeg;base64,/, "");
+                fs.writeFile("./public/img/books/"+ resp.id +".jpg", base64Data, 'base64', function(err) {
+                    console.log(err);
+                });
+            }else{
+                fs.createReadStream('./public/img/books/no-cover.jpg').pipe(fs.createWriteStream("./public/img/books/" + resp.id + ".jpg"));
+            }
+            res.json({ success: true, data: resp});
+         }
+     });
+});
+
 //deprecated
 adminRouter.route('/api/v1/books/remove/:book_id')
 .get(verify.auth, function(req, res, next) {
