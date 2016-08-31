@@ -86,7 +86,7 @@ if (stringPosition == 0) {
                 destY = null;
 
 
-            if (imageObj.width > imageObj.height) {
+            if ((imageObj.width / imageObj.height) > (canvas.width / canvas.height)) {
 
                 destWidth = canvas.width;
                 destHeight = (sourceHeight * canvas.width) / sourceWidth;
@@ -104,15 +104,6 @@ if (stringPosition == 0) {
             context.drawImage(imageObj, sourceX, sourceY, sourceWidth, sourceHeight, destX, destY, destWidth, destHeight);
         };
     });
-
-
-    //         //  $("#book_img_upload").fileinput({
-    //         //     allowedFileExtensions: ["jpg", "png", "gif"],
-    //         //     minImageWidth: 50,
-    //         //     minImageHeight: 50
-    //         // });
-    //     // });
-    // });
 }
 
 $('#book_save').click(function () {
@@ -130,19 +121,6 @@ $('#book_save').click(function () {
             img: s
         }
     }
-
-    $.ajax({
-        url: '/admin/api/v1/books/add',
-        dataType: 'json',
-        contentType: 'application/json',
-        data: JSON.stringify({file: s}),
-        type: 'POST',
-        success: function (data, err) {
-            if (err) {
-                console.log(err);
-            }
-        }
-    });
 
     doAjaxQuery('POST', '/admin/api/v1/books/' + ((stringPosition == 0) ? 'update/' : 'add/') + pathname.substr(stringToFind.length), data, function (res) {
         if (!res.success) {
