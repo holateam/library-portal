@@ -1,7 +1,7 @@
 var pathNameUrl = $(location).attr('pathname').split('/');
 
 var settingStatusForButton = function(val) {
-    var obj = (val == null) ? {
+    var obj = (val === null) ? {
             name: 'Give the book',
             data_busy: false,
             disabled: true,
@@ -16,11 +16,15 @@ var settingStatusForButton = function(val) {
 };
 
 var fillActionBook = function(data) {
+    console.log(data.date);
     $('.nameOfDebtor').val(data.name);
     $('.phoneOfDebtor').val(data.phone);
     $('.emailOfDebtor').val(data.email);
-    $('.dateOfDebtor').val(data.date);
+    $('.termOfDebtor').val(data.term);
     $('.pawnOfDebtor').val(data.pawn);
+    $('.dateOfDebtor').val((data.date===null)
+                            ? view.normalDateFormat(new Date())
+                            : view.normalDateFormat(new Date(data.date)));
     settingStatusForButton(data.event);
 
 };
@@ -39,13 +43,32 @@ $('.btnBookAction').click(function(event) {
         id: $('#bookID').attr('book-id')
     };
     if (status == 'true') {
-        doAjaxQuery('GET', '/admin/api/v1/books/take/' + data.id + '', null, function(res) {
-            if (!res.success) {
-                alert(res.msg); // to replace the normal popup
-            }
+      var isChecked =$('#renewalOfBook').prop('checked');
+        var obj = (isChecked)
+        ? {
+          url : 'admin/api/v1/books/' + data.id + '/renewal',
+          func : function(){
+            console.log('убрать галочку');
+            $('#renewalOfBook').removeAttr("checked");
+            settingStatusForButton(true)
+          }
+        }
+        : {
+          url: '/admin/api/v1/books/take/' + data.id + '',
+          func: function(){
             $('.orderBlock input').val('');
             settingStatusForButton(null);
-        });
+          }
+        };
+          doAjaxQuery('GET', obj.url, null, function(res) {
+            if (!res.success) {
+              alert(res.msg); // to replace the normal popup
+            }
+            obj.func();
+            // $('.orderBlock input').val('');
+            // settingStatusForButton(null);
+          });
+
     } else {
         data.reader = {
             name: $('.nameOfDebtor').val(),
@@ -82,8 +105,23 @@ $('#btnRemoveBook').click(function(event) {
     };
     doAjaxQuery('GET', '/admin/api/v1/books/remove/' + data.id + '', null, function(res) {
         if (!res.success) {
+          addPopUpBlock('Error',res.msg);
             alert(res.msg); // to replace the normal popup
         }
         window.location.href = '/admin/';
     });
+});
+
+
+$('#renewalOfBook').click(function(event) {
+    var isChecked =$('#renewalOfBook').prop('checked');
+    if(isChecked){
+      $('.btnBookAction').text('Update').attr('data-update', true);
+      view.disabledElement(true,'.nameOfDebtor','.phoneOfDebtor','.emailOfDebtor','.pawnOfDebtor');
+    }else{
+      view.disabledElement(false,'.nameOfDebtor','.phoneOfDebtor','.emailOfDebtor','.pawnOfDebtor');
+      var isBusy = $('.btnBookAction').attr('data');
+      var val = (isBusy!=='true') ? null : isBusy;
+        settingStatusForButton(val);
+    }
 });
