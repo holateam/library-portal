@@ -64,8 +64,8 @@ $('#book_save').click(function () {
             year: $('#book_year').val(),
             pages: $('#book_pages').val(),
             isbn: $('#book_isbn').val(),
-            description: $('#book_description').val()
-            //img: fileInBase64
+            description: $('#book_description').val(),
+            img: fileInBase64
         }
     };
     doAjaxQuery('POST', '/admin/api/v1/books/' + ((stringPosition == 0) ? 'update/' : 'add/') + pathname.substr(stringToFind.length), data, function(res) {

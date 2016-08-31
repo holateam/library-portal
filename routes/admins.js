@@ -76,15 +76,24 @@ adminRouter.route('/api/v1/books/:book_id')
 adminRouter.route('/api/v1/books/add')
 .post(verify.auth, function(req, res, next) {
     console.log(req.body.changes);
-    req.body.changes.cover = "cover";
-    req.body.changes.status = true;
-    req.body.changes.year = parseInt(req.body.changes.year);
-    req.body.changes.pages = parseInt(req.body.changes.pages);
+    var changes = req.body.changes;
+    changes.cover = "cover";
+    changes.status = true;
+    changes.year = parseInt(changes.year);
+    changes.pages = parseInt(changes.pages);
 
-    dbLayer.addBook(req.body.changes, function(err, resp) {
+    dbLayer.addBook(changes, function(err, resp) {
         if (err) {
             res.json({ success: false, msg: err });
         } else {
+            if(changes.img){
+                var base64Data = changes.img.replace(/^data:image\/jpeg;base64,/, "");
+                fs.writeFile("./public/img/books/"+ resp.id +".jpg", base64Data, 'base64', function(err) {
+                    console.log(err);
+                });
+            }else{
+                fs.createReadStream('./public/img/books/no-cover.jpg').pipe(fs.createWriteStream("./public/img/books/" + resp.id + ".jpg"));
+            }
             res.json({ success: true, data: resp});
          }
      });
