@@ -103,10 +103,12 @@ var view = {
     },
     addPopUpBlock: function(title, text) {
         $('#main').after('<div id="test-modal" class="mfp-hide white-popup-block"><h1>' + title + '</h1><p>' + text + '</p><p><a class="popup-modal-dismiss" href="#">X</a></p></div>');
+    },
+    showPopup: function(title, text) {
+        $('.modal-title').html(title);
+        $('.modal-body p').html(text);
+        $('#myModal').modal({backdrop: true});
     }
-
-
-
 };
 /* ------------------------------- end view ----------------------------------*/
 

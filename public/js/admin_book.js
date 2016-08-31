@@ -30,7 +30,8 @@ var fillActionBook = function(data) {
 
 doAjaxQuery('GET', '/admin/api/v1/books/' + pathNameUrl[3], null, function(res) {
     if (!res.success) {
-        alert(res.msg); // to replace the normal popup
+        view.showPopup('Error', res.msg); // to replace the normal popup
+        return;
     }
     view.fillBookInfo(res.data);
     fillActionBook(res.data);
@@ -67,7 +68,8 @@ $('.btnBookAction').click(function(event) {
         };
         doAjaxQuery(obj.method, obj.url, updata, function(res) {
             if (!res.success) {
-                alert(res.msg); // to replace the normal popup
+                view.showPopup('Error', res.msg); // to replace the normal popup
+                return;
             }
             obj.func();
             // $('.orderBlock input').val('');
@@ -83,7 +85,8 @@ $('.btnBookAction').click(function(event) {
 
         doAjaxQuery('POST', '/admin/api/v1/readers/add', data, function(res) {
             if (!res.success) {
-                alert(res.msg); // to replace the normal popup
+                view.showPopup('Error', res.msg); // to replace the normal popup
+                return;
             }
             data.event = {
                 reader_id: res.data.reader_id,
@@ -93,7 +96,8 @@ $('.btnBookAction').click(function(event) {
             };
             doAjaxQuery('POST', '/admin/api/v1/books/give/' + data.id + '', data, function(res) {
                 if (!res.success) {
-                    alert(res.msg); // to replace the normal popup
+                    view.showPopup('Error', res.msg); // to replace the normal popup
+                    return;
                 }
                 settingStatusForButton(true);
             });
@@ -112,10 +116,10 @@ $('#btnRemoveBook').click(function(event) {
     };
     doAjaxQuery('GET', '/admin/api/v1/books/remove/' + data.id + '', null, function(res) {
         if (!res.success) {
-            addPopUpBlock('Error', res.msg);
-            alert(res.msg); // to replace the normal popup
+            view.showPopup('Error', res.msg); // to replace the normal popup
+            return;
         }
-        window.location.href = '/admin/';
+        window.location.href = '/admin';
     });
 });
 
