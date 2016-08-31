@@ -26,6 +26,26 @@ module.exports.addBook = function (bookInfo,callback) {
 
 module.exports.getBook = function (book_id,callback) {
     pool.getConnection(function(err, connection) {
+        connection.query("SELECT b.book_id as id, b.* FROM books AS b WHERE b.book_id = ?", [book_id] , function (err, result) {
+            connection.release();
+            if (err) return callback(err);
+
+            var book = result[0];
+
+            book.busy = !!book.event_id;
+            book.isbn = book.ISBN;
+
+            delete book.book_id;
+            delete book.ISBN;
+
+            callback(null, book);
+        });
+    });
+};
+
+//getBooksForAdmin
+module.exports.getBookForAdmin = function (book_id,callback) {
+    pool.getConnection(function(err, connection) {
         connection.query("SELECT b.book_id as id, b.*, ev.*, r.* FROM books AS b LEFT JOIN events AS ev ON b.event=ev.event_id LEFT JOIN readers AS r ON ev.reader_id = r.reader_id WHERE b.book_id = ?", [book_id] , function (err, result) {
             connection.release();
             if (err) return callback(err);
@@ -258,7 +278,7 @@ module.exports.getBooks = function (data, callback) {
     var minoffset = 0;
 
     var filter = "all";
-    var search = "";
+    var search = "'.*'";
 
     if (data.filter) {
         filter = data.filter;
@@ -276,7 +296,26 @@ module.exports.getBooks = function (data, callback) {
         const escSearch = escapeStringRegexp(data.search);
         search ="'" + escSearch.replace(/ /g,"|").toLowerCase() + "'"; // or searchString.split(' ').join('|');
     };
-    var searchStatement = search == "" ?  '1=1' : 'LOWER(b.title) REGEXP ' + search + ' OR LOWER(b.author) REGEXP ' + search + ' OR LOWER(b.description) REGEXP ' + search + ' OR LOWER(b.ISBN) REGEXP ' + search;
+
+    var fields = [
+        "b.book_id",
+        "b.title",
+        "b.author",
+        "b.description",
+        "b.year",
+        "b.cover",
+        "b.pages",
+        "b.ISBN",
+        "b.status",
+        "b.date",
+        "b.event"
+    ];
+    var searchStatement = "";
+
+    fields.forEach(function(field, i, fields) {
+        if (i != 0) searchStatement +=  ' OR ';
+        searchStatement += 'LOWER(' + field + ') REGEXP ' + search;
+    });
 
     var query;
     var queryTotal;
@@ -335,7 +374,7 @@ module.exports.getBooksForAdmin = function (data, callback) {
     var minoffset = 0;
 
     var filter = "all";
-    var search = "";
+    var search = "'.*'";
 
     if (data.filter) {
         filter = data.filter;
@@ -353,26 +392,54 @@ module.exports.getBooksForAdmin = function (data, callback) {
         const escSearch = escapeStringRegexp(data.search);
         search ="'" + escSearch.replace(/ /g,"|").toLowerCase() + "'"; // or searchString.split(' ').join('|');
     };
-    var searchStatement = search == "" ?  '1=1' : 'LOWER(b.title) REGEXP ' + search + ' OR LOWER(b.author) REGEXP ' + search + ' OR LOWER(b.description) REGEXP ' + search + ' OR LOWER(b.ISBN) REGEXP ' + search;
+
+    var fields = [
+        "b.book_id",
+        "b.title",
+        "b.author",
+        "b.description",
+        "b.year",
+        "b.cover",
+        "b.pages",
+        "b.ISBN",
+        "b.status",
+        "b.date",
+        "b.event",
+
+        "ev.event_id",
+        "ev.reader_id",
+        "ev.term",
+        "ev.pawn",
+
+        "r.name",
+        "r.email",
+        "r.phone"
+    ];
+    var searchStatement = "";
+
+    fields.forEach(function(field, i, fields) {
+        if (i != 0) searchStatement +=  ' OR ';
+        searchStatement += 'LOWER(' + field + ') REGEXP ' + search;
+    });
 
     var query;
     var queryTotal;
     switch (filter) {
         case "new":
             query = "SELECT b.book_id as id, b.*, ev.*, r.* FROM books AS b LEFT JOIN events AS ev ON b.event=ev.event_id LEFT JOIN readers AS r ON ev.reader_id = r.reader_id WHERE b.date >= DATE(NOW()) - INTERVAL 2 MONTH AND " + searchStatement + " LIMIT ? OFFSET ?";
-            queryTotal = "SELECT COUNT(b.book_id) AS amount FROM books AS b WHERE b.date >= DATE(NOW()) - INTERVAL 2 MONTH AND " + searchStatement;
+            queryTotal = "SELECT COUNT(b.book_id) AS amount FROM books AS b LEFT JOIN events AS ev ON b.event=ev.event_id LEFT JOIN readers AS r ON ev.reader_id = r.reader_id WHERE b.date >= DATE(NOW()) - INTERVAL 2 MONTH AND " + searchStatement;
             break;
         case "popular":
             query = "SELECT b.book_id as id, b.*, ev.*, r.*, count(e.event_id) as cnt FROM books AS b LEFT JOIN events AS e USING(book_id) LEFT JOIN events AS ev ON b.event=ev.event_id LEFT JOIN readers AS r ON ev.reader_id = r.reader_id WHERE " + searchStatement + " GROUP BY b.book_id ORDER BY cnt DESC LIMIT ? OFFSET ?";
-            queryTotal = "SELECT COUNT(b.book_id) AS amount, b.*, count(e.event_id) as cnt FROM books AS b LEFT JOIN events AS e USING(book_id) WHERE " + searchStatement + " GROUP BY b.book_id ORDER BY cnt DESC;";
+            queryTotal = "SELECT COUNT(b.book_id) AS amount, b.*, count(e.event_id) as cnt FROM books AS b LEFT JOIN events AS e USING(book_id) LEFT JOIN events AS ev ON b.event=ev.event_id LEFT JOIN readers AS r ON ev.reader_id = r.reader_id WHERE " + searchStatement + " GROUP BY b.book_id ORDER BY cnt DESC;";
             break;
         case "free":
             query = "SELECT b.book_id as id, b.*, ev.*, r.* FROM books AS b LEFT JOIN events AS ev ON b.event=ev.event_id LEFT JOIN readers AS r ON ev.reader_id = r.reader_id WHERE b.event IS NULL AND " + searchStatement + " LIMIT ? OFFSET ?";
-            queryTotal = "SELECT COUNT(b.book_id) AS amount FROM books AS b WHERE b.event IS NULL AND " + searchStatement;
+            queryTotal = "SELECT COUNT(b.book_id) AS amount FROM books AS b LEFT JOIN events AS ev ON b.event=ev.event_id LEFT JOIN readers AS r ON ev.reader_id = r.reader_id WHERE b.event IS NULL AND " + searchStatement;
             break;
         case "onhand":
             query = "SELECT b.book_id as id, b.*, ev.*, r.* FROM books AS b LEFT JOIN events AS ev ON b.event=ev.event_id LEFT JOIN readers AS r ON ev.reader_id = r.reader_id WHERE b.event IS NOT NULL AND " + searchStatement + " LIMIT ? OFFSET ?";
-            queryTotal = "SELECT COUNT(b.book_id) AS amount FROM books AS b WHERE b.event IS NOT NULL AND " + searchStatement;
+            queryTotal = "SELECT COUNT(b.book_id) AS amount FROM books AS b LEFT JOIN events AS ev ON b.event=ev.event_id LEFT JOIN readers AS r ON ev.reader_id = r.reader_id WHERE b.event IS NOT NULL AND " + searchStatement;
             break;
         case "expired":
             query = "SELECT b.book_id as id, b.*, ev.*, r.* FROM books AS b LEFT JOIN events AS ev ON b.event=ev.event_id LEFT JOIN readers AS r ON ev.reader_id = r.reader_id WHERE DATE(NOW()) > ev.date + INTERVAL ev.term DAY AND " + searchStatement + " LIMIT ? OFFSET ?";
@@ -380,7 +447,7 @@ module.exports.getBooksForAdmin = function (data, callback) {
             break;
         default:
             query = "SELECT b.book_id as id, b.*, ev.*, r.* FROM books AS b LEFT JOIN events AS ev ON b.event=ev.event_id LEFT JOIN readers AS r ON ev.reader_id = r.reader_id WHERE " + searchStatement + " LIMIT ? OFFSET ?";
-            queryTotal = "SELECT COUNT(b.book_id) AS amount FROM books AS b WHERE " + searchStatement;
+            queryTotal = "SELECT COUNT(b.book_id) AS amount FROM books AS b LEFT JOIN events AS ev ON b.event=ev.event_id LEFT JOIN readers AS r ON ev.reader_id = r.reader_id WHERE " + searchStatement;
             break;
     }
 
