@@ -41,6 +41,7 @@ html,body
     width: 100%
   #search_btn
     margin-left: 10px
+    display: none
 
 /* ----------------------- section #main  - styles sass --------------------- */
 #main
@@ -48,8 +49,8 @@ html,body
   min-height: 100%
   height: auto !important
   height: 100%
-  padding: 160px 0 0 0
-  margin-bottom: -20px
+  padding: 160px 0 160px 0
+  // margin-bottom: -20px
   .menu
     border-bottom-width: 0
     border-right-width: 2px
@@ -84,6 +85,10 @@ html,body
   #pattern
     display: none
   #content
+    .fileinput-upload-button
+      display: none
+    .kv-file-upload
+      display: none
     .bookDescription
       padding: 40px 15px
       h4
@@ -214,6 +219,11 @@ html,body
           color: #27ae60
           cursor: pointer
 
+#formAddBook
+  #book_save
+    float: right
+
+    // display: none
 /* ---------------------- section #footer - styles sass --------------------- */
 #footer
   position: absolute

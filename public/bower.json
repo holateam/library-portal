@@ -24,6 +24,7 @@
     "bootstrap": "^3.3.7",
     "font-awesome": "fontawesome#^4.6.3",
     "magnific-popup": "^1.1.0",
-    "matchHeight": "jquery-match-height#^0.7.0"
+    "matchHeight": "jquery-match-height#^0.7.0",
+    "bootstrap-fileinput": "^4.3.4"
   }
 }

@@ -7,7 +7,22 @@ function fillBookEditor(book) {
     $('#book_pages').val(book.pages);
     $('#book_isbn').val(book.isbn);
     $('#book_description').val(book.description);
-    $('#book_img').attr('src', '/img/books/' + book.id + '.jpg');
+    $("#book_img_upload").fileinput({
+        initialPreview: [
+               '/img/books/' + book.id + '.jpg',
+           ],
+           initialPreviewAsData: true,
+           initialPreviewConfig: [
+                {caption: ""+book.id+".jpg", width: "120px", key: 1, showDelete: false}
+            ],
+           overwriteInitial: true,
+           initialCaption: ""+book.id+".jpg",
+        allowedFileExtensions: ["jpg", "png", "gif"],
+        minImageWidth: 50,
+        minImageHeight: 50
+    });
+
+    // $('.kv-file-content img').attr('src', '/img/books/' + book.id + '.jpg');
 }
 
 $('#book_img_upload').change(function() {
@@ -33,6 +48,12 @@ if (stringPosition == 0) {
         }
         fillBookEditor(res.data);
     });
+}else {
+  $("#book_img_upload").fileinput({
+     allowedFileExtensions: ["jpg", "png", "gif"],
+     minImageWidth: 50,
+     minImageHeight: 50
+ });
 }
 
 $('#book_save').click(function () {
@@ -55,3 +76,21 @@ $('#book_save').click(function () {
         alert('Success');
     });
 });
+
+
+// $("#book_img_upload").fileinput({
+//     uploadUrl: "/file-upload-batch/2",
+//     initialPreview: [
+//            'http://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/631px-FullMoon2010.jpg',
+//        ],
+//        initialPreviewAsData: true,
+//        initialPreviewConfig: [
+//             {caption: "Moon.jpg", size: 930321, width: "120px", key: 1, showDelete: false}
+//         ],
+//        deleteUrl: "/img/books",
+//        overwriteInitial: true,
+//        initialCaption: "The Moon and the Earth",
+//     allowedFileExtensions: ["jpg", "png", "gif"],
+//     minImageWidth: 50,
+//     minImageHeight: 50
+// });

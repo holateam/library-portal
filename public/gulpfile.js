@@ -15,7 +15,7 @@ gulp.task('sass', function(){
   return gulp.src('sass/**/*.sass')
     .pipe(sass().on('error',sass.logError))
     .pipe(autoprefixer(['last 15 versions','>1%','ie 8','ie 7'],{cascade: true}))
-    .pipe(gulp.dest('css'))
+    .pipe(gulp.dest('css'));
 });
 
 gulp.task('scripts', function(){
@@ -24,6 +24,7 @@ gulp.task('scripts', function(){
     'libs/magnific-popup/dist/jquery.magnific-popup.min.js',
 		'libs/bootstrap/dist/js/bootstrap.min.js',
     'libs/matchHeight/dist/jquery.matchHeight-min.js',
+    'libs/bootstrap-fileinput/js/fileinput.min.js'
   ])
   .pipe(concat('libs.min.js'))
   .pipe(uglify())

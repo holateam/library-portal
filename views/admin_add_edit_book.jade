@@ -1,37 +1,33 @@
 extends admin_layout
 
 block content
-    div.row
-        form.col-md-12
-            div.row
-                div.col-md-8
-                    div.row
-                        label.col-md-3(for='book_title') Title:
-                        input#book_title.col-md-9(type='text', name="title")
-                    div.row
-                        label.col-md-3(for='book_author') Author:
-                        input#book_author.col-md-9(type='text', name="author")
-                    div.row
-                        label.col-md-3(for='book_year') Year:
-                        input#book_year.col-md-9(type='text', name="year")
-                    div.row
-                        label.col-md-3(for='book_pages') Number of pages:
-                        input#book_pages.col-md-9(type='text', name="pages")
-                    div.row
-                        label.col-md-3(for='book_isbn') ISBN:
-                        input#book_isbn.col-md-9(type='text', name="isbn")
-                    div.row
-                        label.col-md-3(for='book_description') Description:
-                        textarea#book_description.col-md-9(rows='6', name="description")
-                div.col-md-4
-                    div.row
-                        img#book_img(src='/img/books/no-cover.jpg', width='200', height='300')
-                    div.row
-                        input#book_img_upload(type='file', name="img")
-
-            div.row
-                div.col-md-10.col-md-offset-2
-                    input#book_save(type='button' value='Save')
-
+    div#formAddBook.row
+        form.form-horizontal.col-md-6
+          .form-group
+              label.control-label.col-sm-3(for='book_title') Title:
+              .col-sm-9
+                input#book_title.form-control(type='text', aria-describedby='inputSuccess3Status' name='title')
+          .form-group
+              label.control-label.col-sm-3(for='book_author') Author:
+              .col-sm-9
+                input#book_author.form-control(type='text', aria-describedby='inputSuccess3Status' name='author')
+          .form-group
+              label.control-label.col-sm-3(for='book_year') Year:
+              .col-sm-9
+                input#book_year.form-control(type='text', aria-describedby='inputSuccess3Status' name='year')
+          .form-group
+              label.control-label.col-sm-3(for='book_pages') Number of pages:
+              .col-sm-9
+                input#book_pages.form-control(type='text', aria-describedby='inputSuccess3Status' name='pages')
+          .form-group
+              label.control-label.col-sm-3(for='book_isbn') ISBN:
+              .col-sm-9
+                input#book_isbn.form-control(type='text', aria-describedby='inputSuccess3Status' name='isbn')
+          .form-group
+              label.control-label.col-sm-3(for='book_description') Description:
+              .col-sm-9
+                textarea#book_description.form-control(rows='5')
+          button#book_save.btn.btn-primary(type='button' value='save') Save
+        .form-group.col-md-6
+          input#book_img_upload(type='file', data-upload-url='#')
     script(src='/js/admin_add_edit_book.js' defer)
-

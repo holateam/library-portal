@@ -48,3 +48,7 @@ public/libs
 public/fonts
 public/css
 public/js/libs.min.js
+
+#File img books
+public/img/books
+public/uploads
