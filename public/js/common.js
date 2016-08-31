@@ -93,16 +93,16 @@ var view = {
         var nameClassIsBook = (book.busy) ? '.busyBook' : '.freeBook';
         $(nameClassIsBook).css('display', 'block');
     },
-    normalDateFormat: function(date){
-      return date.toISOString().substring(0, 10);
+    normalDateFormat: function(date) {
+        return date.toISOString().substring(0, 10);
     },
-    disabledElement: function(boolean, element){
-      for (var i = 1; i < arguments.length; i++)
-          (boolean) ? $(arguments[i]).attr('disabled',true)
-                    : $(arguments[i]).attr('disabled',false);
+    disabledElement: function(boolean, element) {
+        for (var i = 1; i < arguments.length; i++)
+            (boolean) ? $(arguments[i]).attr('disabled', true) :
+            $(arguments[i]).attr('disabled', false);
     },
-    addPopUpBlock : function (title, text) {
-      $('#main').after('<div id="test-modal" class="mfp-hide white-popup-block"><h1>'+title+'</h1><p>'+text+'</p><p><a class="popup-modal-dismiss" href="#">X</a></p></div>');
+    addPopUpBlock: function(title, text) {
+        $('#main').after('<div id="test-modal" class="mfp-hide white-popup-block"><h1>' + title + '</h1><p>' + text + '</p><p><a class="popup-modal-dismiss" href="#">X</a></p></div>');
     }
 
 
@@ -162,15 +162,15 @@ if (pathNameUrl[1] !== 'admin') {
 
 
 
-$(function () {
-	$('.popup-modal').magnificPopup({
-		type: 'inline',
-		preloader: false,
-		focus: '#username',
-		modal: true
-	});
-	$(document).on('click', '.popup-modal-dismiss', function (e) {
-		e.preventDefault();
-		$.magnificPopup.close();
-	});
+$(function() {
+    $('.popup-modal').magnificPopup({
+        type: 'inline',
+        preloader: false,
+        focus: '#username',
+        modal: true
+    });
+    $(document).on('click', '.popup-modal-dismiss', function(e) {
+        e.preventDefault();
+        $.magnificPopup.close();
+    });
 });
