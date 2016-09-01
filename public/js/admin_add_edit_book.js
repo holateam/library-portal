@@ -46,7 +46,7 @@ var pathname = $(location).attr('pathname');
 var stringToFind = '/admin/book/update/';
 var stringPosition = pathname.indexOf(stringToFind);
 
-if (stringPosition == 0) {
+// if (stringPosition == 0) {
     doAjaxQuery('GET', '/admin/api/v1/books/' + pathname.substr(stringToFind.length), null, function (res) {
         if (!res.success) {
             view.showPopup('Error', res.msg); // to replace the normal popup
@@ -54,7 +54,7 @@ if (stringPosition == 0) {
         }
         fillBookEditor(res.data);
     });
-} else {
+// } else {
 
     var imageObj = new Image();
     $('#book_img_upload').change(function (e) {
@@ -104,7 +104,7 @@ if (stringPosition == 0) {
             context.drawImage(imageObj, sourceX, sourceY, sourceWidth, sourceHeight, destX, destY, destWidth, destHeight);
         };
     });
-}
+// }
 
 $('#book_save').click(function () {
     var dataURL = canvas.toDataURL("image/png"),
