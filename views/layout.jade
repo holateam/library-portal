@@ -13,11 +13,12 @@ html(lang='ru')
         
     body
         include header
+        include sidebar
         section#main
             div.container
                 div.row
-                    include sidebar
-                    div#content.col-xs-10.col-sm-10.col-md-10.col-lg-10
+                    //- include sidebar
+                    div#content.col-xs-12.col-sm-12.col-md-12.col-lg-12
                         block content
         section.contacts
           a(href='./map.html', target='_blank')

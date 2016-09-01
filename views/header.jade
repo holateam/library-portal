@@ -1,22 +1,38 @@
 section#header
-    nav.navbar.navbar-default.navbar-fixed-top
+    nav.navbar.navbar-default
         .container
-            .navbar-header
-                button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1', aria-expanded='false')
-                    span.sr-only Toggle navigation
-                    span.icon-bar
-                    span.icon-bar
-                    span.icon-bar
-                a.navbar-brand(href='#')
-                    span.sh Ш
-                    span.plus ++
-            #bs-example-navbar-collapse-1.collapse.navbar-collapse
-                .col-xs-9.col-sm-9.col-md-9.col-lg-9
-                    form.navbar-form.navbar-right
-                        .form-group
-                            input#search.form-control(type='text', placeholder='Search book')
-                        button#search_btn.btn.btn-default(type='submit') OK
-                ul.nav.navbar-nav.navbar-right(style="display: none")
-                    li
-                        a(href='#') Admin
+            .logo
+              a.navbar-brand(href='/')
+                  span.sh Ш
+                  span.plus ++
+            .main-menu
+              .nav1
+                  a#main-link.menu_ru(href='ru/', data-ng-class="{active: isActive('') || isActive('/') || isActive('/home')}") Главная
+                  a#news-link.menu_ru(href='ru/news', data-ng-class="{active: isActive('/news')}") Новости
+                  a#courses-link.menu_ru(href='ru/courses', data-ng-class="{active: isActive('/courses')}") Курсы
+                  a#pot-link.menu_ru.active(href='ru/potential', data-ng-class="{active: isActive('/potential')}") Возможности
+                  a#about-link.menu_ru(href='ru/about', data-ng-class="{active: isActive('/about')}", data-ng-bind-html='translation.about') О нас
+                  // <a href="http://vk.com/programming_in_kr" target="_blank" class="menu_{{selectedLanguage}}" id="vk-link">{{translation.vk}}</a>
+                  a#contacts-link.menu_ru(href='ru/about#contacts', data-ng-class="{active: isActive('/about#contacts')}", data-ng-bind-html='translation.contacts') Контакты
+                  a#anketa-link.anketa.menu_ru(href='ru/anketa', data-ng-class="{active: isActive('/anketa')}") Заполните анкету!
+                  a#form-link.ask.menu_ru(href='ru/courses#faq') Задайте вопрос
+                  a(href='https://vk.com/programming_in_kr', target='_blank')
+                    i.fa.fa-vk              
+                
+      div.green-submenu
+          #bs-example-navbar-collapse-1.collapse.navbar-collapse
+              .col-xs-12.col-sm-12.col-md-12.col-lg-12
+                  form.navbar-form.navbar-right
+                      .form-group
+                          input#search.form-control(type='text', placeholder='Search book')
+                      button#search_btn.btn.btn-default(type='submit') OK
+              ul.nav.navbar-nav.navbar-right(style="display: none")
+                  li
+                      a(href='#') Admin
+      //- div.sidebar2
+      //-   div.nav2
+      //-     a.sidebar_item.active(href="/?filter=new" data-filter = 'new') Новые
+      //-     a.sidebar_item(href="/?filter=popular" data-filter = 'popular') Популярные
+      //-     a.sidebar_item(href="/?filter=all" data-filter = 'all') Все
+          
 script(src='/js/search.js' defer)

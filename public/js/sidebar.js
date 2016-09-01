@@ -7,7 +7,7 @@ sidebarItems.click(function(event) {
     $('body').scrollTop(0);
 
     sidebarItems.removeClass('active');
-    context.closest('li').addClass('active');
+    context.closest('.filterBlock a').addClass('active');
 
     if ($(location).attr('pathname') == '/') {
         event.preventDefault();

@@ -37,6 +37,8 @@ var view = {
         for (var i in books) {
             view.addBookItem(books[i]);
         }
+        $(".book_item").matchHeight();
+        $('.blockI').matchHeight();
     },
     showZeroSearch: function(searchText, pathUrl) {
         if (pathUrl === '') {
@@ -136,31 +138,31 @@ function doAjaxQuery(method, url, data, callback) {
 }
 
 /* ------------ Hide the element when I toscroll to the desired item -------- */
-var pathNameUrl = $(location).attr('pathname').split('/');
-if (pathNameUrl[1] !== 'admin') {
-    function come(elem, val) {
-        var docViewTop = $(window).scrollTop(),
-            docViewBottom = docViewTop + $(window).height(),
-            elemTop = $(elem).offset().top,
-            elemBottom = elemTop - val + $(elem).height();
-        console.log("docViewTop:" + docViewTop + ', docViewBottom: ' + docViewBottom + 'elemTop:' + elemTop + ', elemBottom:' + elemBottom);
-        return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
-    }
-
-    $(document).scroll(function() {
-        sidebarBottom = 240; // 240px = 160px margin + 80px height sidebar
-        if (!come('.contacts', sidebarBottom)) {
-            $('#sidebar').css({
-                'visibility': 'visible'
-            });
-        }
-        if (come('.contacts', sidebarBottom)) {
-            $('#sidebar').css({
-                'visibility': 'hidden'
-            });
-        }
-    });
-}
+// var pathNameUrl = $(location).attr('pathname').split('/');
+// if (pathNameUrl[1] !== 'admin') {
+//     function come(elem, val) {
+//         var docViewTop = $(window).scrollTop(),
+//             docViewBottom = docViewTop + $(window).height(),
+//             elemTop = $(elem).offset().top,
+//             elemBottom = elemTop - val + $(elem).height();
+//         console.log("docViewTop:" + docViewTop + ', docViewBottom: ' + docViewBottom + 'elemTop:' + elemTop + ', elemBottom:' + elemBottom);
+//         return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+//     }
+//
+//     $(document).scroll(function() {
+//         sidebarBottom = 240; // 240px = 160px margin + 80px height sidebar
+//         if (!come('.contacts', sidebarBottom)) {
+//             $('#sidebar').css({
+//                 'visibility': 'visible'
+//             });
+//         }
+//         if (come('.contacts', sidebarBottom)) {
+//             $('#sidebar').css({
+//                 'visibility': 'hidden'
+//             });
+//         }
+//     });
+// }
 
 
 
