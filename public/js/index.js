@@ -48,15 +48,15 @@ window.history.replaceState({}, '', $(location).attr('origin'));
 //         var offset = offsetCoef * viewPortion;
 //         var filter = sessionStorage.filter ? sessionStorage.filter : 'all';
 //         if (!isScrollQuerySended) {
-//             doAjaxQuery('GET', '/api/v1/books?filter=' + filter + '&limit=' + viewPortion + '&offset=' + offset, null, function(res) {
-//                 isScrollQuerySended = true;
-//
-//                 if (res.success) {
-//                     isScrollQuerySended = false;
-//                 }
-//                 addBooksItemsOnScroll(res.data.books);
-//
-//             });
+            doAjaxQuery('GET', '/api/v1/books?filter=' + filter + '&limit=' + viewPortion + '&offset=' + offset, null, function(res) {
+                isScrollQuerySended = true;
+
+                if (res.success) {
+                    isScrollQuerySended = false;
+                }
+                addBooksItemsOnScroll(res.data.books);
+
+            });
 //         }
 //     }
 // });
