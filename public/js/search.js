@@ -6,7 +6,6 @@ var requestBooksSearch = function() {
     var text = $('#search').val();
     text = text.replace(/(^\s+|\s+$)/g,'');
     var textEncode = encodeURIComponent(text); // shielding request
-
     doAjaxQuery('GET', '' + pathUrl + '/api/v1/books?search=' + textEncode + '', null,
         function(res) {
             if (!res.success) {

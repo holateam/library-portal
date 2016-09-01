@@ -25,6 +25,7 @@ var view = {
     addBookItem: function(book) {
         $('#pattern').clone().removeAttr('id').attr('book-id', book.id).addClass('book_item')
             .find('img').attr('src', '/img/books/' + book.id + '.jpg').end()
+            .find('.blockI').attr('data-title', book.title+': '+book.author).end()
             .find('.title').attr('data-book-title', book.title).html(book.title).end()
             .find('.author').attr('data-book-author', book.author).html(book.author).end()
             .find('a').attr('href', '/book/' + book.id).end()
