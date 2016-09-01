@@ -1,6 +1,13 @@
 function addBookItemOnScroll(book) {
-    $('#pattern').clone().removeAttr('id').attr('book-id', book.id)
+    // $('#pattern').clone().removeAttr('id').attr('book-id', book.id)
+    //     .find('img').attr('src', '/img/books/' + book.id + '.jpg').end()
+    //     .find('.title').attr('data-book-title', book.title).html(book.title).end()
+    //     .find('.author').attr('data-book-author', book.author).html(book.author).end()
+    //     .find('a').attr('href', '/book/' + book.id).end()
+    //     .css('display', 'block').appendTo('#content .row');
+    $('#pattern').clone().removeAttr('id').attr('book-id', book.id).addClass('book_item')
         .find('img').attr('src', '/img/books/' + book.id + '.jpg').end()
+        .find('.blockI').attr('data-title', book.title+': '+book.author).end()
         .find('.title').attr('data-book-title', book.title).html(book.title).end()
         .find('.author').attr('data-book-author', book.author).html(book.author).end()
         .find('a').attr('href', '/book/' + book.id).end()
@@ -33,9 +40,10 @@ window.history.replaceState({}, '', $(location).attr('origin'));
 var viewPortion = 8;
 var offsetCoef = 0;
 var isScrollQuerySended = false;
+var footerH = 500;
 
 $(document).scroll(function() {
-    if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+    if ($(window).scrollTop() + $(window).height()+footerH >= $(document).height()){
         offsetCoef++;
         var offset = offsetCoef * viewPortion;
         var filter = sessionStorage.filter ? sessionStorage.filter : 'all';
@@ -47,6 +55,7 @@ $(document).scroll(function() {
                     isScrollQuerySended = false;
                 }
                 addBooksItemsOnScroll(res.data.books);
+
             });
         }
     }

@@ -2,7 +2,7 @@
   margin: 0
   padding: 0
 html,body
-  font-family: 'Open Sans', sans-serif
+  font-family: 'PT Sans', Arial, sans-serif
   line-height: 1.5
   font-size: 100%
   margin: 0
@@ -148,7 +148,7 @@ html,body
   #pattern
     display: none
   #content
-    .details
+    .details,.btnBookID
       background-color: white
       color: #2c3e50
       border-color: #263646
@@ -228,7 +228,7 @@ html,body
       display: block
       img
         width: auto
-        height: 220px
+        height: 128px
         cursor: pointer
     .book
       text-align: center
@@ -236,14 +236,29 @@ html,body
       &:hover
         box-shadow: 0px 3px 7px 1px rgba(195, 195, 195, 0.27)
       .title
-        padding: 10px 0 5px 0
-        color: #27ae60
-        font-size: 14px
-        font-weight: bold
+        // padding: 10px 0 5px 0
+        // color: #27ae60
+        // font-size: 14px
+        // font-weight: bold
+        color: #2c3e50
+        font-size: 12px !important
+        line-height: 1.5 !important
+        text-align: center
+        white-space: nowrap
+        padding: 5px 0 0 0
+        text-overflow: ellipsis
+        overflow: hidden
       .author
         color: #2c3e50
-        font-style: italic
-        font-size: 15px
+        // font-style: italic
+        // font-size: 15px
+        font-size: 12px !important
+        line-height: 1.5 !important
+        text-align: center
+        white-space: nowrap
+        padding: 0 0 5px 0
+        text-overflow: ellipsis
+        overflow: hidden
 .filterBlock
   border-bottom-width: 1px
   border-bottom-style: solid
@@ -307,6 +322,43 @@ html,body
     float: right
 
     // display: none
+.blockI
+  position: relative
+  &::before
+    // display: block
+    // position: absolute
+    bottom: 30px
+    // left: 50%
+    margin-left: -40%
+    padding: 10px
+    width: 80%
+    font-size: 10px
+    color: white
+    text-align: center
+    background-color: rgba(0, 0, 0, .85)
+    border-radius: 5px
+    content: attr(data-title)
+    box-sizing: border-box
+    // transition: opacify .7s
+    // visibility: hidden
+    // opacity: 0
+  &::after
+    content: ''
+    border-top: 10px solid rgba(0, 0, 0, .85)
+    border-left: 10px solid transparent
+    border-right: 10px solid transparent
+    bottom: 20px
+    margin-left: -10px
+.blockI::before,.blockI::after
+  display: block
+  position: absolute
+  left: 50%
+  visibility: hidden
+  opacity: 0
+  transition: opacity .5s
+.blockI:hover::before,.blockI:hover::after
+  visibility: visible
+  opacity: 1
 /* ---------------------- section #footer - styles sass --------------------- */
 #footer
   position: absolute
