@@ -37,29 +37,29 @@ if (stringPosition == 0) {
 window.history.replaceState({}, '', $(location).attr('origin'));
 
 // get the next one potion of book_items while scrolling
-var viewPortion = 8;
-var offsetCoef = 0;
-var isScrollQuerySended = false;
-var footerH = 566;
-
-$(document).scroll(function() {
-    if ($(window).scrollTop() + $(window).height()+footerH >= $(document).height()){
-        offsetCoef++;
-        var offset = offsetCoef * viewPortion;
-        var filter = sessionStorage.filter ? sessionStorage.filter : 'all';
-        if (!isScrollQuerySended) {
-            doAjaxQuery('GET', '/api/v1/books?filter=' + filter + '&limit=' + viewPortion + '&offset=' + offset, null, function(res) {
-                isScrollQuerySended = true;
-
-                if (res.success) {
-                    isScrollQuerySended = false;
-                }
-                addBooksItemsOnScroll(res.data.books);
-
-            });
-        }
-    }
-});
+// var viewPortion = 8;
+// var offsetCoef = 0;
+// var isScrollQuerySended = false;
+// var footerH = 566;
+//
+// $(document).scroll(function() {
+//     if ($(window).scrollTop() + $(window).height()+footerH >= $(document).height()){
+//         offsetCoef++;
+//         var offset = offsetCoef * viewPortion;
+//         var filter = sessionStorage.filter ? sessionStorage.filter : 'all';
+//         if (!isScrollQuerySended) {
+//             doAjaxQuery('GET', '/api/v1/books?filter=' + filter + '&limit=' + viewPortion + '&offset=' + offset, null, function(res) {
+//                 isScrollQuerySended = true;
+//
+//                 if (res.success) {
+//                     isScrollQuerySended = false;
+//                 }
+//                 addBooksItemsOnScroll(res.data.books);
+//
+//             });
+//         }
+//     }
+// });
 /* -----------Clean scrolling mouse wheel with google maps ----------------- */
 $(function() {
   $(this).find('iframe').css('pointer-events', 'none');
