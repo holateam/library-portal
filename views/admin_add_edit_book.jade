@@ -30,4 +30,6 @@ block content
           button#book_save.btn.btn-primary(type='button' value='save') Save
         .form-group.col-md-6
           input#book_img_upload(type='file', data-upload-url='#')
+          img#imgInp(display='none')
+          canvas#canvas(width='465', height='660')
     script(src='/js/admin_add_edit_book.js' defer)
