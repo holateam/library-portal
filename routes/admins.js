@@ -230,6 +230,14 @@ adminRouter.route('/api/v1/books/update/:book_id')
         if (err) {
             res.json({ success: false, msg: err });
         } else {
+            var img = req.body.changes.img;
+            if(img) {
+                console.log("tyt");
+                var base64Data = img.replace(/^data:image\/jpeg;base64,/, "");
+                fs.writeFile("./public/img/books/" + req.params.book_id + ".jpg", base64Data, 'base64', function (err) {
+                    console.log(err);
+                });
+            }
             res.json({ success: true, data: resp});
         }
     });

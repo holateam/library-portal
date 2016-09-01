@@ -95,10 +95,14 @@ module.exports.deleteBookWithIdInList = function (ids_array,callback) {
 module.exports.updateBookById = function (book_id, changedFields, callback) {
     var query = "UPDATE books SET ";
     for (var key in changedFields) {
+        if(key == "img"){
+            continue;
+        }
         query += key + " = '" + changedFields[key] + "', ";
     }
     query = query.substring(0, query.length - 2);
     query += " WHERE book_id = " + book_id + ";";
+    console.log(query);
     pool.getConnection(function(err, connection) {
         connection.query(query, function (err, result) {
             connection.release();
