@@ -426,6 +426,8 @@ module.exports.getBooksForAdmin = function (data, callback) {
         searchStatement += 'LOWER(' + field + ') REGEXP ' + search;
     });
 
+    console.log("searchStatement: " + searchStatement);
+
     var query;
     var queryTotal;
     switch (filter) {

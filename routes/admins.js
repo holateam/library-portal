@@ -99,32 +99,6 @@ adminRouter.route('/api/v1/books/add')
      });
 });
 
-adminRouter.route('/api/v1/books/addOne')
-.post(verify.auth, function(req, res, next) {
-    console.log(req.body.changes);
-    var changes = req.body.changes;
-    changes.cover = "cover";
-    changes.status = true;
-    changes.year = parseInt(changes.year);
-    changes.pages = parseInt(changes.pages);
-
-    dbLayer.addBook(changes, function(err, resp) {
-        if (err) {
-            res.json({ success: false, msg: err });
-        } else {
-            if(changes.img){
-                var base64Data = changes.img.replace(/^data:image\/jpeg;base64,/, "");
-                fs.writeFile("./public/img/books/"+ resp.id +".jpg", base64Data, 'base64', function(err) {
-                    console.log(err);
-                });
-            }else{
-                fs.createReadStream('./public/img/books/no-cover.jpg').pipe(fs.createWriteStream("./public/img/books/" + resp.id + ".jpg"));
-            }
-            res.json({ success: true, data: resp});
-         }
-     });
-});
-
 //deprecated
 adminRouter.route('/api/v1/books/remove/:book_id')
 .get(verify.auth, function(req, res, next) {
@@ -231,12 +205,13 @@ adminRouter.route('/api/v1/books/update/:book_id')
             res.json({ success: false, msg: err });
         } else {
             var img = req.body.changes.img;
-            if(img) {
-                console.log("tyt");
+            if(img){
                 var base64Data = img.replace(/^data:image\/jpeg;base64,/, "");
-                fs.writeFile("./public/img/books/" + req.params.book_id + ".jpg", base64Data, 'base64', function (err) {
+                fs.writeFile("./public/img/books/"+ req.params.book_id +".jpg", base64Data, 'base64', function(err) {
                     console.log(err);
                 });
+            }else{
+                fs.createReadStream('./public/img/books/no-cover.jpg').pipe(fs.createWriteStream("./public/img/books/" + req.params.book_id + ".jpg"));
             }
             res.json({ success: true, data: resp});
         }
@@ -249,6 +224,14 @@ adminRouter.route('/api/v1/books/:book_id/update')
         if (err) {
             res.json({ success: false, msg: err });
         } else {
+            var img = req.body.changes.img;
+            if(img) {
+                console.log("tyt");
+                var base64Data = img.replace(/^data:image\/jpeg;base64,/, "");
+                fs.writeFile("./public/img/books/" + req.params.book_id + ".jpg", base64Data, 'base64', function (err) {
+                    console.log(err);
+                });
+            }
             res.json({ success: true, data: resp});
         }
     });
