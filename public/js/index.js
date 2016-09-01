@@ -40,9 +40,10 @@ window.history.replaceState({}, '', $(location).attr('origin'));
 var viewPortion = 8;
 var offsetCoef = 0;
 var isScrollQuerySended = false;
+var footerH = 500;
 
 $(document).scroll(function() {
-    if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+    if ($(window).scrollTop() + $(window).height()+footerH >= $(document).height()){
         offsetCoef++;
         var offset = offsetCoef * viewPortion;
         var filter = sessionStorage.filter ? sessionStorage.filter : 'all';
