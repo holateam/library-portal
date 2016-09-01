@@ -40,7 +40,7 @@ window.history.replaceState({}, '', $(location).attr('origin'));
 var viewPortion = 8;
 var offsetCoef = 0;
 var isScrollQuerySended = false;
-var footerH = 500;
+var footerH = 566;
 
 $(document).scroll(function() {
     if ($(window).scrollTop() + $(window).height()+footerH >= $(document).height()){
@@ -59,4 +59,13 @@ $(document).scroll(function() {
             });
         }
     }
+});
+/* -----------Clean scrolling mouse wheel with google maps ----------------- */
+$(function() {
+  $(this).find('iframe').css('pointer-events', 'none');
+    $('#map').click(function(e) {
+        $(this).find('iframe').css('pointer-events', 'all');
+    }).mouseleave(function(e) {
+        $(this).find('iframe').css('pointer-events', 'none');
+    });
 });
