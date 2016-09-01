@@ -23,7 +23,7 @@ var view = {
         view.showElement('.glyphicon-ok');
     },
     addBookItem: function(book) {
-        $('#pattern').clone().removeAttr('id').attr('book-id', book.id)
+        $('#pattern').clone().removeAttr('id').attr('book-id', book.id).addClass('book_item')
             .find('img').attr('src', '/img/books/' + book.id + '.jpg').end()
             .find('.title').attr('data-book-title', book.title).html(book.title).end()
             .find('.author').attr('data-book-author', book.author).html(book.author).end()
@@ -36,9 +36,27 @@ var view = {
 
         for (var i in books) {
             view.addBookItem(books[i]);
+            if(Number(i) == books.length-1){
+
+                // $('.blockI').matchHeight();
+                $(".book").matchHeight(
+                  // {
+                  //   byRow: true,
+                  //   property: 'height',
+                  //   target: null,
+                  //   remove: false
+                  // }
+                );
+
+              // $(".book_item").matchHeight();
+              // $('.blockI').matchHeight();
+            }
         }
-        $(".book_item").matchHeight();
-        $('.blockI').matchHeight();
+        console.log('matchHeight');
+        // $(document).ready(function() {
+        //   // $(".book_item").matchHeight();
+        //   // $('.blockI').matchHeight();
+        // });
     },
     showZeroSearch: function(searchText, pathUrl) {
         if (pathUrl === '') {
@@ -90,9 +108,9 @@ var view = {
         $('#pages').html(book.pages);
         $('#isbn').html(book.isbn);
         $('#bookDescriptionText').html(book.description);
-        $('#bookID').attr('busy', book.busy);
+        $('#bookID').attr('busy', book.event);
 
-        var nameClassIsBook = (book.busy) ? '.busyBook' : '.freeBook';
+        var nameClassIsBook = (book.event===null) ? '.freeBook' : '.busyBook';
         $(nameClassIsBook).css('display', 'block');
     },
     normalDateFormat: function(date) {

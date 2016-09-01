@@ -47,6 +47,7 @@ $(document).scroll(function() {
                     isScrollQuerySended = false;
                 }
                 addBooksItemsOnScroll(res.data.books);
+                
             });
         }
     }
