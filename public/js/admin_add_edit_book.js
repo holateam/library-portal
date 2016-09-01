@@ -1,4 +1,6 @@
-var fileInBase64;
+var canvas = document.getElementById('canvas');
+var isImgChanged = false;
+var img = new Image();
 
 function fillBookEditor(book) {
     $('#book_title').val(book.title);
@@ -7,36 +9,22 @@ function fillBookEditor(book) {
     $('#book_pages').val(book.pages);
     $('#book_isbn').val(book.isbn);
     $('#book_description').val(book.description);
-
-    // $("#book_img_upload").fileinput({
-    //     initialPreview: [
-    //            '/img/books/' + book.id + '.jpg',
-    //        ],
-    //        initialPreviewAsData: true,
-    //        initialPreviewConfig: [
-    //             {caption: ""+book.id+".jpg", width: "120px", key: 1, showDelete: false}
-    //         ],
-    //        overwriteInitial: true,
-    //        initialCaption: ""+book.id+".jpg",
-    //     allowedFileExtensions: ["jpg", "png", "gif"],
-    //     minImageWidth: 50,
-    //     minImageHeight: 50
-    // });
-
-    // $('.kv-file-content img').attr('src', '/img/books/' + book.id + '.jpg');
+    $('#bookImg img').attr('src', getBookImgSrcFromServ(book.id));
+    img.src = getBookImgSrcFromServ(book.id);
+    img.onload = function () {
+        canvas.getContext('2d').drawImage(img, 0, 0);
+    };
 }
 
-var canvas = document.getElementById('canvas');
-var context = canvas.getContext('2d');
-
 $('#book_img_upload').change(function () {
-    context.clearRect(0, 0, canvas.width, canvas.height);
+    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+    isImgChanged = true;
 
     var file = $(this)[0].files[0];
     var fileReader = new FileReader();
 
     fileReader.onload = function () {
-        fileInBase64 = fileReader.result;
+        var fileInBase64 = fileReader.result;
         $('#book_img').attr('src', fileInBase64);
     };
     fileReader.readAsDataURL(file);
@@ -46,70 +34,40 @@ var pathname = $(location).attr('pathname');
 var stringToFind = '/admin/book/update/';
 var stringPosition = pathname.indexOf(stringToFind);
 
-// if (stringPosition == 0) {
-    doAjaxQuery('GET', '/admin/api/v1/books/' + pathname.substr(stringToFind.length), null, function (res) {
-        if (!res.success) {
-            view.showPopup('Error', res.msg); // to replace the normal popup
-            return;
+doAjaxQuery('GET', '/admin/api/v1/books/' + pathname.substr(stringToFind.length), null, function (res) {
+    if (!res.success) {
+        view.showPopup('Error', res.msg); // to replace the normal popup
+        return;
+    }
+    fillBookEditor(res.data);
+});
+
+$('#book_img_upload').change(function (e) {
+
+    function readURL(input) {
+        if (input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(input.files[0]);
         }
-        fillBookEditor(res.data);
-    });
-// } else {
+    }
 
-    var imageObj = new Image();
-    $('#book_img_upload').change(function (e) {
+    readURL(e.target);
 
-        function readURL(input) {
-            if (input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    // console.log(e.target.result);
-                    // $('#imgInp').attr('src', e.target.result);
-                    imageObj.src = e.target.result;
-                };
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-
-        readURL(e.target);
-
-        imageObj.onload = function () {
-
-            $('#imgInp').hide();
-            var sourceX = 0,
-                sourceY = 0,
-                sourceWidth = imageObj.width,
-                sourceHeight = imageObj.height,
-                destWidth,
-                destHeight,
-                destX,
-                destY = null;
-
-
-            if ((imageObj.width / imageObj.height) > (canvas.width / canvas.height)) {
-
-                destWidth = canvas.width;
-                destHeight = (sourceHeight * canvas.width) / sourceWidth;
-                destX = 0;
-                destY = (canvas.height - destHeight) / 2;
-
-            } else {
-
-                destWidth = (sourceWidth * canvas.height) / sourceHeight;
-                destHeight = canvas.height;
-                destX = (canvas.width - destWidth) / 2;
-                destY = 0;
-            }
-
-            context.drawImage(imageObj, sourceX, sourceY, sourceWidth, sourceHeight, destX, destY, destWidth, destHeight);
-        };
-    });
-// }
+    img.onload = function () {
+        drawCenteredImageOnCanvas(img, canvas);
+    };
+});
 
 $('#book_save').click(function () {
-    var dataURL = canvas.toDataURL("image/png"),
+    var s = null;
+    if (isImgChanged) {
+        var dataURL = canvas.toDataURL("image/png");
         s = dataURL.replace(/^data:image\/png;base64,/, "");
-    console.log(s);
+        isImgChanged = false;
+    }
     var data = {
         changes: {
             title: $('#book_title').val(),
@@ -120,7 +78,7 @@ $('#book_save').click(function () {
             description: $('#book_description').val(),
             img: s
         }
-    }
+    };
 
     doAjaxQuery('POST', '/admin/api/v1/books/' + ((stringPosition == 0) ? 'update/' : 'add/') + pathname.substr(stringToFind.length), data, function (res) {
         if (!res.success) {
@@ -128,24 +86,40 @@ $('#book_save').click(function () {
             return;
         }
         view.showPopup('Success', 'Data is saved');
-
     });
 });
 
+function getBookImgSrcFromServ(book_id) {
+    var imgType = ".jpg";
+    var path = '../../../img/books/';
+    return path + book_id + imgType;
+}
 
-// $("#book_img_upload").fileinput({
-//     uploadUrl: "/file-upload-batch/2",
-//     initialPreview: [
-//            'http://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/631px-FullMoon2010.jpg',
-//        ],
-//        initialPreviewAsData: true,
-//        initialPreviewConfig: [
-//             {caption: "Moon.jpg", size: 930321, width: "120px", key: 1, showDelete: false}
-//         ],
-//        deleteUrl: "/img/books",
-//        overwriteInitial: true,
-//        initialCaption: "The Moon and the Earth",
-//     allowedFileExtensions: ["jpg", "png", "gif"],
-//     minImageWidth: 50,
-//     minImageHeight: 50
-// });
+function drawCenteredImageOnCanvas(imageObj, canvasObj) {
+    $('#imgInp').hide();
+    var sourceX = 0,
+        sourceY = 0,
+        sourceWidth = imageObj.width,
+        sourceHeight = imageObj.height,
+        destWidth,
+        destHeight,
+        destX,
+        destY = null;
+
+    if ((imageObj.width / imageObj.height) > (canvasObj.width / canvasObj.height)) {
+
+        destWidth = canvasObj.width;
+        destHeight = (sourceHeight * canvasObj.width) / sourceWidth;
+        destX = 0;
+        destY = (canvasObj.height - destHeight) / 2;
+
+    } else {
+
+        destWidth = (sourceWidth * canvasObj.height) / sourceHeight;
+        destHeight = canvasObj.height;
+        destX = (canvasObj.width - destWidth) / 2;
+        destY = 0;
+    }
+
+    canvasObj.getContext('2d').drawImage(imageObj, sourceX, sourceY, sourceWidth, sourceHeight, destX, destY, destWidth, destHeight);
+}
