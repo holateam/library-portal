@@ -393,8 +393,9 @@ module.exports.getBooksForAdmin = function (data, callback) {
     };
 
     if (data.search) {
-        const escSearch = escapeStringRegexp(data.search);
-        search ="'" + escSearch.replace(/ /g,"|").toLowerCase() + "'"; // or searchString.split(' ').join('|');
+//        const escSearch = escapeStringRegexp(data.search.toLowerCase());
+        const escSearch = data.search.toLowerCase().replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\\\$&');
+        search ="'" + escSearch.replace(/ /g,"|") + "'"; // or searchString.split(' ').join('|');
     };
 
     var fields = [
