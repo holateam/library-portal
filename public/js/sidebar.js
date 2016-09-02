@@ -16,7 +16,7 @@ sidebarItems.click(function(event) {
 
         doAjaxQuery('GET', '/api/v1/books?limit=' + loadLimit + '&filter=' + context.attr('data-filter'), null, function (res) {
             if (!res.success) {
-                view.showPopup('Error', res.msg);
+                view.showError(res.msg);
                 return;
             }
             view.addBooksItems(res.data.books);

@@ -44,6 +44,7 @@ $(document).scroll(function() {
             doAjaxQuery('GET', '/api/v1/books?filter=' + filter + '&limit=' + viewPortion + '&offset=' + offset, null, function(res) {
                 console.log(viewPortion);
                 isScrollQuerySended = true;
+
                 if (res.success) {
                     isScrollQuerySended = false;
                 }
@@ -52,4 +53,16 @@ $(document).scroll(function() {
             });
         }
     }
+});
+//         }
+//     }
+// });
+/* -----------Clean scrolling mouse wheel with google maps ----------------- */
+$(function() {
+  $(this).find('iframe').css('pointer-events', 'none');
+    $('#map').click(function(e) {
+        $(this).find('iframe').css('pointer-events', 'all');
+    }).mouseleave(function(e) {
+        $(this).find('iframe').css('pointer-events', 'none');
+    });
 });

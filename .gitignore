@@ -42,6 +42,8 @@ jspm_packages
 
 # Config files
 configDB.js
+configDB.json
+configAP.json
 
 # Frontend dev files
 public/libs
