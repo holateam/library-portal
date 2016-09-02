@@ -31,7 +31,7 @@ if (stringPosition == 0) {
 window.history.replaceState({}, '', $(location).attr('origin'));
 
 // get the next one portion of book_items while scrolling
-var viewPortion = 6;
+var viewPortion = 12;
 var offsetCoef = 0;
 var isScrollQuerySended = false;
 
