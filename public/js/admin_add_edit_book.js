@@ -80,7 +80,7 @@ $('#book_save').click(function () {
         }
     };
 
-    doAjaxQuery('POST', '/admin/api/v1/books/' + ((stringPosition == 0) ? 'update/' : 'add/') + pathname.substr(stringToFind.length), data, function (res) {
+    doAjaxQuery('POST', '/admin/api/v1/books/' + pathname.substr(stringToFind.length) + ((stringPosition == 0) ? '/update/' : 'add/'), data, function (res) {
         if (!res.success) {
             view.showPopup('Error', res.msg); // to replace the normal popup
             return;
