@@ -2,52 +2,24 @@ extends layout
 block content
     include book_item
     div.row#bookID
-        div.col-md-3#bookImg
+        div.col-md-12.bookInfo
+          h1#titleBook
+          div
+              span.properties
+                b Автор:
+              span#author
+        div.col-xs-12.col-sm-3.col-md-3#bookImg
             img(src='')
-        div.col-md-6.bookInfo
-            h4#titleBook
-            div
-                span.properties Автор:
-                span#author 
-            div
-                span.properties Год:
+            .bookLastInfo
+                span.properties год:
                 span#year
-            div
                 span.properties страниц:
                 span#pages
-            div
-                span.properties ISBN:
+                span.properties isbn:
                 span#isbn
-        div.orderBlock.col-md-3
-            div.busyBook
-              h3 Книгу сейчас читают
-              br
-              p Привет, тебе не повезло, книгу сейчас читают, но ты можешь взять ее, когда она освободится.
-              p Для этого введите свой email и нажми кнопку "Хочу читать!".
-              p
-            div.freeBook
-              h3 Книгу сейчас никто не читает
-              br
-              p Привет тебе очень повезло, книгу никто сейчас не читает и ты можете взять ее почитать.
-              p Для этого введите свой email и нажми кнопку "Хочу читать!".
-              p
-            div.response
-              h3 Поздравляем
-              br
-              p Инструкции о том, как получить книгу отправлена на твой email:
-                span.youEmail
-            .input-group.form-queue
-              .input-group-addon @
-              input.orderEmail.form-control(type='text', placeholder='email' name='email')
-              span.glyphicon.glyphicon-ok.form-control-feedback(aria-hidden='true')
-              span.glyphicon.glyphicon-remove.form-control-feedback(aria-hidden='true')
-            br
+        div.bookDescription.col-xs-12.col-sm-9.col-md-9
             button.btnBookID.btn.btn-success(type='button') Хочу читать!
-            
-        div.bookDescription
-            div.col-md-12
-                h4 О книге
-                hr
-                p#bookDescriptionText
-
+            h4 О книге
+              hr
+              p#bookDescriptionText
     script(src='/js/book.js' defer)

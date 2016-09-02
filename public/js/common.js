@@ -119,8 +119,7 @@ var view = {
     },
     disabledElement: function(boolean, element) {
         for (var i = 1; i < arguments.length; i++)
-            (boolean) ? $(arguments[i]).attr('disabled', true) :
-            $(arguments[i]).attr('disabled', false);
+            $(arguments[i]).attr('disabled', boolean);
     },
     addPopUpBlock: function(title, text) {
         $('#main').after('<div id="test-modal" class="mfp-hide white-popup-block"><h1>' + title + '</h1><p>' + text + '</p><p><a class="popup-modal-dismiss" href="#">X</a></p></div>');

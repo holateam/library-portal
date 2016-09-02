@@ -1,17 +1,3 @@
-// function fillBookInfo(book) {
-//     $('#bookID').attr('book-id', book.id);
-//     $('#bookImg img').attr('src', '/img/books/' + book.id + '.jpg');
-//     $('#titleBook').html(book.title);
-//     $('#author').html(book.author);
-//     $('#year').html(book.year);
-//     $('#pages').html(book.pages);
-//     $('#isbn').html(book.isbn);
-//     $('#bookDescriptionText').html(book.description);
-//     $('#bookID').attr('busy', book.busy);
-//
-//     var nameClassIsBook = (book.busy) ? '.busyBook' : '.freeBook';
-//     $(nameClassIsBook).css('display', 'block');
-// }
 var pathname = $(location).attr('pathname');
 var bookIdPosition = pathname.lastIndexOf('/') + 1;
 
@@ -55,6 +41,7 @@ $('.orderEmail').keyup(function(event) {
         if (isEmail) {
             view.showSuccessEmail();
             if (event.keyCode == 13) {
+
                 var id = $('#bookID').attr('book-id');
                 sendEmailToQueue(id, email);
             }

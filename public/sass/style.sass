@@ -47,6 +47,9 @@ html,body
       line-height: 90px
       .fa-stack
         line-height: 1.9em
+        i
+          border: 1px solid
+          border-radius: 50%
       a
         color: #27ae60
         opacity: 0.8
@@ -126,7 +129,7 @@ html,body
   min-height: 100%
   height: auto !important
   height: 100%
-  padding: 20px 0 20px 0
+  padding: 10px 0 20px 0
   // margin-bottom: -20px
   .menu
     border-bottom-width: 0
@@ -175,40 +178,59 @@ html,body
     .kv-file-upload
       display: none
     .bookDescription
-      padding: 40px 15px
+      max-height: 312px
+      overflow: hidden
+      // padding: 40px 15px
       h4
         font-weight: 500
       #bookDescriptionText
-        text-align: justify
+        font-size: 14px
+        text-align: left
         text-indent: 1.5em
         line-height: 24px
       p:first-letter
         font-size: 22px
         color: #27ae60
     #bookID
+      .btnBookID
+        float: right
       #bookImg img
         width: 220px
         height: auto
-        box-shadow: 10px 10px 5px -9px rgba(0, 0, 0, 0.75)
+        // box-shadow: 10px 10px 5px -9px rgba(0, 0, 0, 0.75)
       .blokBtnAdmin
         padding: 10px 0
         text-align: center
         .btn
           margin: 0 3px
+      .bookLastInfo
+        font-size: 12px
+        width: 220px
+        padding: 10px 0 10px 10px
+        .properties
+          font-weight: 600
+          display: inline-block
+        #year,#pages,#isbn
+          padding: 0 5px 0 5px
       .bookInfo
-        padding: 0 30px
+        padding: 0 15px 10px
+        color: #2c3e50
+        font-size: 14px
         #titleBook
-          font-weight: 500
-          font-size: 22px
+          font-weight: 600
+          // font-size: 22px
           line-height: 32px
           letter-spacing: .01em
           margin-bottom: 10px
+          // color: #888
+          // width: 80px
+          // padding-right: 19px
+          // padding-bottom: 8px
         .properties
-          display: inline-block
-          color: #888
-          width: 80px
-          padding-right: 19px
-          padding-bottom: 8px
+          padding: 0 5px 0 10px
+        .btnBook
+          // margin-top: 60px
+          text-align: center
       .orderBlock
         text-align: center
         background-color: #fff
@@ -382,6 +404,7 @@ html,body
     i.fa-heart
       padding: 0 5px
       color: #dc4242
+      cursor: pointer
       &:hover
         color: white
 
