@@ -63,17 +63,18 @@ SQL="${Q1}${Q2}${Q3}"
 $MYSQL -uroot -p -e "$SQL"
 mysql -u root -p $DBNAME < library.sql
 
+cat > configDB.json <<EOF
+{
+    "host": "localhost",
+    "user": "$USER",
+    "password": "$PASSWD",
+    "database": "$DBNAME"
+}
+EOF
 
-echo "Database $DBNAME and user $USER created with a password $PASSWD"
-
-
-cat > configDB.js <<EOF
-var configDB = {};
-
-configDB.host = 'localhost';
-configDB.user ='$USER';
-configDB.password = '$PASSWD';
-configDB.database = '$DBNAME';
-
-module.exports = configDB;
+cat > configAP.json <<EOF
+{
+    "username": "$USER",
+    "password": "$PASSWD"
+}
 EOF
