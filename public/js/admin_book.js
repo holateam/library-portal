@@ -30,7 +30,7 @@ var fillActionBook = function(data) {
 
 doAjaxQuery('GET', '/admin/api/v1/books/' + pathNameUrl[3], null, function(res) {
     if (!res.success) {
-        view.showPopup('Error', res.msg); // to replace the normal popup
+        view.showError(res.msg);
         return;
     }
     view.fillBookInfo(res.data);
@@ -68,7 +68,7 @@ $('.btnBookAction').click(function(event) {
         };
         doAjaxQuery(obj.method, obj.url, updata, function(res) {
             if (!res.success) {
-                view.showPopup('Error', res.msg); // to replace the normal popup
+                view.showError(res.msg); // to replace the normal popup
                 return;
             }
             obj.func();
@@ -85,7 +85,7 @@ $('.btnBookAction').click(function(event) {
 
         doAjaxQuery('POST', '/admin/api/v1/readers/add', data, function(res) {
             if (!res.success) {
-                view.showPopup('Error', res.msg); // to replace the normal popup
+                view.showError(res.msg);
                 return;
             }
             data.event = {
@@ -96,7 +96,7 @@ $('.btnBookAction').click(function(event) {
             };
             doAjaxQuery('POST', '/admin/api/v1/books/' + data.id + '/give', data, function(res) {
                 if (!res.success) {
-                    view.showPopup('Error', res.msg); // to replace the normal popup
+                    view.showError(res.msg);
                     return;
                 }
                 settingStatusForButton(true);
@@ -116,7 +116,7 @@ $('#btnRemoveBook').click(function(event) {
     };
     doAjaxQuery('GET', '/admin/api/v1/books/' + data.id + '/remove', null, function(res) {
         if (!res.success) {
-            view.showPopup('Error', res.msg); // to replace the normal popup
+            view.showError(res.msg);
             return;
         }
         window.location.href = '/admin';
@@ -136,5 +136,3 @@ $('#renewalOfBook').click(function(event) {
         settingStatusForButton(val);
     }
 });
-
-  showPopup();

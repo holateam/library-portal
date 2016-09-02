@@ -36,7 +36,7 @@ var showResultSendEmailToQueue = function(email, result) {
 var sendEmailToQueue = function(id, email) {
     doAjaxQuery('GET', '/api/v1/books/' + id + '/order?email=' + email, null, function(res) {
         if (!res.success) {
-            view.showPopup('Error', res.msg); // to replace the normal popup
+            view.showError(res.msg);
             return;
         } else {
             showResultSendEmailToQueue(email, res.success);

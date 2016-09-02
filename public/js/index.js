@@ -60,3 +60,12 @@ var isScrollQuerySended = false;
 //         }
 //     }
 // });
+/* -----------Clean scrolling mouse wheel with google maps ----------------- */
+$(function() {
+  $(this).find('iframe').css('pointer-events', 'none');
+    $('#map').click(function(e) {
+        $(this).find('iframe').css('pointer-events', 'all');
+    }).mouseleave(function(e) {
+        $(this).find('iframe').css('pointer-events', 'none');
+    });
+});

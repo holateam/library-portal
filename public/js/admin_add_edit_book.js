@@ -9,40 +9,32 @@ function fillBookEditor(book) {
     $('#book_pages').val(book.pages);
     $('#book_isbn').val(book.isbn);
     $('#book_description').val(book.description);
-    $('#bookImg img').attr('src', getBookImgSrcFromServ(book.id));
     img.src = getBookImgSrcFromServ(book.id);
-    img.onload = function () {
-        canvas.getContext('2d').drawImage(img, 0, 0);
-    };
+    if (img.src) {
+        img.src = getBookImgSrcFromServ(book.id);
+        img.onload = function () {
+            canvas.getContext('2d').drawImage(img, 0, 0);
+        };
+    }
 }
 
-$('#book_img_upload').change(function () {
-    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
-    isImgChanged = true;
-
-    var file = $(this)[0].files[0];
-    var fileReader = new FileReader();
-
-    fileReader.onload = function () {
-        var fileInBase64 = fileReader.result;
-        $('#book_img').attr('src', fileInBase64);
-    };
-    fileReader.readAsDataURL(file);
-});
-
-var pathname = $(location).attr('pathname');
-var stringToFind = '/admin/book/update/';
-var stringPosition = pathname.indexOf(stringToFind);
-
-doAjaxQuery('GET', '/admin/api/v1/books/' + pathname.substr(stringToFind.length), null, function (res) {
-    if (!res.success) {
-        view.showPopup('Error', res.msg); // to replace the normal popup
-        return;
-    }
-    fillBookEditor(res.data);
-});
+function clearBookEditor() {
+    $('#book_title').val('');
+    $('#book_author').val('');
+    $('#book_year').val('');
+    $('#book_pages').val('');
+    $('#book_isbn').val('');
+    $('#book_description').val('');
+    $('#book_img_upload').val('');
+    var canvas = $('#canvas')[0];
+    var context = canvas.getContext('2d');
+    context.clearRect(0, 0, canvas.width, canvas.height);
+}
 
 $('#book_img_upload').change(function (e) {
+
+    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+    isImgChanged = true;
 
     function readURL(input) {
         if (input.files[0]) {
@@ -55,11 +47,23 @@ $('#book_img_upload').change(function (e) {
     }
 
     readURL(e.target);
-
     img.onload = function () {
         drawCenteredImageOnCanvas(img, canvas);
     };
 });
+
+var pathname = $(location).attr('pathname');
+var stringToFind = '/admin/book/update/';
+var stringPosition = pathname.indexOf(stringToFind);
+
+doAjaxQuery('GET', '/admin/api/v1/books/' + pathname.substr(stringToFind.length), null, function (res) {
+    if (!res.success) {
+        view.showError(res.msg); // to replace the normal popup
+        return;
+    }
+    fillBookEditor(res.data);
+});
+
 
 $('#book_save').click(function () {
     var s = null;
@@ -82,10 +86,11 @@ $('#book_save').click(function () {
 
     doAjaxQuery('POST', '/admin/api/v1/books/' + pathname.substr(stringToFind.length) + ((stringPosition == 0) ? '/update/' : 'add/'), data, function (res) {
         if (!res.success) {
-            view.showPopup('Error', res.msg); // to replace the normal popup
+            view.showError(res.msg);
             return;
         }
-        view.showPopup('Success', 'Data is saved');
+        view.showSuccess('Данные сохранены');
+        clearBookEditor();
     });
 });
 
