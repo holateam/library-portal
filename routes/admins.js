@@ -8,13 +8,9 @@ var multer  =   require('multer');
 
 var path = require('path');
 var fs = require('fs');
-//var mime = require('mime-types');
-
-//var upload = multer({ dest: './public/img/books' });
 
 var mailer = require('../models/mailer');
 
-/* GET adminka. */
 adminRouter.get('/', verify.auth, function(req, res, next) {
     res.render('admin_index', { title: 'Admin Panel' });
 });
@@ -68,10 +64,8 @@ adminRouter.route('/api/v1/books/:book_id')
     });
 });
 
-///admin/api/v1/books/add
 adminRouter.route('/api/v1/books/add')
 .post(verify.auth, function(req, res, next) {
-    console.log(req.body.changes);
     var changes = req.body.changes;
     changes.cover = "cover";
     changes.status = true;
@@ -85,7 +79,6 @@ adminRouter.route('/api/v1/books/add')
             if(changes.img){
                 var base64Data = changes.img.replace(/^data:image\/jpeg;base64,/, "");
                 fs.writeFile("./public/img/books/"+ resp.id +".jpg", base64Data, 'base64', function(err) {
-                    console.log(err);
                 });
             }else{
                 fs.createReadStream('./public/img/books/no-cover.jpg').pipe(fs.createWriteStream("./public/img/books/" + resp.id + ".jpg"));
@@ -107,7 +100,6 @@ adminRouter.route('/api/v1/books/:book_id/remove')
     });
 });
 
-// /admin/api/v1/books/remove
 adminRouter.route('/api/v1/books/remove')
 .post(verify.auth, function(req, res, next) {
 
@@ -175,7 +167,6 @@ adminRouter.route('/api/v1/books/:book_id/update')
         } else {
             var img = req.body.changes.img;
             if(img) {
-                console.log("tyt");
                 var base64Data = img.replace(/^data:image\/jpeg;base64,/, "");
                 fs.writeFile("./public/img/books/" + req.params.book_id + ".jpg", base64Data, 'base64', function (err) {
                     console.log(err);
