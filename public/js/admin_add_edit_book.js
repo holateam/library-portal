@@ -9,25 +9,34 @@ function fillBookEditor(book) {
     $('#book_pages').val(book.pages);
     $('#book_isbn').val(book.isbn);
     $('#book_description').val(book.description);
-    $('#bookImg img').attr('src', getBookImgSrcFromServ(book.id));
-    img.src = getBookImgSrcFromServ(book.id);
-    img.onload = function () {
-        canvas.getContext('2d').drawImage(img, 0, 0);
-    };
+    img.src = getBookImgSrcFromServ(book.id)
+    if (img.src) {
+        img.src = getBookImgSrcFromServ(book.id);
+        img.onload = function () {
+            canvas.getContext('2d').drawImage(img, 0, 0);
+        };
+    }
 }
 
-$('#book_img_upload').change(function () {
+$('#book_img_upload').change(function (e) {
+
     canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
     isImgChanged = true;
 
-    var file = $(this)[0].files[0];
-    var fileReader = new FileReader();
+    function readURL(input) {
+        if (input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
 
-    fileReader.onload = function () {
-        var fileInBase64 = fileReader.result;
-        $('#book_img').attr('src', fileInBase64);
+    readURL(e.target);
+    img.onload = function () {
+        drawCenteredImageOnCanvas(img, canvas);
     };
-    fileReader.readAsDataURL(file);
 });
 
 var pathname = $(location).attr('pathname');
@@ -42,24 +51,6 @@ doAjaxQuery('GET', '/admin/api/v1/books/' + pathname.substr(stringToFind.length)
     fillBookEditor(res.data);
 });
 
-$('#book_img_upload').change(function (e) {
-
-    function readURL(input) {
-        if (input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                img.src = e.target.result;
-            };
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-
-    readURL(e.target);
-
-    img.onload = function () {
-        drawCenteredImageOnCanvas(img, canvas);
-    };
-});
 
 $('#book_save').click(function () {
     var s = null;
