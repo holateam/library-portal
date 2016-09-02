@@ -51,7 +51,7 @@ $('.btnBookAction').click(function(event) {
                 $('#renewalOfBook').prop('checked', false);
                 view.disabledElement(false, '.nameOfDebtor', '.phoneOfDebtor', '.emailOfDebtor', '.pawnOfDebtor');
                 settingStatusForButton(true);
-                view.showSuccess('Человек стремится к знаниям! Ну разве это не прекрасно? ))');
+                view.showSuccess('Человек стремится к знаниям!\nНу разве это не прекрасно? ))');
             }
         } : {
             method: 'GET',
