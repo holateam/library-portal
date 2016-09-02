@@ -4,7 +4,7 @@ var pathUrl = (pathNameUrl[1] == 'admin') ? '/admin' : '';
 /* ------------------- Get the query in database searching -------------------*/
 var requestBooksSearch = function() {
     var text = $('#search').val();
-    text = text.replace(/(^\s+|\s+$)/g,'');
+    text = text.replace(/(^\s+|\s+$)/g, '');
     var textEncode = encodeURIComponent(text); // shielding request
     doAjaxQuery('GET', '' + pathUrl + '/api/v1/books?search=' + textEncode + '', null,
         function(res) {

@@ -58,6 +58,7 @@ $('.btnBookAction').click(function(event) {
             func: function() {
                 $('.orderBlock input').val('');
                 settingStatusForButton(null);
+                console.log("sddfdfdf");
             }
         };
         var updata = {
