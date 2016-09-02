@@ -442,7 +442,7 @@ module.exports.getBooksForAdmin = function (data, callback) {
             break;
         case "expired":
             query = "SELECT b.book_id as id, b.*, ev.*, r.* FROM books AS b LEFT JOIN events AS ev ON b.event=ev.event_id LEFT JOIN readers AS r ON ev.reader_id = r.reader_id WHERE DATE(NOW()) > ev.date + INTERVAL ev.term DAY AND (" + searchStatement + ") LIMIT ? OFFSET ?";
-            queryTotal = "SELECT COUNT(b.book_id) AS amount FROM books AS b LEFT JOIN events AS ev ON b.event=ev.event_id WHERE DATE(NOW()) > ev.date + INTERVAL ev.term DAY AND (" + searchStatement + ")";
+            queryTotal = "SELECT COUNT(b.book_id) AS amount FROM books AS b LEFT JOIN events AS ev ON b.event=ev.event_id LEFT JOIN readers AS r ON ev.reader_id = r.reader_id  WHERE DATE(NOW()) > ev.date + INTERVAL ev.term DAY AND (" + searchStatement + ")";
             break;
         default:
             query = "SELECT b.book_id as id, b.*, ev.*, r.* FROM books AS b LEFT JOIN events AS ev ON b.event=ev.event_id LEFT JOIN readers AS r ON ev.reader_id = r.reader_id WHERE (" + searchStatement + ") LIMIT ? OFFSET ?";
