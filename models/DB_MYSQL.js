@@ -11,15 +11,11 @@ var pool = mysql.createPool({
     database : configDB.database
 });
 
-function isInt(n) {
-    return n % 1 === 0;
-}
-
 module.exports.addBook = function (bookInfo,callback) {
     pool.getConnection(function(err, connection) {
 
-        if ( !isInt(parseInt(bookInfo.year)) ) bookInfo.year = 0;
-        if ( !isInt(parseInt(bookInfo.pages)) ) bookInfo.pages = 0;
+        bookInfo.year = parseInt(bookInfo.year) || 0;
+        bookInfo.pages = parseInt(bookInfo.pages) || 0;
 
         connection.query("INSERT INTO books (book_id, ISBN, title, author, description, year, pages, cover, status, event) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, NULL)", [bookInfo.isbn, bookInfo.title, bookInfo.author, bookInfo.description, bookInfo.year, bookInfo.pages, bookInfo.cover, bookInfo.status], function (err, result) {
             connection.release();
