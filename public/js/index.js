@@ -1,4 +1,10 @@
 function addBookItemOnScroll(book) {
+    // $('#pattern').clone().removeAttr('id').attr('book-id', book.id)
+    //     .find('img').attr('src', '/img/books/' + book.id + '.jpg').end()
+    //     .find('.title').attr('data-book-title', book.title).html(book.title).end()
+    //     .find('.author').attr('data-book-author', book.author).html(book.author).end()
+    //     .find('a').attr('href', '/book/' + book.id).end()
+    //     .css('display', 'block').appendTo('#content .row');
     $('#pattern').clone().removeAttr('id').attr('book-id', book.id).addClass('book_item')
         .find('img').attr('src', '/img/books/' + book.id + '.jpg').end()
         .find('.blockI').attr('data-title', book.title+': '+book.author).end()
@@ -30,7 +36,7 @@ if (stringPosition == 0) {
 
 window.history.replaceState({}, '', $(location).attr('origin'));
 
-// get the next one portion of book_items while scrolling
+// get the next one potion of book_items while scrolling
 var viewPortion = 8;
 // var offsetCoef = 0;
 var isScrollQuerySended = false;
@@ -39,7 +45,7 @@ var isScrollQuerySended = false;
 // $(document).scroll(function() {
 //     if ($(window).scrollTop() + $(window).height()+footerH >= $(document).height()){
 //         offsetCoef++;
-        var offset = offsetCoef * viewPortion;
+//         var offset = offsetCoef * viewPortion;
         var filter = sessionStorage.filter ? sessionStorage.filter : 'all';
 //         if (!isScrollQuerySended) {
             doAjaxQuery('GET', '/api/v1/books?filter=' + filter + '&limit=' + viewPortion + '&offset=' + offset, null, function(res) {
@@ -54,3 +60,14 @@ var isScrollQuerySended = false;
 //         }
 //     }
 // });
+/* -----------Clean scrolling mouse wheel with google maps ----------------- */
+$(function() {
+  $(this).find('iframe').css('pointer-events', 'none');
+    $('#map').click(function(e) {
+        $(this).find('iframe').css('pointer-events', 'all');
+    }).mouseleave(function(e) {
+        $(this).find('iframe').css('pointer-events', 'none');
+    });
+});
+
+view.showSuccess('Ура');
