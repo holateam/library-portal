@@ -9,13 +9,26 @@ function fillBookEditor(book) {
     $('#book_pages').val(book.pages);
     $('#book_isbn').val(book.isbn);
     $('#book_description').val(book.description);
-    img.src = getBookImgSrcFromServ(book.id)
+    img.src = getBookImgSrcFromServ(book.id);
     if (img.src) {
         img.src = getBookImgSrcFromServ(book.id);
         img.onload = function () {
             canvas.getContext('2d').drawImage(img, 0, 0);
         };
     }
+}
+
+function clearBookEditor() {
+    $('#book_title').val('');
+    $('#book_author').val('');
+    $('#book_year').val('');
+    $('#book_pages').val('');
+    $('#book_isbn').val('');
+    $('#book_description').val('');
+    $('#book_img_upload').val('');
+    var canvas = $('#canvas')[0];
+    var context = canvas.getContext('2d');
+    context.clearRect(0, 0, canvas.width, canvas.height);
 }
 
 $('#book_img_upload').change(function (e) {
@@ -77,6 +90,7 @@ $('#book_save').click(function () {
             return;
         }
         view.showSuccess('Данные сохранены');
+        clearBookEditor();
     });
 });
 

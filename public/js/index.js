@@ -69,5 +69,3 @@ $(function() {
         $(this).find('iframe').css('pointer-events', 'none');
     });
 });
-
-view.showSuccess('Ура');
