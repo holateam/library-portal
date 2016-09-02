@@ -51,6 +51,7 @@ $('.btnBookAction').click(function(event) {
                 $('#renewalOfBook').prop('checked', false);
                 view.disabledElement(false, '.nameOfDebtor', '.phoneOfDebtor', '.emailOfDebtor', '.pawnOfDebtor');
                 settingStatusForButton(true);
+                view.showSuccess('Человек стремится к знаниям! Ну разве это не прекрасно? ))');
             }
         } : {
             method: 'GET',
@@ -58,6 +59,7 @@ $('.btnBookAction').click(function(event) {
             func: function() {
                 $('.orderBlock input').val('');
                 settingStatusForButton(null);
+                view.showSuccess('Общий уровень знаний на планете ощутимо повысился! ))');
             }
         };
         var updata = {
@@ -102,7 +104,7 @@ $('.btnBookAction').click(function(event) {
                 settingStatusForButton(true);
             });
         });
-
+        view.showSuccess('Не забудьте про залог! ))');
     }
 });
 
