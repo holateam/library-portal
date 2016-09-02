@@ -31,26 +31,25 @@ if (stringPosition == 0) {
 window.history.replaceState({}, '', $(location).attr('origin'));
 
 // get the next one portion of book_items while scrolling
-var viewPortion = 8;
-// var offsetCoef = 0;
+var viewPortion = 6;
+var offsetCoef = 0;
 var isScrollQuerySended = false;
-// var footerH = 566;
-//
-// $(document).scroll(function() {
-//     if ($(window).scrollTop() + $(window).height()+footerH >= $(document).height()){
-//         offsetCoef++;
-        var offset = offsetCoef * viewPortion;
-        var filter = sessionStorage.filter ? sessionStorage.filter : 'all';
-//         if (!isScrollQuerySended) {
-            doAjaxQuery('GET', '/api/v1/books?filter=' + filter + '&limit=' + viewPortion + '&offset=' + offset, null, function(res) {
-                isScrollQuerySended = true;
 
+$(document).scroll(function() {
+    if ($(window).scrollTop() + $(window).height() == $(document).height()){
+        offsetCoef++;
+        var offset = offsetCoef * viewPortion;
+        var filter = sessionStorage.filter ? sessionStorage.filter : 'new';
+        if (!isScrollQuerySended) {
+            doAjaxQuery('GET', '/api/v1/books?filter=' + filter + '&limit=' + viewPortion + '&offset=' + offset, null, function(res) {
+                console.log(viewPortion);
+                isScrollQuerySended = true;
                 if (res.success) {
                     isScrollQuerySended = false;
                 }
                 addBooksItemsOnScroll(res.data.books);
 
             });
-//         }
-//     }
-// });
+        }
+    }
+});
