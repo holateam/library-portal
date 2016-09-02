@@ -1,34 +1,44 @@
 section#header
     nav.navbar.navbar-default
         .container
-            .logo
-              a.navbar-brand(href='/')
-                  span.sh Ш
-                  span.plus ++
-            .main-menu
-              .nav1
-                  a#main-link.menu_ru(href='ru/', data-ng-class="{active: isActive('') || isActive('/') || isActive('/home')}") Главная
-                  a#news-link.menu_ru(href='ru/news', data-ng-class="{active: isActive('/news')}") Новости
-                  a#courses-link.menu_ru(href='ru/courses', data-ng-class="{active: isActive('/courses')}") Курсы
-                  a#pot-link.menu_ru.active(href='ru/potential', data-ng-class="{active: isActive('/potential')}") Возможности
-                  a#about-link.menu_ru(href='ru/about', data-ng-class="{active: isActive('/about')}", data-ng-bind-html='translation.about') О нас
-                  // <a href="http://vk.com/programming_in_kr" target="_blank" class="menu_{{selectedLanguage}}" id="vk-link">{{translation.vk}}</a>
-                  a#contacts-link.menu_ru(href='ru/about#contacts', data-ng-class="{active: isActive('/about#contacts')}", data-ng-bind-html='translation.contacts') Контакты
-                  a#anketa-link.anketa.menu_ru(href='ru/anketa', data-ng-class="{active: isActive('/anketa')}") Заполните анкету!
-                  a#form-link.ask.menu_ru(href='ru/courses#faq') Задайте вопрос
-                  a(href='https://vk.com/programming_in_kr', target='_blank')
-                    i.fa.fa-vk              
+            .col-xs-2.col-sm-2.col-md-2.col-lg-2
+                .logo
+                  a.navbar-brand(href='/')
+                      span.sh Ш
+                      span.plus ++
+            .col-xs-8.col-sm-8.col-md-8.col-lg-8
+                .main-menu
+                    .col-xs-12.col-sm-12.col-md-12.col-lg-12
+                        form.navbar-form.navbar-right
+                            .form-group
+                                input#search.form-control(type='text', placeholder='Найти книгу')
+                            button#search_btn.btn.btn-default(type='submit') OK
+            .col-xs-2.col-sm-2.col-md-2.col-lg-2
+                .social
+                    a(href='https://vk.com/programming_in_kr')
+                        span.fa-stack.fa-sm
+                          i.fa.fa-circle-thin.fa-stack-2x
+                          i.fa.fa-vk.fa-stack-1x
+                    a(href='https://www.facebook.com/groups/programming.ua/')
+                        span.fa-stack.fa-sm
+                          i.fa.fa-circle-thin.fa-stack-2x
+                          i.fa.fa-facebook.fa-stack-1x
+                    a(href='http://programming.kr.ua/ru/courses#faq')
+                        span.fa-stack.fa-sm
+                          i.fa.fa-circle-thin.fa-stack-2x
+                          i.fa.fa-envelope-o.fa-stack-1x
                 
-      div.green-submenu
-          #bs-example-navbar-collapse-1.collapse.navbar-collapse
-              .col-xs-12.col-sm-12.col-md-12.col-lg-12
-                  form.navbar-form.navbar-right
-                      .form-group
-                          input#search.form-control(type='text', placeholder='Найти книгу')
-                      button#search_btn.btn.btn-default(type='submit') OK
-              ul.nav.navbar-nav.navbar-right(style="display: none")
-                  li
-                      a(href='#') Admin
+      //- div.green-submenu
+      //-     #bs-example-navbar-collapse-1.collapse.navbar-collapse
+      //-         .col-xs-12.col-sm-12.col-md-12.col-lg-12
+                  
+              //-     form.navbar-form.navbar-right
+              //-         .form-group
+              //-             input#search.form-control(type='text', placeholder='Найти книгу')
+              //-         button#search_btn.btn.btn-default(type='submit') OK
+              //- ul.nav.navbar-nav.navbar-right(style="display: none")
+              //-     li
+              //-         a(href='#') Admin
       //- div.sidebar2
       //-   div.nav2
       //-     a.sidebar_item.active(href="/?filter=new" data-filter = 'new') Новые

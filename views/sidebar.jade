@@ -1,17 +1,9 @@
-//- div#sidebar.col-xs-2.col-sm-2.col-md-2.col-lg-2
-//-     div.menu.menu_fixed_middle
-//-         ul.menu_nav
-//-             li.sidebar_item.active(data-filter = 'new')
-//-                 a(href="/?filter=new") New
-//-             li.sidebar_item(data-filter = 'popular')
-//-                 a(href="/?filter=popular") Popular
-//-             li.sidebar_item(data-filter = 'all')
-//-                 a(href="/?filter=all") All
+
 div.sidebar2
   div.nav2
     span.filterBlock
-      a.sidebar_item.active(href="/?filter=new" data-filter = 'new') Новые
+      a.sidebar_item(href="/?filter=new" data-filter = 'new') Новые
       a.sidebar_item(href="/?filter=popular" data-filter = 'popular') Популярные
-      a.sidebar_item(href="/?filter=all" data-filter = 'all') Все
+      a.sidebar_item.active(href="/?filter=all" data-filter = 'all') Все
 
 script(src='/js/sidebar.js' defer)
