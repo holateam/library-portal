@@ -171,27 +171,6 @@ adminRouter.route('/api/v1/books/:book_id/renewal')
     });
 });
 
-//deprecated
-adminRouter.route('/api/v1/books/update/:book_id')
-.post(verify.auth, function(req, res, next) {
-    dbLayer.updateBookById(req.params.book_id, req.body.changes, function(err, resp) {
-        if (err) {
-            res.json({ success: false, msg: err });
-        } else {
-            var img = req.body.changes.img;
-            if(img){
-                var base64Data = img.replace(/^data:image\/jpeg;base64,/, "");
-                fs.writeFile("./public/img/books/"+ req.params.book_id +".jpg", base64Data, 'base64', function(err) {
-                    console.log(err);
-                });
-            }else{
-                fs.createReadStream('./public/img/books/no-cover.jpg').pipe(fs.createWriteStream("./public/img/books/" + req.params.book_id + ".jpg"));
-            }
-            res.json({ success: true, data: resp});
-        }
-    });
-});
-
 adminRouter.route('/api/v1/books/:book_id/update')
 .post(verify.auth, function(req, res, next) {
     dbLayer.updateBookById(req.params.book_id, req.body.changes, function(err, resp) {
@@ -206,20 +185,6 @@ adminRouter.route('/api/v1/books/:book_id/update')
                     console.log(err);
                 });
             }
-            res.json({ success: true, data: resp});
-        }
-    });
-});
-
-//deprecated
-adminRouter.route('/api/v1/books/take/:book_id')
-.get(verify.auth, function(req, res, next) {
-
-    dbLayer.takeBookById(req.params.book_id, function(err, resp) {
-        if (err) {
-            res.json({ success: false, msg: err });
-        } else {
-            mailer.sendMail(req.params.book_id);
             res.json({ success: true, data: resp});
         }
     });

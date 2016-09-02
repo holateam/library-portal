@@ -54,7 +54,7 @@ $('.btnBookAction').click(function(event) {
             }
         } : {
             method: 'GET',
-            url: '/admin/api/v1/books/take/' + data.id + '',
+            url: '/admin/api/v1/books/' + data.id + '/take',
             func: function() {
                 $('.orderBlock input').val('');
                 settingStatusForButton(null);
