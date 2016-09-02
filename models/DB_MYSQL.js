@@ -3,7 +3,7 @@ var mysql = require('mysql');
 const escapeStringRegexp = require('escape-string-regexp');
 
 //var configDB = require('../configDB.json'); // todo
-var configDB = require('../configDB.js');
+var configDB = require('../configDB');
 
 var pool = mysql.createPool({
     host     : 'localhost',
@@ -102,7 +102,6 @@ module.exports.updateBookById = function (book_id, changedFields, callback) {
     }
     query = query.substring(0, query.length - 2);
     query += " WHERE book_id = " + book_id + ";";
-    console.log(query);
     pool.getConnection(function(err, connection) {
         connection.query(query, function (err, result) {
             connection.release();
@@ -427,8 +426,6 @@ module.exports.getBooksForAdmin = function (data, callback) {
         if (i != 0) searchStatement +=  ' OR ';
         searchStatement += 'LOWER(' + field + ') REGEXP ' + search;
     });
-
-    console.log("searchStatement: " + searchStatement);
 
     var query;
     var queryTotal;
