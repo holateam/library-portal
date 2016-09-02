@@ -2,7 +2,6 @@ var mysql = require('mysql');
 
 const escapeStringRegexp = require('escape-string-regexp');
 
-//var configDB = require('../configDB.json'); // todo
 var configDB = require('../configDB');
 
 var pool = mysql.createPool({
@@ -43,7 +42,6 @@ module.exports.getBook = function (book_id,callback) {
     });
 };
 
-//getBooksForAdmin
 module.exports.getBookForAdmin = function (book_id,callback) {
     pool.getConnection(function(err, connection) {
         connection.query("SELECT b.book_id as id, b.*, ev.*, r.* FROM books AS b LEFT JOIN events AS ev ON b.event=ev.event_id LEFT JOIN readers AS r ON ev.reader_id = r.reader_id WHERE b.book_id = ?", [book_id] , function (err, result) {
@@ -78,7 +76,6 @@ module.exports.deleteBookById = function (book_id,callback) {
 
 module.exports.deleteBookWithIdInList = function (ids_array,callback) {
     pool.getConnection(function(err, connection) {
-//        var placeholders = Array(ids_array.length + 1).join('?').split('').join();
         var placeholders = '?,'.repeat(ids_array.length - 1) + '?';
         var querystring = "DELETE FROM books WHERE book_id IN (" + placeholders + ")";
         connection.query(querystring, ids_array, function (err, result) {
@@ -108,7 +105,6 @@ module.exports.updateBookById = function (book_id, changedFields, callback) {
             if (err) return callback(err);
             var data={};
             data.affectedRows = result["affectedRows"];
-//            var res = result["affectedRows"]? true : false;
             callback(null, data);
         });
     });
@@ -194,7 +190,6 @@ module.exports.updateEventById = function (event_id, changedFields, callback) {
             if (err) return callback(err);
             var data={};
             data.affectedRows = result["affectedRows"];
-//            var res = result["affectedRows"]? true : false;
             callback(null, data);
         });
     });
@@ -236,7 +231,6 @@ module.exports.takeBookById = function (book_id, callback) {
             var data={};
             data.affectedRows = result["affectedRows"];
 
-//            var res = result["affectedRows"]? true : false;
             callback(null, data);
         });
     });
