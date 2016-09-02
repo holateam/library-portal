@@ -1,5 +1,5 @@
 var sidebarItems = $('.sidebar_item');
-var loadLimit = 12;
+var loadLimit = 6;
 sidebarItems.click(function(event) {
     var context = $(this);
     var fp = (context.attr('data-filter').substring('').toLowerCase());
