@@ -1,3 +1,5 @@
+var configAP = require('./configAP');
+
 var basicAuth = require('basic-auth');
 
 // middleware
@@ -13,7 +15,7 @@ module.exports.auth = function (req, res, next) {
         return unauthorized(res);
     };
 
-    if (user.name === 'admin' && user.pass === 'admin') {
+    if (user.name === configAP.username && user.pass === configAP.password) {
         return next();
     } else {
         return unauthorized(res);
@@ -31,7 +33,7 @@ module.exports.isLogin = function (req, res, next) {
         return unauthorized(res);
     };
 
-    if (user.name === 'admin' && user.pass === 'admin') {
+    if (user.name === configAP.username && user.pass === configAP.password) {
         res.json({ isLogin: true, username: user.name });
     } else {
         return unauthorized(res);

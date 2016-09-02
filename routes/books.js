@@ -11,6 +11,7 @@ booksRouter.route('/')
     data.limit = req.query.limit;
     data.offset = req.query.offset;
     data.search = req.query.search;
+    console.log(req.query);
 
     dbLayer.getBooks(data, function(err, resp) {
         if (err) {
