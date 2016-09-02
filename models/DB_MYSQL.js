@@ -157,7 +157,7 @@ module.exports.createReader = function (readerInfo,callback) {
 
 module.exports.giveBookById = function (book_id, data, callback) {
     pool.getConnection(function(err, connection) {
-        connection.query("INSERT INTO events (event_id, book_id, reader_id, term, pawn) VALUES (NULL, ?, ?, ?, ?);", [book_id, data.reader_id, data.term, data.pawn] , function (err, result) {
+        connection.query("INSERT INTO events (event_id, book_id, reader_id, term, pawn) VALUES (NULL, ?, ?, ?, ?);", [book_id, data.reader_id, parseInt(data.term), parseInt(data.pawn)] , function (err, result) {
             if (err) return callback(err);
             var res = result["insertId"];
             connection.query("UPDATE books SET event = ? WHERE book_id = ?",  [res, book_id], function (err,result){

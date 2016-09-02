@@ -54,7 +54,7 @@ $('.btnBookAction').click(function(event) {
             }
         } : {
             method: 'GET',
-            url: '/admin/api/v1/books/take/' + data.id + '',
+            url: '/admin/api/v1/books/' + data.id + '/take',
             func: function() {
                 $('.orderBlock input').val('');
                 settingStatusForButton(null);
@@ -94,7 +94,7 @@ $('.btnBookAction').click(function(event) {
                 term: $('.dateOfDebtor').val(),
                 pawn: $('.pawnOfDebtor').val(),
             };
-            doAjaxQuery('POST', '/admin/api/v1/books/give/' + data.id + '', data, function(res) {
+            doAjaxQuery('POST', '/admin/api/v1/books/' + data.id + '/give', data, function(res) {
                 if (!res.success) {
                     view.showPopup('Error', res.msg); // to replace the normal popup
                     return;
@@ -114,7 +114,7 @@ $('#btnRemoveBook').click(function(event) {
     var data = {
         id: $('#bookID').attr('book-id')
     };
-    doAjaxQuery('GET', '/admin/api/v1/books/remove/' + data.id + '', null, function(res) {
+    doAjaxQuery('GET', '/admin/api/v1/books/' + data.id + '/remove', null, function(res) {
         if (!res.success) {
             view.showPopup('Error', res.msg); // to replace the normal popup
             return;
