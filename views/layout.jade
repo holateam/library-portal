@@ -1,21 +1,21 @@
 doctype html
 html(lang='ru')
-    head
-        title= "shpp-library"
-        meta(charset="utf-8")
-        meta(http-equiv="X-UA-Compatible" content="IE=edge")
-        meta(name="viewport" content="width=device-width, initial-scale=1")
-        meta( name='description', content='library Sh++')
-        link(rel='stylesheet',href='/css/libs.min.css')
-        link(rel='stylesheet', href='/css/style.css')
-        script(src='/js/libs.min.js' defer)
-        script(src='/js/common.js' defer)
-        
-    body
-        include header
-        include sidebar
-        section#main
-            div.container
-                div#content.col-xs-12.col-sm-12.col-md-12.col-lg-12
-                block content
-        include footer
+  head
+    title= "shpp-library"
+    meta(charset="utf-8")
+    meta(http-equiv="X-UA-Compatible" content="IE=edge")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    meta( name='description', content='library Sh++')
+    link(rel='stylesheet',href='/css/libs.min.css')
+    link(rel='stylesheet', href='/css/style.css')
+    script(src='/js/libs.min.js' defer)
+    script(src='/js/common.js' defer)
+
+  body
+    include header
+    include sidebar
+    section#main
+      div.container
+        div#content.col-xs-12.col-sm-12.col-md-12.col-lg-12
+        block content
+    include footer
