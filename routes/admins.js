@@ -11,29 +11,25 @@ var fs = require('fs');
 
 var mailer = require('../models/mailer');
 
-adminRouter.get('/', verify.auth, function(req, res, next) {
-    res.render('admin_index', { title: 'Admin Panel' });
-});
+var defaultCoverPath = "./public/img/books/";
+var defaultBookCover = "no-cover.jpg";
+var defaultCoverExtension = ".jpg";
 
-adminRouter.get('/addbook', verify.auth, function(req, res, next) {
-    res.render('admin_add_edit_book', { title: 'Add book' });
-});
+var Render = function(router, path, middleware, view, title) {
+    router.get(path, middleware, function(req, res, next) {
+        res.render(view, { title: title });
+    });
+};
 
-adminRouter.get('/editbook/:id', verify.auth, function(req, res, next) {
-    res.render('admin_add_edit_book', { title: 'Add book' });
-});
+var standardCallback = function(err, resp) {
+    return res.json(err ? { success: !!err, msg: err } : { success: !!err, data: resp });
+};
 
-adminRouter.get('/book/:id', verify.auth, function(req, res, next) {
-    res.render('admin_book', { title: 'book' });
-});
-
-adminRouter.get('/book/update/:id', verify.auth, function(req, res, next) {
-    res.render('admin_add_edit_book', { title: 'Update book' });
-});
-
-adminRouter.get('/cover', function(req, res, next) {
-    res.render('upload_cover',  { title: 'Upload form' });
-});
+Render(adminRouter, '/', verify.auth, 'admin_index', 'Admin Panel');
+Render(adminRouter, '/addbook', verify.auth, 'admin_add_edit_book', 'Add book');
+Render(adminRouter, '/editbook/:id', verify.auth, 'admin_add_edit_book', 'Add book');
+Render(adminRouter, '/book/:id', verify.auth, 'admin_book', 'book');
+Render(adminRouter, '/book/update/:id', verify.auth, 'admin_add_edit_book', 'Update book');
 
 adminRouter.route('/api/v1/books')
 .get(function(req, res, next) {
@@ -43,25 +39,13 @@ adminRouter.route('/api/v1/books')
     data.offset = req.query.offset;
     data.search = req.query.search;
 
-    dbLayer.getBooksForAdmin(data, function(err, resp) {
-        if (err) {
-            res.json({ success: false, msg: err });
-        } else {
-            res.json({ success: true, data: resp});
-        }
-    });
+    dbLayer.getBooksForAdmin(data, standardCallback(err, resp));
 });
 
 adminRouter.route('/api/v1/books/:book_id')
 .get(function(req, res, next) {
 
-    dbLayer.getBookForAdmin(req.params.book_id, function(err, resp) {
-        if (err) {
-            res.json({ success: false, msg: err });
-        } else {
-            res.json({ success: true, data: resp});
-        }
-    });
+    dbLayer.getBookForAdmin(req.params.book_id, standardCallback(err, resp));
 });
 
 adminRouter.route('/api/v1/books/add')
@@ -78,85 +62,14 @@ adminRouter.route('/api/v1/books/add')
         } else {
             if(changes.img){
                 var base64Data = changes.img.replace(/^data:image\/jpeg;base64,/, "");
-                fs.writeFile("./public/img/books/"+ resp.id +".jpg", base64Data, 'base64', function(err) {
+                fs.writeFile(defaultCoverPath+ resp.id + defaultCoverExtension, base64Data, 'base64', function(err) {
                 });
             }else{
-                fs.createReadStream('./public/img/books/no-cover.jpg').pipe(fs.createWriteStream("./public/img/books/" + resp.id + ".jpg"));
+                fs.createReadStream(defaultCoverPath + defaultBookCover).pipe(fs.createWriteStream(defaultCoverPath + resp.id + defaultCoverExtension));
             }
             res.json({ success: true, data: resp});
          }
      });
-});
-
-adminRouter.route('/api/v1/books/:book_id/remove')
-.get(verify.auth, function(req, res, next) {
-
-    dbLayer.deleteBookById(req.params.book_id, function(err, resp) {
-        if (err) {
-            res.json({ success: false, msg: err });
-        } else {
-            res.json({ success: true, data: resp});
-        }
-    });
-});
-
-adminRouter.route('/api/v1/books/remove')
-.post(verify.auth, function(req, res, next) {
-
-    dbLayer.deleteBookWithIdInList(req.body.ids, function(err, resp) {
-        if (err) {
-            res.json({ success: false, msg: err });
-        } else {
-            res.json({ success: true, data: resp});
-        }
-    });
-});
-
-adminRouter.route('/api/v1/queue/:book_id')
-.get(verify.auth, function(req, res, next) {
-
-    dbLayer.getQueueByBookId(req.params.book_id, function(err, resp) {
-        if (err) {
-            res.json({ success: false, msg: err });
-        } else {
-            res.json({ success: true, data: resp});
-        }
-    });
-});
-
-adminRouter.route('/api/v1/readers/add')
-.post(verify.auth, function(req, res, next) {
-    dbLayer.createReader(req.body.reader, function(err, resp) {
-        if (err) {
-            res.json({ success: false, msg: err });
-        } else {
-            res.json({ success: true, data: resp});
-        }
-    });
-});
-
-adminRouter.route('/api/v1/books/:book_id/give')
-.post(verify.auth, function(req, res, next) {
-
-    dbLayer.giveBookById(req.params.book_id, req.body.event, function(err, resp) {
-        if (err) {
-            res.json({ success: false, msg: err });
-        } else {
-            res.json({ success: true, data: resp});
-        }
-    });
-});
-
-adminRouter.route('/api/v1/books/:book_id/renewal')
-.post(verify.auth, function(req, res, next) {
-
-    dbLayer.updateEventByBookId(req.params.book_id, req.body.changes, function(err, resp) {
-        if (err) {
-            res.json({ success: false, msg: err });
-        } else {
-            res.json({ success: true, data: resp});
-        }
-    });
 });
 
 adminRouter.route('/api/v1/books/:book_id/update')
@@ -168,13 +81,48 @@ adminRouter.route('/api/v1/books/:book_id/update')
             var img = req.body.changes.img;
             if(img) {
                 var base64Data = img.replace(/^data:image\/jpeg;base64,/, "");
-                fs.writeFile("./public/img/books/" + req.params.book_id + ".jpg", base64Data, 'base64', function (err) {
+                fs.writeFile(defaultCoverPath + req.params.book_id + defaultCoverExtension, base64Data, 'base64', function (err) {
                     console.log(err);
                 });
             }
             res.json({ success: true, data: resp});
         }
     });
+});
+
+adminRouter.route('/api/v1/books/:book_id/remove')
+.get(verify.auth, function(req, res, next) {
+
+    dbLayer.deleteBookById(req.params.book_id, standardCallback(err, resp));
+});
+
+adminRouter.route('/api/v1/books/remove')
+.post(verify.auth, function(req, res, next) {
+
+    dbLayer.deleteBookWithIdInList(req.body.ids, standardCallback(err, resp));
+});
+
+adminRouter.route('/api/v1/queue/:book_id')
+.get(verify.auth, function(req, res, next) {
+
+    dbLayer.getQueueByBookId(req.params.book_id, standardCallback(err, resp));
+});
+
+adminRouter.route('/api/v1/readers/add')
+.post(verify.auth, function(req, res, next) {
+    dbLayer.createReader(req.body.reader, standardCallback(err, resp));
+});
+
+adminRouter.route('/api/v1/books/:book_id/give')
+.post(verify.auth, function(req, res, next) {
+
+    dbLayer.giveBookById(req.params.book_id, req.body.event, standardCallback(err, resp));
+});
+
+adminRouter.route('/api/v1/books/:book_id/renewal')
+.post(verify.auth, function(req, res, next) {
+
+    dbLayer.updateEventByBookId(req.params.book_id, req.body.changes, standardCallback(err, resp));
 });
 
 adminRouter.route('/api/v1/books/:book_id/take')
@@ -193,37 +141,15 @@ adminRouter.route('/api/v1/books/:book_id/take')
 adminRouter.route('/api/v1/events/:event_id')
 .get(verify.auth, function(req, res, next) {
 
-    dbLayer.getEventById(req.params.event_id, function(err, resp) {
-        if (err) {
-            res.json({ success: false, msg: err });
-        } else {
-            res.json({ success: true, data: resp});
-        }
-    });
+    dbLayer.getEventById(req.params.event_id, standardCallback(err, resp));
 });
 
 adminRouter.route('/api/v1/events/:event_id/update')
 .post(verify.auth, function(req, res, next) {
-    dbLayer.updateEventById(req.params.event_id, req.body.changes, function(err, resp) {
-        if (err) {
-            res.json({ success: false, msg: err });
-        } else {
-            res.json({ success: true, data: resp});
-        }
-    });
+    dbLayer.updateEventById(req.params.event_id, req.body.changes, standardCallback(err, resp));
 });
 
 adminRouter.route('/api/v1/verify/islogin')
 .get(verify.isLogin);
-
-adminRouter.route('/api/v1/cover/upload')
-.post(verify.auth, function(req, res) {
-    upload(req, res, function(err) {
-        if (err) {
-            return res.end("Error uploading file.");
-        }
-        res.end("File is uploaded");
-    });
-});
 
 module.exports = adminRouter;

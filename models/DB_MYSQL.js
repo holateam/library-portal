@@ -117,16 +117,19 @@ module.exports.updateBookById = function (book_id, changedFields, callback) {
 module.exports.addToQueue = function (data,callback) {
     pool.getConnection(function(err, connection) {
         connection.query("SELECT * FROM queue WHERE book_id = ? AND email = ?", [data.book_id, data.email] , function (err, result) {
-            if (err) return callback(err);
+            if (err) {
+                connection.release();
+                return callback(err);
+            }
             if (result == false) {
                 connection.query("INSERT INTO queue(book_id, email) VALUES (?,?)", [data.book_id, data.email] , function (err, result) {
                     connection.release();
                     if (err) return callback(err);
-                    callback(null,true);
+                    callback(null, true);
                 });
             }else{
                 connection.release();
-                callback(null,false);
+                callback(null, false);
             }
         });
     });
@@ -157,10 +160,15 @@ module.exports.createReader = function (readerInfo,callback) {
 module.exports.giveBookById = function (book_id, data, callback) {
     pool.getConnection(function(err, connection) {
         connection.query("INSERT INTO events (event_id, book_id, reader_id, term, pawn) VALUES (NULL, ?, ?, ?, ?);", [book_id, data.reader_id, parseInt(data.term), parseInt(data.pawn)] , function (err, result) {
-            if (err) return callback(err);
-            var res = result["insertId"];
-            connection.query("UPDATE books SET event = ? WHERE book_id = ?",  [res, book_id], function (err,result){
+            if (err) {
                 connection.release();
+                return callback(err);
+            }
+            var res = result["insertId"];
+            connection.query("UPDATE books SET event = ? WHERE book_id = ?",  [res, book_id], function (err, result){
+                connection.release();
+                if (err) return callback(err);
+
                 var data = {};
                 data.event_id = res;
                 callback(null, data);
@@ -173,7 +181,7 @@ module.exports.getEventById = function (event_id, callback) {
     pool.getConnection(function(err, connection) {
         connection.query("SELECT * FROM events WHERE event_id = ?", [event_id] , function (err, result) {
             connection.release();
-            if(err) callback(err);
+            if (err) return callback(err);
             var data = {};
             data.event = result[0];
             callback(null, data);
@@ -240,63 +248,20 @@ module.exports.takeBookById = function (book_id, callback) {
     });
 };
 
-module.exports.getPortionBooks = function (data, callback) {
-    pool.getConnection(function(err, connection) {
-        connection.query("SELECT * FROM books LIMIT ? OFFSET ?", [data.limit, data.offset] , function (err, result) {
-            connection.release();
-            if(err) callback(err);
-            callback(null,result);
-        });
-    });
-};
-
-module.exports.getPopular = function (callback) {
-    pool.getConnection(function(err, connection) {
-        connection.query("SELECT book_id, COUNT(book_id) AS cnt FROM events GROUP BY book_id ORDER BY cnt DESC", function (err, result) {
-            connection.release();
-            if(err) callback(err);
-            callback(null,result);
-        });
-    });
-};
-
-module.exports.getNew = function (callback) {
-    pool.getConnection(function(err, connection) {
-        connection.query("SELECT * FROM books WHERE date >= DATE(NOW()) - INTERVAL 2 MONTH", function (err, result) {
-            connection.release();
-            if(err) callback(err);
-            callback(null,result);
-        });
-    });
-};
-
-
 module.exports.getBooks = function (data, callback) {
     var maxlimit = 1000000000; //18446744073709551615
-    var limit = maxlimit;
+    var defaultFilter = "all";
+    var defaultOffset = 0;
 
-    var offset = 0;
-    var minoffset = 0;
+    var filter = data.filter || defaultFilter;
+    var limit = parseInt(data.limit) || maxlimit;
+    var offset = parseInt(data.offset) || defaultOffset;
 
-    var filter = "all";
     var search = "'.*'";
 
-    if (data.filter) {
-        filter = data.filter;
-    };
-
-    if (data.limit) {
-        limit = parseInt(data.limit);
-    };
-
-    if (data.offset) {
-        offset = parseInt(data.offset);
-    };
-
     if (data.search) {
-        //        const escSearch = escapeStringRegexp(data.search.toLowerCase());
-                const escSearch = data.search.toLowerCase().replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\\\$&');
-                search ="'" + escSearch.replace(/ /g,"|") + "'"; // or searchString.split(' ').join('|');
+        const escSearch = data.search.toLowerCase().replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\\\$&');
+        search ="'" + escSearch.replace(/ /g,"|") + "'";
     };
 
     var fields = [
@@ -312,12 +277,8 @@ module.exports.getBooks = function (data, callback) {
         "b.date",
         "b.event"
     ];
-    var searchStatement = "";
 
-    fields.forEach(function(field, i, fields) {
-        if (i != 0) searchStatement +=  ' OR ';
-        searchStatement += 'LOWER(' + field + ') REGEXP ' + search;
-    });
+    var searchStatement = fields.map(function( x) { return 'LOWER(' + x + ') REGEXP ' + search}).join(" OR ");
 
     var query;
     var queryTotal;
@@ -339,7 +300,10 @@ module.exports.getBooks = function (data, callback) {
     pool.getConnection(function(err, connection) {
 
         connection.query(query, [limit, offset], function (err, result) {
-            if (err) return callback(err);
+            if (err) {
+                connection.release();
+                return callback(err);
+            }
             connection.query(queryTotal, function (err, total) {
                 connection.release();
                 if (err) return callback(err);
@@ -370,30 +334,18 @@ module.exports.getBooks = function (data, callback) {
 
 module.exports.getBooksForAdmin = function (data, callback) {
     var maxlimit = 1000000000; //18446744073709551615
-    var limit = maxlimit;
+    var defaultFilter = "all";
+    var defaultOffset = 0;
 
-    var offset = 0;
-    var minoffset = 0;
+    var filter = data.filter || defaultFilter;
+    var limit = parseInt(data.limit) || maxlimit;
+    var offset = parseInt(data.offset) || defaultOffset;
 
-    var filter = "all";
     var search = "'.*'";
 
-    if (data.filter) {
-        filter = data.filter;
-    };
-
-    if (data.limit) {
-        limit = parseInt(data.limit);
-    };
-
-    if (data.offset) {
-        offset = parseInt(data.offset);
-    };
-
     if (data.search) {
-//        const escSearch = escapeStringRegexp(data.search.toLowerCase());
         const escSearch = data.search.toLowerCase().replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\\\$&');
-        search ="'" + escSearch.replace(/ /g,"|") + "'"; // or searchString.split(' ').join('|');
+        search ="'" + escSearch.replace(/ /g,"|") + "'";
     };
 
     var fields = [
@@ -418,12 +370,8 @@ module.exports.getBooksForAdmin = function (data, callback) {
         "r.email",
         "r.phone"
     ];
-    var searchStatement = "";
 
-    fields.forEach(function(field, i, fields) {
-        if (i != 0) searchStatement +=  ' OR ';
-        searchStatement += 'LOWER(' + field + ') REGEXP ' + search;
-    });
+    var searchStatement = fields.map(function( x) { return 'LOWER(' + x + ') REGEXP ' + search}).join(" OR ");
 
     var query;
     var queryTotal;
@@ -457,7 +405,10 @@ module.exports.getBooksForAdmin = function (data, callback) {
     pool.getConnection(function(err, connection) {
 
         connection.query(query, [limit, offset], function (err, result) {
-            if (err) return callback(err);
+            if (err) {
+                connection.release();
+                return callback(err);
+            }
             connection.query(queryTotal, function (err, total) {
                 connection.release();
                 if (err) return callback(err);
@@ -486,25 +437,12 @@ module.exports.getBooksForAdmin = function (data, callback) {
     });
 };
 
-module.exports.find = function (word, callback) {
-    pool.getConnection(function(err, connection) {
-        connection.query("SELECT * FROM books WHERE title LIKE '%"+ word +"%' OR author LIKE '%"+ word +"%' OR description LIKE '%"+ word +"%' OR ISBN LIKE '%"+ word +"%'", function (err, result) {
-            connection.release();
-            if(err) callback(err);
-            callback(null,result);
-        });
-    });
-};
-
 module.exports.deleteFromQueue = function (book_id,email, callback) {
     pool.getConnection(function(err, connection) {
         connection.query("DELETE FROM queue WHERE book_id = ? AND email = ?",[book_id,email], function (err, result) {
             connection.release();
-            if(err) {
-                callback(err);
-                return;
-            }
-            callback(null,result);
+            if (err) return callback(err);
+            callback(null, result);
         });
     });
 };
