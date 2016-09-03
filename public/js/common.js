@@ -96,10 +96,6 @@ var view = {
   normalDateFormat: function(date) {
     return date.toISOString().substring(0, 10);
   },
-  disabledElement: function(boolean, element) {
-    for (var i = 1; i < arguments.length; i++)
-      $(arguments[i]).attr('disabled', boolean);
-  },
   addPopUpBlock: function(title, text) {
     $('#main').after('<div id="test-modal" class="mfp-hide white-popup-block"><h1>' + title + '</h1><p>' + text + '</p><p><a class="popup-modal-dismiss" href="#">X</a></p></div>');
   },
@@ -143,35 +139,6 @@ function doAjaxQuery(method, url, data, callback) {
     }
   });
 }
-
-/* ------------ Hide the element when I toscroll to the desired item -------- */
-// var pathNameUrl = $(location).attr('pathname').split('/');
-// if (pathNameUrl[1] !== 'admin') {
-//     function come(elem, val) {
-//         var docViewTop = $(window).scrollTop(),
-//             docViewBottom = docViewTop + $(window).height(),
-//             elemTop = $(elem).offset().top,
-//             elemBottom = elemTop - val + $(elem).height();
-//         console.log("docViewTop:" + docViewTop + ', docViewBottom: ' + docViewBottom + 'elemTop:' + elemTop + ', elemBottom:' + elemBottom);
-//         return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
-//     }
-//
-//     $(document).scroll(function() {
-//         sidebarBottom = 240; // 240px = 160px margin + 80px height sidebar
-//         if (!come('.contacts', sidebarBottom)) {
-//             $('#sidebar').css({
-//                 'visibility': 'visible'
-//             });
-//         }
-//         if (come('.contacts', sidebarBottom)) {
-//             $('#sidebar').css({
-//                 'visibility': 'hidden'
-//             });
-//         }
-//     });
-// }
-
-
 
 $(function() {
   $('.popup-modal').magnificPopup({
