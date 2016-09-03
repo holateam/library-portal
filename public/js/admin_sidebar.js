@@ -11,10 +11,6 @@ sidebarItems.click(function(event) {
     if (pathname == '/admin') {
         event.preventDefault();
         doAjaxQuery('GET', '/admin/api/v1/books?filter=' + context.attr('data-filter'), null, function(res) {
-            if (!res.success) {
-                view.showError(res.msg);
-                return;
-            }
             view.addBooksList(res.data.books);
         });
     }
