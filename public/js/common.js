@@ -90,6 +90,10 @@ var view = {
     }
 
     content.html(contentHTML);
+
+    $('.book_list_row').click(function () {
+      $(location).attr('href', 'admin/book/' + $(this).attr('data-book-id'));
+    });
   },
 
   fillBookInfo: function(book) {
