@@ -33,7 +33,6 @@ var view = {
         var contentHTML = ((doClean) ? '' : content.html());
 
         for (var i in books) {
-            // console.log(view.addBookItem(books[i]));
             contentHTML += view.addBookItem(books[i]);
         }
 
@@ -131,8 +130,11 @@ function doAjaxQuery(method, url, data, callback) {
         url: url,
         contentType: 'application/json',
         dataType: 'json',
-        data: JSON.stringify(data),
-        success: callback
+        data: data,
+        success: callback,
+        error: function(jqXHR,textStatus) {
+            view.showError('Ошибка '+textStatus);
+        }
     });
 }
 
