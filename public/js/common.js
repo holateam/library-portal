@@ -96,10 +96,6 @@ var view = {
     normalDateFormat: function(date) {
         return date.toISOString().substring(0, 10);
     },
-    disabledElement: function(boolean, element) {
-        for (var i = 1; i < arguments.length; i++)
-            $(arguments[i]).attr('disabled', boolean);
-    },
     addPopUpBlock: function(title, text) {
         $('#main').after('<div id="test-modal" class="mfp-hide white-popup-block"><h1>' + title + '</h1><p>' + text + '</p><p><a class="popup-modal-dismiss" href="#">X</a></p></div>');
     },

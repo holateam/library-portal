@@ -14,14 +14,26 @@ var settingStatusForButton = function(val) {
     $('#renewalOfBook').attr('disabled', obj.disabled);
 };
 
+
+
+function fillFields(o,fields){
+    console.log(o.name);
+    fields=fields.split(',');
+    fields.map(function(f){
+      
+      $('#'+f).val(o[f]);
+    });
+}
+
 var fillActionBook = function(data) {
-    console.log(data.date);
-    $('.nameOfDebtor').val(data.name);
-    $('.phoneOfDebtor').val(data.phone);
-    $('.emailOfDebtor').val(data.email);
-    $('.termOfDebtor').val(data.term);
-    $('.pawnOfDebtor').val(data.pawn);
-    $('.dateOfDebtor').val((data.date === null) ?
+    console.log(data);
+    fillFields(data,'name,phone,email,term,pawn');
+    // $('#name').val(data.name);
+    // $('#phone').val(data.phone);
+    // $('#email').val(data.email);
+    // $('#term').val(data.term);
+    // $('#pawn').val(data.pawn);
+    $('#date').val((data.date === null) ?
         view.normalDateFormat(new Date()) :
         view.normalDateFormat(new Date(data.date)));
     settingStatusForButton(data.event);
@@ -49,7 +61,7 @@ $('.btnBookAction').click(function(event) {
             url: '/admin/api/v1/books/' + data.id + '/renewal',
             func: function() {
                 $('#renewalOfBook').prop('checked', false);
-                view.disabledElement(false, '.nameOfDebtor', '.phoneOfDebtor', '.emailOfDebtor', '.pawnOfDebtor');
+                $('#name,#phone,#email,#pawn').css('disabled',false);
                 settingStatusForButton(true);
                 view.showSuccess('Человек стремится к знаниям!\nНу разве это не прекрасно? ))');
             }
@@ -64,8 +76,8 @@ $('.btnBookAction').click(function(event) {
         };
         var updata = {
             changes: {
-                term: $('.termOfDebtor').val(),
-                pawn: $('.pawnOfDebtor').val()
+                term: $('#term').val(),
+                pawn: $('#pawn').val()
             }
         };
         doAjaxQuery(obj.method, obj.url, updata, function(res) {
@@ -80,12 +92,12 @@ $('.btnBookAction').click(function(event) {
 
     } else {
         data.reader = {
-            name: $('.nameOfDebtor').val(),
-            email: $('.emailOfDebtor').val(),
-            phone: $('.phoneOfDebtor').val(),
+            name: $('#name').val(),
+            email: $('#email').val(),
+            phone: $('#phone').val(),
         };
 
-        doAjaxQuery('POST', '/admin/api/v1/readers/add', data, function(res) {
+        doAjaxQuery('POST', '/admin/api/v1/readers/add', JSON.stringify(data), function(res) {
             if (!res.success) {
                 view.showError(res.msg);
                 return;
@@ -93,10 +105,10 @@ $('.btnBookAction').click(function(event) {
             data.event = {
                 reader_id: res.data.reader_id,
                 date: new Date(),
-                term: $('.dateOfDebtor').val(),
-                pawn: $('.pawnOfDebtor').val(),
+                term: $('#date').val(),
+                pawn: $('#pawn').val(),
             };
-            doAjaxQuery('POST', '/admin/api/v1/books/' + data.id + '/give', data, function(res) {
+            doAjaxQuery('POST', '/admin/api/v1/books/' + data.id + '/give', JSON.stringify(data), function(res) {
                 if (!res.success) {
                     view.showError(res.msg);
                     return;
@@ -130,9 +142,9 @@ $('#renewalOfBook').click(function(event) {
     var isChecked = $('#renewalOfBook').prop('checked');
     if (isChecked) {
         $('.btnBookAction').text('Update').attr('data-update', true);
-        view.disabledElement(true, '.nameOfDebtor', '.phoneOfDebtor', '.emailOfDebtor', '.pawnOfDebtor');
+        $('#name,#phone,#email,#pawn').css('disabled',true);
     } else {
-        view.disabledElement(false, '.nameOfDebtor', '.phoneOfDebtor', '.emailOfDebtor', '.pawnOfDebtor');
+        $('#name,#phone,#email,#pawn').css('disabled',false);
         var isBusy = $('.btnBookAction').attr('data');
         var val = (isBusy !== 'true') ? null : isBusy;
         settingStatusForButton(val);
