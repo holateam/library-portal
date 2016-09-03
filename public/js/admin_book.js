@@ -16,23 +16,17 @@ var settingStatusForButton = function(val) {
 
 
 
-function fillFields(o,fields){
-    console.log(o.name);
+function fillFields(obj,fields){
+    console.log(obj.name);
     fields=fields.split(',');
     fields.map(function(f){
-      
-      $('#'+f).val(o[f]);
+        $('#'+f).val(obj[f]);
     });
 }
 
 var fillActionBook = function(data) {
     console.log(data);
     fillFields(data,'name,phone,email,term,pawn');
-    // $('#name').val(data.name);
-    // $('#phone').val(data.phone);
-    // $('#email').val(data.email);
-    // $('#term').val(data.term);
-    // $('#pawn').val(data.pawn);
     $('#date').val((data.date === null) ?
         view.normalDateFormat(new Date()) :
         view.normalDateFormat(new Date(data.date)));
