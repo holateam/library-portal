@@ -179,3 +179,9 @@ $(function() {
         $.magnificPopup.close();
     });
 });
+
+var global = {
+    view_limit_on_page_load : 12,
+    total_items_exist : Number.POSITIVE_INFINITY,
+    number_of_items_onscroll : 6
+};

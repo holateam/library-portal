@@ -1,53 +1,23 @@
-// function addBookItemOnScroll(book) {
-//     $('#pattern').clone().removeAttr('id').attr('book-id', book.id).addClass('book_item')
-//         .find('img').attr('src', '/img/books/' + book.id + '.jpg').end()
-//         .find('.blockI').attr('data-title', book.title+': '+book.author).end()
-//         .find('.title').attr('data-book-title', book.title).html(book.title).end()
-//         .find('.author').attr('data-book-author', book.author).html(book.author).end()
-//         .find('a').attr('href', '/book/' + book.id).end()
-//         .css('display', 'block').appendTo('#content .row');
-// }
-
-// function addBooksItemsOnScroll(books) {
-//     for (var i in books) {
-//         addBookItemOnScroll(books[i]);
-//     }
-//
-//     $('.details, .book_item a').click(function() {
-//         $(location).attr('href', '/book/' + $(this).closest('.book_item').attr('book-id'));
-//     });
-// }
-// var search = $(location).attr('search');
-// console.log('search: ' + search);
-// var stringToFind = '?filter=';
-
-
-var filter = sessionStorage.getItem('filter')|| 'new';
-console.log('filter: ' + filter);
+var filter = sessionStorage.getItem('filter') || 'new';
+var offsetScrollCoef = (global.view_limit_on_page_load / global.number_of_items_onscroll) - 1;
+offsetScrollCoef = (offsetScrollCoef >= 0) ? offsetScrollCoef : 0;
 $('.sidebar_item[data-filter=' + filter + ']').click();
 
 window.history.replaceState({}, '', $(location).attr('origin'));
 
-// get the next one portion of book_items while scrolling
-var viewPortion = 12;
-var offsetCoef = 0;
-var isScrollQuerySended = false;
-
-$(document).scroll(function() {
+$(document).scroll(function () {
     if ($(window).scrollTop() + $(window).height() == $(document).height()) {
-        offsetCoef++;
-        var offset = offsetCoef * viewPortion;
-        var filter = sessionStorage.filter ? sessionStorage.filter : 'new';
-        if (!isScrollQuerySended) {
-            doAjaxQuery('GET', '/api/v1/books?filter=' + filter + '&limit=' + viewPortion + '&offset=' + offset, null, function(res) {
-                console.log(viewPortion);
-                isScrollQuerySended = true;
+        offsetScrollCoef++;
+        var offset = offsetScrollCoef * global.number_of_items_onscroll;
 
-                if (res.success) {
-                    isScrollQuerySended = false;
-                }
-                addBooksItemsOnScroll(res.data.books);
-
+        if (offset < global.total_items_exist) {
+            doAjaxQuery('GET', '/api/v1/books', {
+                'filter': filter,
+                'limit': global.number_of_items_onscroll,
+                'offset': offset
+            }, function (res) {
+                console.log(({'filter': filter, 'limit': global.number_of_items_onscroll, 'offset': offset}));
+                view.addBooksItems(res.data.books, false);
             });
         }
     }
