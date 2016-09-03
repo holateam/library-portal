@@ -1,17 +1,24 @@
 var filter = sessionStorage.getItem('filter') || 'new';
+var offsetScrollCoef = (global.view_limit_on_page_load / global.number_of_items_onscroll) - 1;
+offsetScrollCoef = (offsetScrollCoef >= 0) ? offsetScrollCoef : 0;
 $('.sidebar_item[data-filter=' + filter + ']').click();
 
 window.history.replaceState({}, '', $(location).attr('origin'));
 
-var viewPortion = 12;
-var offsetCoef = 0;
-
 $(document).scroll(function () {
-  if ($(window).scrollTop() + $(window).height() == $(document).height()) {
-    offsetCoef++;
-    var offset = offsetCoef * viewPortion;
-    doAjaxQuery('GET', '/api/v1/books', {'filter': filter, 'limit': viewPortion, 'offset': offset}, function (res) {
-      view.addBooksItems(res.data.books, false);
-    });
-  }
+    if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+        offsetScrollCoef++;
+        var offset = offsetScrollCoef * global.number_of_items_onscroll;
+
+        if (offset < global.total_items_exist) {
+            doAjaxQuery('GET', '/api/v1/books', {
+                'filter': filter,
+                'limit': global.number_of_items_onscroll,
+                'offset': offset
+            }, function (res) {
+                console.log(({'filter': filter, 'limit': global.number_of_items_onscroll, 'offset': offset}));
+                view.addBooksItems(res.data.books, false);
+            });
+        }
+    }
 });

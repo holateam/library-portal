@@ -52,33 +52,50 @@ var view = {
   nullToDash: function(string) {
     return (((string == null) || (string == 0)) ? '-' : string);
   },
-  addBookListRow: function(book) {
+
+  addBooksListRow: function(book) {
     var date;
     if (book.date) {
       date = new Date(book.date);
       date.setDate(date.getDate() + book.term);
       date = date.toDateString();
     }
-    $('#pattern').clone().removeAttr('id').attr('book-id', book.id)
-      .html('<td>' + book.title + '</td><td>' + book.author + '</td><td>' + view.nullToDash(book.name) + '</td><td>' +
-        view.nullToDash(book.email) + '</td><td>' + view.nullToDash(book.phone) + '</td><td>' +
-        view.nullToDash(date) + '</td><td>' + view.nullToDash(book.pawn) + '</td>')
-      .click(function() {
-        $(location).attr('href', 'admin/book/' + book.id);
-      })
-      .css('display', 'table-row').css('cursor', 'pointer').appendTo('.table tbody');
+
+    return $('#pattern').html()
+      .replace(/{id}/g, book.id)
+      .replace(/{title}/g, book.title)
+      .replace(/{author}/g, book.author)
+      .replace(/{name}/g, view.nullToDash(book.name))
+      .replace(/{email}/g, view.nullToDash(book.email))
+      .replace(/{phone}/g, view.nullToDash(book.phone))
+      .replace(/{date}/g, view.nullToDash(date))
+      .replace(/{pawn}/g, view.nullToDash(book.pawn));
+
+
+
+
+  //     .click(function() {
+  //       $(location).attr('href', 'admin/book/' + book.id);
+  //     })
+  //     .css('display', 'table-row').css('cursor', 'pointer').appendTo('.table tbody');
   },
+
   addBooksList: function(books) {
-    console.log('addBooksList');
-    $('.table-hover').css('display', 'block');
-    $('#bookID').remove();
-    $('.book_list_row:not(#pattern)').remove();
-    $('#zero_search').remove();
+    var content = $('#table_content');
+    var contentHTML = '';
 
     for (var i in books) {
-      view.addBookListRow(books[i]);
+      console.log(view.addBooksListRow(books[i]));
+      contentHTML += view.addBooksListRow(books[i]);
     }
+
+    content.html(contentHTML);
+
+    $('.book_list_row').click(function () {
+      $(location).attr('href', 'admin/book/' + $(this).attr('data-book-id'));
+    });
   },
+
   fillBookInfo: function(book) {
     $('#bookID').attr('book-id', book.id);
     $('#bookImg img').attr('src', '/img/books/' + book.id + '.jpg');
@@ -126,7 +143,7 @@ function doAjaxQuery(method, url, data, callback) {
     url: url,
     contentType: 'application/json',
     dataType: 'json',
-    data: (method == 'POST') ? JSON.stringify(data) : data,
+    data: ((method == 'POST') ? JSON.stringify(data) : data),
     success: function (res) {
       if (!res.success) {
         view.showError(res.msg);
@@ -152,3 +169,9 @@ $(function() {
     $.magnificPopup.close();
   });
 });
+
+var global = {
+    view_limit_on_page_load : 12,
+    total_items_exist : Number.POSITIVE_INFINITY,
+    number_of_items_onscroll : 6
+};

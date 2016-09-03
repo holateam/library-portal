@@ -1,5 +1,6 @@
 var sidebarItems = $('.sidebar_item');
 var loadLimit = 12;
+
 sidebarItems.click(function(event) {
     var context = $(this);
     var filter = context.attr('data-filter');
@@ -12,10 +13,6 @@ sidebarItems.click(function(event) {
         event.preventDefault();
 
         doAjaxQuery('GET', '/api/v1/books', {'filter': filter, 'limit': loadLimit}, function(res) {
-            if (!res.success) {
-                view.showError(res.msg);
-                return;
-            }
             view.addBooksItems(res.data.books,true);
         });
     }
