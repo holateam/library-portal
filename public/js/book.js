@@ -2,10 +2,6 @@ var pathname = $(location).attr('pathname');
 var bookIdPosition = pathname.lastIndexOf('/') + 1;
 
 doAjaxQuery('GET', '/api/v1/books/' + pathname.substr(bookIdPosition), null, function(res) {
-    if (!res.success) {
-        view.showPopup('Error', res.msg); // to replace the normal popup
-        return;
-    }
     view.fillBookInfo(res.data);
 });
 
@@ -21,12 +17,7 @@ var showResultSendEmailToQueue = function(email, result) {
 /*--------------- Send email. Get in Queue in for a book ---------------------*/
 var sendEmailToQueue = function(id, email) {
     doAjaxQuery('GET', '/api/v1/books/' + id + '/order?email=' + email, null, function(res) {
-        if (!res.success) {
-            view.showError(res.msg);
-            return;
-        } else {
-            showResultSendEmailToQueue(email, res.success);
-        }
+        showResultSendEmailToQueue(email, res.success);
     });
 };
 

@@ -1,5 +1,6 @@
 var sidebarItems = $('.sidebar_item');
-var startLoadLimit = 12;
+var loadLimit = 12;
+
 sidebarItems.click(function(event) {
     var context = $(this);
     var filter = context.attr('data-filter');
@@ -11,12 +12,7 @@ sidebarItems.click(function(event) {
     if ($(location).attr('pathname') == '/') {
         event.preventDefault();
 
-        doAjaxQuery('GET', '/api/v1/books', {'filter': filter, 'limit': startLoadLimit}, function(res) {
-            if (!res.success) {
-                view.showError(res.msg);
-                return;
-            }
-            global.total_items_exist = res.data.total.amount;
+        doAjaxQuery('GET', '/api/v1/books', {'filter': filter, 'limit': loadLimit}, function(res) {
             view.addBooksItems(res.data.books,true);
         });
     }

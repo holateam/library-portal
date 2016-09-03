@@ -1,10 +1,10 @@
 script#pattern(type='text/template')
-    div.book_item.col-xs-12.col-sm-3.col-md-2.col-lg-2(data-book-id='{id}')
-        div.book
-            a(href='/book/{id}')
-                img(src='img/books/{id}.jpg', alt='{title}')
-                div.blockI(data-title='{title}')
-                    div.title.size_text(data-book-title='{title}') {title}
-                    div.author(data-book-author='{author}') {author}
-            a(href='/book/{id}')
-                button.details.btn.btn-success(type="button") Читать
+  div.book_item.col-xs-12.col-sm-3.col-md-2.col-lg-2(data-book-id='{id}')
+    div.book
+      a(href='/book/{id}')
+        img(src='img/books/{id}.jpg', alt='{title}')
+        div.blockI(data-title='{title}')
+          div.title.size_text(data-book-title='{title}') {title}
+          div.author(data-book-author='{author}') {author}
+      a(href='/book/{id}')
+        button.details.btn.btn-success(type="button") Читать
