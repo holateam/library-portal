@@ -130,7 +130,7 @@ function doAjaxQuery(method, url, data, callback) {
     url: url,
     contentType: 'application/json',
     dataType: 'json',
-    data: (method == 'POST') ? JSON.stringify(data) : data,
+    data: ((method == 'POST') ? JSON.stringify(data) : data),
     success: function (res) {
       if (!res.success) {
         view.showError(res.msg);
