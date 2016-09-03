@@ -57,10 +57,6 @@ var stringToFind = '/admin/book/update/';
 var stringPosition = pathname.indexOf(stringToFind);
 
 doAjaxQuery('GET', '/admin/api/v1/books/' + pathname.substr(stringToFind.length), null, function (res) {
-    if (!res.success) {
-        view.showError(res.msg); // to replace the normal popup
-        return;
-    }
     fillBookEditor(res.data);
 });
 
@@ -85,10 +81,6 @@ $('#book_save').click(function () {
     };
 
     doAjaxQuery('POST', '/admin/api/v1/books/' + pathname.substr(stringToFind.length) + ((stringPosition == 0) ? '/update/' : 'add/'), data, function (res) {
-        if (!res.success) {
-            view.showError(res.msg);
-            return;
-        }
         view.showSuccess('Данные сохранены');
         clearBookEditor();
     });

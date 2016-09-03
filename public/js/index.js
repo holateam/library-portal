@@ -16,7 +16,6 @@ $(document).scroll(function () {
                 'limit': global.number_of_items_onscroll,
                 'offset': offset
             }, function (res) {
-                console.log(({'filter': filter, 'limit': global.number_of_items_onscroll, 'offset': offset}));
                 view.addBooksItems(res.data.books, false);
             });
         }
