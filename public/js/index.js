@@ -17,10 +17,12 @@
 //         $(location).attr('href', '/book/' + $(this).closest('.book_item').attr('book-id'));
 //     });
 // }
-var search = $(location).attr('search');
-console.log('search: ' + search);
-var stringToFind = '?filter=';
-var filter = (search.indexOf(stringToFind) == 0) ? search.substr(stringToFind.length) : 'new';
+// var search = $(location).attr('search');
+// console.log('search: ' + search);
+// var stringToFind = '?filter=';
+
+
+var filter = sessionStorage.getItem('filter')|| 'new';
 console.log('filter: ' + filter);
 $('.sidebar_item[data-filter=' + filter + ']').click();
 
