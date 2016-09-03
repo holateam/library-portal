@@ -23,41 +23,21 @@ var view = {
         view.showElement('.glyphicon-ok');
     },
     addBookItem: function(book) {
-        $('#pattern').clone().removeAttr('id').attr('book-id', book.id).addClass('book_item')
-            .find('img').attr('src', '/img/books/' + book.id + '.jpg').end()
-            .find('.blockI').attr('data-title', book.title+': '+book.author).end()
-            .find('.title').attr('data-book-title', book.title).html(book.title).end()
-            .find('.author').attr('data-book-author', book.author).html(book.author).end()
-            .find('a').attr('href', '/book/' + book.id).end()
-            .css('display', 'block').appendTo('#content .row');
+        return $('#pattern').html()
+            .replace(/{id}/g, book.id)
+            .replace(/{title}/g, book.title)
+            .replace(/{author}/g, book.author);
     },
-    addBooksItems: function(books) {
-        // $('.book_item:not(#pattern)').remove();
-        $('#content .row> :not(#pattern)').remove();
+    addBooksItems: function(books, doClean) {
+        var content = $('#content');
+        var contentHTML = ((doClean) ? '' : content.html());
 
         for (var i in books) {
-            view.addBookItem(books[i]);
-            if(Number(i) == books.length-1){
-
-                // $('.blockI').matchHeight();
-                $(".book").matchHeight(
-                  // {
-                  //   byRow: true,
-                  //   property: 'height',
-                  //   target: null,
-                  //   remove: false
-                  // }
-                );
-
-              // $(".book_item").matchHeight();
-              // $('.blockI').matchHeight();
-            }
+            // console.log(view.addBookItem(books[i]));
+            contentHTML += view.addBookItem(books[i]);
         }
-        console.log('matchHeight');
-        // $(document).ready(function() {
-        //   // $(".book_item").matchHeight();
-        //   // $('.blockI').matchHeight();
-        // });
+
+        content.html(contentHTML);
     },
     showZeroSearch: function(searchText, pathUrl) {
         if (pathUrl === '') {
@@ -111,7 +91,7 @@ var view = {
         $('#bookDescriptionText').html(book.description);
         $('#bookID').attr('busy', book.event);
 
-        var nameClassIsBook = (book.event===null) ? '.freeBook' : '.busyBook';
+        var nameClassIsBook = (book.event === null) ? '.freeBook' : '.busyBook';
         $(nameClassIsBook).css('display', 'block');
     },
     normalDateFormat: function(date) {
@@ -193,7 +173,7 @@ $(function() {
         modal: true
     });
     $(document).on('click', '.popup-modal-dismiss', function(e) {
-        e.preventDefault();
+         e.preventDefault();
         $.magnificPopup.close();
     });
 });

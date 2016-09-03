@@ -1,32 +1,28 @@
-function addBookItemOnScroll(book) {
-    $('#pattern').clone().removeAttr('id').attr('book-id', book.id).addClass('book_item')
-        .find('img').attr('src', '/img/books/' + book.id + '.jpg').end()
-        .find('.blockI').attr('data-title', book.title+': '+book.author).end()
-        .find('.title').attr('data-book-title', book.title).html(book.title).end()
-        .find('.author').attr('data-book-author', book.author).html(book.author).end()
-        .find('a').attr('href', '/book/' + book.id).end()
-        .css('display', 'block').appendTo('#content .row');
-}
+// function addBookItemOnScroll(book) {
+//     $('#pattern').clone().removeAttr('id').attr('book-id', book.id).addClass('book_item')
+//         .find('img').attr('src', '/img/books/' + book.id + '.jpg').end()
+//         .find('.blockI').attr('data-title', book.title+': '+book.author).end()
+//         .find('.title').attr('data-book-title', book.title).html(book.title).end()
+//         .find('.author').attr('data-book-author', book.author).html(book.author).end()
+//         .find('a').attr('href', '/book/' + book.id).end()
+//         .css('display', 'block').appendTo('#content .row');
+// }
 
-function addBooksItemsOnScroll(books) {
-    for (var i in books) {
-        addBookItemOnScroll(books[i]);
-    }
-
-    $('.details, .book_item a').click(function() {
-        $(location).attr('href', '/book/' + $(this).closest('.book_item').attr('book-id'));
-    });
-}
-
+// function addBooksItemsOnScroll(books) {
+//     for (var i in books) {
+//         addBookItemOnScroll(books[i]);
+//     }
+//
+//     $('.details, .book_item a').click(function() {
+//         $(location).attr('href', '/book/' + $(this).closest('.book_item').attr('book-id'));
+//     });
+// }
 var search = $(location).attr('search');
+console.log('search: ' + search);
 var stringToFind = '?filter=';
-var stringPosition = search.indexOf(stringToFind);
-
-if (stringPosition == 0) {
-    $('.sidebar_item[data-filter=' + search.substr(stringToFind.length) + ']').click();
-} else {
-    $('.sidebar_item[data-filter=new]').click();
-}
+var filter = (search.indexOf(stringToFind) == 0) ? search.substr(stringToFind.length) : 'new';
+console.log('filter: ' + filter);
+$('.sidebar_item[data-filter=' + filter + ']').click();
 
 window.history.replaceState({}, '', $(location).attr('origin'));
 
@@ -36,7 +32,7 @@ var offsetCoef = 0;
 var isScrollQuerySended = false;
 
 $(document).scroll(function() {
-    if ($(window).scrollTop() + $(window).height() == $(document).height()){
+    if ($(window).scrollTop() + $(window).height() == $(document).height()) {
         offsetCoef++;
         var offset = offsetCoef * viewPortion;
         var filter = sessionStorage.filter ? sessionStorage.filter : 'new';
@@ -53,16 +49,4 @@ $(document).scroll(function() {
             });
         }
     }
-});
-//         }
-//     }
-// });
-/* -----------Clean scrolling mouse wheel with google maps ----------------- */
-$(function() {
-  $(this).find('iframe').css('pointer-events', 'none');
-    $('#map').click(function(e) {
-        $(this).find('iframe').css('pointer-events', 'all');
-    }).mouseleave(function(e) {
-        $(this).find('iframe').css('pointer-events', 'none');
-    });
 });
