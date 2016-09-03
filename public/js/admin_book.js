@@ -35,10 +35,6 @@ var fillActionBook = function(data) {
 };
 
 doAjaxQuery('GET', '/admin/api/v1/books/' + pathNameUrl[3], null, function(res) {
-    if (!res.success) {
-        view.showError(res.msg);
-        return;
-    }
     view.fillBookInfo(res.data);
     fillActionBook(res.data);
 });
@@ -75,10 +71,6 @@ $('.btnBookAction').click(function(event) {
             }
         };
         doAjaxQuery(obj.method, obj.url, updata, function(res) {
-            if (!res.success) {
-                view.showError(res.msg); // to replace the normal popup
-                return;
-            }
             obj.func();
             // $('.orderBlock input').val('');
             // settingStatusForButton(null);
@@ -92,10 +84,6 @@ $('.btnBookAction').click(function(event) {
         };
 
         doAjaxQuery('POST', '/admin/api/v1/readers/add', JSON.stringify(data), function(res) {
-            if (!res.success) {
-                view.showError(res.msg);
-                return;
-            }
             data.event = {
                 reader_id: res.data.reader_id,
                 date: new Date(),
@@ -103,10 +91,6 @@ $('.btnBookAction').click(function(event) {
                 pawn: $('#pawn').val(),
             };
             doAjaxQuery('POST', '/admin/api/v1/books/' + data.id + '/give', JSON.stringify(data), function(res) {
-                if (!res.success) {
-                    view.showError(res.msg);
-                    return;
-                }
                 settingStatusForButton(true);
             });
         });
@@ -123,10 +107,6 @@ $('#btnRemoveBook').click(function(event) {
         id: $('#bookID').attr('book-id')
     };
     doAjaxQuery('GET', '/admin/api/v1/books/' + data.id + '/remove', null, function(res) {
-        if (!res.success) {
-            view.showError(res.msg);
-            return;
-        }
         window.location.href = '/admin';
     });
 });

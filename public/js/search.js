@@ -8,15 +8,11 @@ var requestBooksSearch = function() {
     var textEncode = encodeURIComponent(text); // shielding request
     doAjaxQuery('GET', '' + pathUrl + '/api/v1/books?search=' + textEncode + '', null,
         function(res) {
-            if (!res.success) {
-                view.showError(res.msg); // to replace the normal popup
+            if (res.data.total.amount > 0) {
+                (pathUrl === '') ? view.addBooksItems(res.data.books): view.addBooksList(res.data.books);
             } else {
-                if (res.data.total.amount > 0) {
-                    (pathUrl === '') ? view.addBooksItems(res.data.books): view.addBooksList(res.data.books);
-                } else {
-                    console.log("zero");
-                    view.showZeroSearch(text, pathUrl);
-                }
+                console.log("zero");
+                view.showZeroSearch(text, pathUrl);
             }
         });
 };
