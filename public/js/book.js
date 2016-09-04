@@ -1,8 +1,12 @@
 var pathname = $(location).attr('pathname');
 var bookIdPosition = pathname.lastIndexOf('/') + 1;
+var isBookInUse = false;
 
-doAjaxQuery('GET', '/api/v1/books/' + pathname.substr(bookIdPosition), null, function(res) {
+doAjaxQuery('GET', '/api/v1/books/' + pathname.substr(bookIdPosition), null, function (res) {
     view.fillBookInfo(res.data);
+    if (res.data.event) {
+        isBookInUse = true;
+    }
 });
 
 /* --------------------Show the result, for sending the -----------------------
@@ -44,13 +48,33 @@ $('.orderEmail').keyup(function(event) {
 
 /*------------------ Sending email by clicking on the button ----------------*/
 $('.btnBookID').click(function(event) {
-    var email = $('.orderEmail').val();
-    var isEmail = controller.validateEmail(email);
-    if (isEmail) {
-        view.showSuccessEmail();
-        var id = $('#bookID').attr('book-id');
-        sendEmailToQueue(id, email);
-    } else {
-        view.showErrEmail();
+    // var email = $('.orderEmail').val();
+    // var isEmail = controller.validateEmail(email);
+    // if (isEmail) {
+    //     view.showSuccessEmail();
+    //     var id = $('#bookID').attr('book-id');
+    //     sendEmailToQueue(id, email);
+    // } else {
+    //     view.showErrEmail();
+    // }
+    if (isBookInUse) {
+        view.showSubscribe(
+            "Сейчас эта книга находится на руках, у одного из наших учеников."
+            + " Оставь свой email и мы сообщим, как только книга вновь"
+            + " появится в библиотеке"
+        );
     }
+    else  {
+        view.showSuccess(
+            "Книга свободна и ты можешь прийти за ней."
+            + " Наш адрес: г. Кропивницкий, переулок Васильевский 10, 5 этаж."
+            + " Лучше предварительно прозвонить и предупредить нас, чтоб "
+            + " не попасть в неловкую ситуацию. Тел. 099 196 24 69"
+        );
+    }
+
+
+
+
+
 });
