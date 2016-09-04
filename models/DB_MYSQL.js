@@ -211,10 +211,11 @@ module.exports.updateEventByBookId = function (book_id, changedFields, callback)
     pool.getConnection(function(err, connection) {
         connection.query("SELECT event FROM books WHERE book_id = ?;", [book_id] , function (err, result) {
             if (err) return callback(err);
-            var event_id = result[0].event;
-            if ( !event_id) {
+            if ( !result[0] || !result[0].event) {
                 return callback("Attemp to update not exists event");
             }
+
+            var event_id = result[0].event;
             var query = "UPDATE events SET ";
             for (var key in changedFields) {
                 query += key + " = " + changedFields[key] + ", ";

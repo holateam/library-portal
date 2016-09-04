@@ -21,8 +21,8 @@ var Render = function(router, path, middleware, view, title) {
     });
 };
 
-var standardCallback = function(err, resp) {
-    return res.json(err ? { success: !!err, msg: err } : { success: !!err, data: resp });
+var standardRes = function(err, resp) {
+    return err ? { success: !err, msg: err } : { success: !err, data: resp };
 };
 
 Render(adminRouter, '/', verify.auth, 'admin_index', 'Admin Panel');
@@ -39,13 +39,16 @@ adminRouter.route('/api/v1/books')
     data.offset = req.query.offset;
     data.search = req.query.search;
 
-    dbLayer.getBooksForAdmin(data, standardCallback(err, resp));
+    dbLayer.getBooksForAdmin(data, function(err, resp) {
+        res.json(standardRes(err, resp));
+    });
 });
 
 adminRouter.route('/api/v1/books/:book_id')
 .get(function(req, res, next) {
-
-    dbLayer.getBookForAdmin(req.params.book_id, standardCallback(err, resp));
+    dbLayer.getBookForAdmin(req.params.book_id, function(err, resp) {
+        res.json(standardRes(err, resp));
+    });
 });
 
 adminRouter.route('/api/v1/books/add')
@@ -57,9 +60,7 @@ adminRouter.route('/api/v1/books/add')
     changes.pages = parseInt(changes.pages);
 
     dbLayer.addBook(changes, function(err, resp) {
-        if (err) {
-            res.json({ success: false, msg: err });
-        } else {
+        if (!err) {
             if(changes.img){
                 var base64Data = changes.img.replace(/^data:image\/jpeg;base64,/, "");
                 fs.writeFile(defaultCoverPath+ resp.id + defaultCoverExtension, base64Data, 'base64', function(err) {
@@ -67,17 +68,15 @@ adminRouter.route('/api/v1/books/add')
             }else{
                 fs.createReadStream(defaultCoverPath + defaultBookCover).pipe(fs.createWriteStream(defaultCoverPath + resp.id + defaultCoverExtension));
             }
-            res.json({ success: true, data: resp});
-         }
+        }
+        res.json(standardRes(err, resp));
      });
 });
 
 adminRouter.route('/api/v1/books/:book_id/update')
 .post(verify.auth, function(req, res, next) {
     dbLayer.updateBookById(req.params.book_id, req.body.changes, function(err, resp) {
-        if (err) {
-            res.json({ success: false, msg: err });
-        } else {
+        if (!err) {
             var img = req.body.changes.img;
             if(img) {
                 var base64Data = img.replace(/^data:image\/jpeg;base64,/, "");
@@ -85,68 +84,72 @@ adminRouter.route('/api/v1/books/:book_id/update')
                     console.log(err);
                 });
             }
-            res.json({ success: true, data: resp});
         }
+        res.json(standardRes(err, resp));
     });
 });
 
 adminRouter.route('/api/v1/books/:book_id/remove')
 .get(verify.auth, function(req, res, next) {
-
-    dbLayer.deleteBookById(req.params.book_id, standardCallback(err, resp));
+    dbLayer.deleteBookById(req.params.book_id, function(err, resp) {
+        res.json(standardRes(err, resp));
+    });
 });
 
 adminRouter.route('/api/v1/books/remove')
 .post(verify.auth, function(req, res, next) {
-
-    dbLayer.deleteBookWithIdInList(req.body.ids, standardCallback(err, resp));
+    dbLayer.deleteBookWithIdInList(req.body.ids, function(err, resp) {
+        res.json(standardRes(err, resp));
+    });
 });
 
 adminRouter.route('/api/v1/queue/:book_id')
 .get(verify.auth, function(req, res, next) {
-
-    dbLayer.getQueueByBookId(req.params.book_id, standardCallback(err, resp));
+    dbLayer.getQueueByBookId(req.params.book_id, function(err, resp) {
+        res.json(standardRes(err, resp));
+    });
 });
 
 adminRouter.route('/api/v1/readers/add')
 .post(verify.auth, function(req, res, next) {
-    dbLayer.createReader(req.body.reader, standardCallback(err, resp));
+    dbLayer.createReader(req.body.reader, function(err, resp) {
+        res.json(standardRes(err, resp));
+    });
 });
 
 adminRouter.route('/api/v1/books/:book_id/give')
 .post(verify.auth, function(req, res, next) {
-
-    dbLayer.giveBookById(req.params.book_id, req.body.event, standardCallback(err, resp));
+    dbLayer.giveBookById(req.params.book_id, req.body.event, function(err, resp) {
+        res.json(standardRes(err, resp));
+    });
 });
 
 adminRouter.route('/api/v1/books/:book_id/renewal')
 .post(verify.auth, function(req, res, next) {
-
-    dbLayer.updateEventByBookId(req.params.book_id, req.body.changes, standardCallback(err, resp));
+    dbLayer.updateEventByBookId(req.params.book_id, req.body.changes, function(err, resp) {
+        res.json(standardRes(err, resp));
+    });
 });
 
 adminRouter.route('/api/v1/books/:book_id/take')
 .get(verify.auth, function(req, res, next) {
-
     dbLayer.takeBookById(req.params.book_id, function(err, resp) {
-        if (err) {
-            res.json({ success: false, msg: err });
-        } else {
-            mailer.sendMail(req.params.book_id);
-            res.json({ success: true, data: resp});
-        }
+        res.json(standardRes(err, resp));
     });
 });
 
 adminRouter.route('/api/v1/events/:event_id')
 .get(verify.auth, function(req, res, next) {
-
-    dbLayer.getEventById(req.params.event_id, standardCallback(err, resp));
+    dbLayer.getEventById(req.params.event_id, function(err, resp) {
+        res.json(standardRes(err, resp));
+    });
 });
 
 adminRouter.route('/api/v1/events/:event_id/update')
 .post(verify.auth, function(req, res, next) {
-    dbLayer.updateEventById(req.params.event_id, req.body.changes, standardCallback(err, resp));
+    dbLayer.updateEventById(req.params.event_id, req.body.changes, function(err, resp) {
+        res.json(standardRes(err, resp));
+    });
 });
 
 adminRouter.route('/api/v1/verify/islogin')
