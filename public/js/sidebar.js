@@ -9,11 +9,13 @@ sidebarItems.click(function(event) {
     sidebarItems.removeClass('active');
     context.closest('.filterBlock a').addClass('active');
 
+    $(location).attr('pathname');
+
     if ($(location).attr('pathname') == '/') {
         event.preventDefault();
 
         doAjaxQuery('GET', '/api/v1/books', {'filter': filter, 'limit': loadLimit}, function(res) {
-            view.addBooksItems(res.data.books,true);
+            view.addBooksItems(res.data.books, true);
         });
     }
 });
