@@ -2,11 +2,11 @@ var pathNameUrl = $(location).attr('pathname').split('/');
 
 var settingStatusForButton = function(val) {
     var obj = (val === null) ? {
-        name: 'Give the book',
+        name: 'Выдать книгу',
         data_busy: false,
         disabled: true,
     } : {
-        name: 'Pick up the book',
+        name: 'Принять книгу',
         data_busy: true,
         disabled: false,
     };
@@ -106,9 +106,7 @@ $('#btnRemoveBook').click(function(event) {
     var data = {
         id: $('#bookID').attr('book-id')
     };
-    doAjaxQuery('GET', '/admin/api/v1/books/' + data.id + '/remove', null, function(res) {
-        window.location.href = '/admin';
-    });
+    view.showConfirm(data.id);
 });
 
 
