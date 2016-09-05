@@ -36,7 +36,9 @@ var fillActionBook = function(data) {
 
 doAjaxQuery('GET', '/admin/api/v1/books/' + pathNameUrl[3], null, function(res) {
     view.fillBookInfo(res.data);
-    fillActionBook(res.data);
+    if(res.data.event !== null){
+      fillActionBook(res.data);
+    }
 });
 
 $('.btnBookAction').click(function(event) {
