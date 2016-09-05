@@ -122,6 +122,7 @@ adminRouter.route('/api/v1/books/:book_id/renewal')
 adminRouter.route('/api/v1/books/:book_id/take')
 .get(verify.auth, function(req, res, next) {
     dbLayer.takeBookById(req.params.book_id, function(err, resp) {
+        mailer.sendMail(req.params.book_id);
         res.json(standardRes(err, resp));
     });
 });

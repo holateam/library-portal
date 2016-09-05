@@ -114,7 +114,7 @@ var view = {
 
   showSubscribe: function (text, bookId) {
     swal({
-        title: 'Отлично!',
+        title: 'Хотите почитать?',
         text: text,
         type: 'input',
         showCancelButton: true,
@@ -141,7 +141,7 @@ var view = {
   showConfirm: function (bookId) {
     swal({
         title: 'Вы уверены?',
-        text: 'Согласие приведет к невозратитому удалению книги',
+        text: 'Согласие приведет к невозвратимому удалению книги',
         type: 'warning',
         showCancelButton: true,
         cancelButtonText: 'Льолик, не надо!',
