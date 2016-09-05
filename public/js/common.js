@@ -132,7 +132,7 @@ var view = {
           swal.showInputError('Вы где-то ошиблись. Проверьте введенные данные.');
           return false;
         }
-        doAjaxQuery('GET', '/api/v1/books/' + bookId + '/order', inputValue, function (res) {
+        doAjaxQuery('GET', '/api/v1/books/' + bookId + '/order', {'email': inputValue}, function (res) {
           view.showSuccess('Ваш e-mail ' + inputValue + '\nдобавлен в список ожидания.');
         });
       });
