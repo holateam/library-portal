@@ -2,14 +2,14 @@ div#sidebar.col-xs-2.col-sm-2.col-md-2.col-lg-2
   div.menu.menu_fixed_middle
     ul.menu_nav
       li.sidebar_item.active(data-filter = 'all')
-        a(href="/admin?filter=all") All
+        a(href="/admin?filter=all") Все
       li.sidebar_item(data-filter = 'expired')
-        a(href="/admin?filter=expired") Expired
+        a(href="/admin?filter=expired") Просроченные
       li.sidebar_item(data-filter = 'onhand')
-        a(href="/admin?filter=onhand") On hand
+        a(href="/admin?filter=onhand") На руках
       li.sidebar_item(data-filter = 'free')
-        a(href="/admin?filter=free") Free
+        a(href="/admin?filter=free") Свободные
     a(href="/admin/addbook")
-      button.btn.btn-success(type='button') Add book
+      button.btn.btn-success(type='button') Добавить книгу
 
 script(src='/js/admin_sidebar.js' defer)
