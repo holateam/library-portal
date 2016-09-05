@@ -48,6 +48,7 @@ adminRouter.route('/api/v1/books/:book_id')
 adminRouter.route('/api/v1/books/add')
 .post(verify.auth, function(req, res, next) {
     dbLayer.addBook(req.body.changes, function(err, resp) {
+        var changes = req.body.changes;
         if (!err) {
             if(changes.img){
                 var base64Data = changes.img.replace(/^data:image\/jpeg;base64,/, "");
