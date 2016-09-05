@@ -11,11 +11,14 @@ var pool = mysql.createPool({
     database : configDB.database
 });
 
+
 module.exports.addBook = function (bookInfo,callback) {
     pool.getConnection(function(err, connection) {
 
         bookInfo.year = parseInt(bookInfo.year) || 0;
         bookInfo.pages = parseInt(bookInfo.pages) || 0;
+        bookInfo.cover = bookInfo.pages || "cover";  // todo: delete
+        bookInfo.status = true; // todo: delete
 
         connection.query("INSERT INTO books (book_id, ISBN, title, author, description, year, pages, cover, status, event) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, NULL)", [bookInfo.isbn, bookInfo.title, bookInfo.author, bookInfo.description, bookInfo.year, bookInfo.pages, bookInfo.cover, bookInfo.status], function (err, result) {
             connection.release();
@@ -94,11 +97,22 @@ module.exports.deleteBookWithIdInList = function (ids_array,callback) {
 };
 
 module.exports.updateBookById = function (book_id, changedFields, callback) {
+    var allowableFields =  [
+        "title",
+        "author",
+        "year",
+        "pages",
+        "ISBN",
+        "description"
+    ];
+
+
+//    var changed = changedFields.pick([allowableFields]);
+//    console.log(changed);
+
     var query = "UPDATE books SET ";
     for (var key in changedFields) {
-        if(key == "img"){
-            continue;
-        }
+        if(key == "img") continue;
         query += key + " = '" + changedFields[key] + "', ";
     }
     query = query.substring(0, query.length - 2);
@@ -114,15 +128,15 @@ module.exports.updateBookById = function (book_id, changedFields, callback) {
     });
 };
 
-module.exports.addToQueue = function (data,callback) {
+module.exports.addToQueue = function (book_id, data, callback) {
     pool.getConnection(function(err, connection) {
-        connection.query("SELECT * FROM queue WHERE book_id = ? AND email = ?", [data.book_id, data.email] , function (err, result) {
+        connection.query("SELECT * FROM queue WHERE book_id = ? AND email = ?", [book_id, data.email] , function (err, result) {
             if (err) {
                 connection.release();
                 return callback(err);
             }
             if (result == false) {
-                connection.query("INSERT INTO queue(book_id, email) VALUES (?,?)", [data.book_id, data.email] , function (err, result) {
+                connection.query("INSERT INTO queue(book_id, email) VALUES (?,?)", [book_id, data.email] , function (err, result) {
                     connection.release();
                     if (err) return callback(err);
                     callback(null, true);
