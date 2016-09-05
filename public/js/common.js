@@ -37,6 +37,7 @@ var view = {
     }
 
     content.html(contentHTML);
+    $('.blockI').matchHeight(); // Aligns all the height of the book
   },
   showZeroSearch: function (searchText, pathUrl) {
     if (pathUrl === '') {
