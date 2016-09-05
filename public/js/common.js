@@ -139,8 +139,8 @@ var view = {
           return false;
         }
 
-        doAjaxQuery('GET', '/books/' + bookId + '/order', inputValue, function (res) {
-          this.showSuccess('Твой e-mail ' + inputValue + '\nдобавлен в список ожидания.');
+        doAjaxQuery('GET', '/api/v1/books/' + bookId + '/order', {'email' : inputValue}, function (res) {
+          view.showSuccess('Твой e-mail ' + inputValue + '\nдобавлен в список ожидания.');
         });
       });
   }
