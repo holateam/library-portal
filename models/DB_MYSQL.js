@@ -27,20 +27,35 @@ var getObj = function(source){
     }
 }
 
-var get = function(source){
-
-    return {
-	    onlyFields: function(arr){
-            var _this = source;
-            var obj = {};
-            arr.forEach(function(key){
-                if (_this.hasOwnProperty(key)) obj[key] = _this[key];
-            });
-
-            return obj; //pairToStr: function
-	    }
-    }
+var get = function (source) {
+    return new tmpObj(source);
 }
+
+var tmpObj = function(source){
+    this.final = source;
+    return this;
+}
+
+tmpObj.prototype.onlyFields = function(arr) {
+    var _this = this.final;
+    var obj = {};
+    arr.forEach(function(key){
+        if (_this.hasOwnProperty(key)) obj[key] = _this[key];
+    });
+    this.final = obj;
+    return this;
+};
+
+tmpObj.prototype.pairToStr = function() {
+    var _this = this.final;
+    this.final = Object.keys(_this).map(function(x) { return x + " = \'" + _this[x] + "\'"}).join(", ");
+    return this;
+};
+
+tmpObj.prototype.finalize = function() {
+    return this.final;
+};
+
 
 module.exports.addBook = function (bookInfo,callback) {
     pool.getConnection(function(err, connection) {
@@ -126,7 +141,7 @@ module.exports.deleteBookWithIdInList = function (ids_array,callback) {
     });
 };
 
-module.exports.updateBookById = function (book_id, changedFields, callback) {
+module.exports.updateBookById = function (book_id, changes, callback) {
     var allowableFields =  [
         "title",
         "author",
@@ -136,18 +151,9 @@ module.exports.updateBookById = function (book_id, changedFields, callback) {
         "description"
     ];
 
-    console.log(getObj(changedFields).onlyFields(allowableFields));
+    var pair = get(changes).onlyFields(allowableFields).pairToStr().finalize();
+    var query = "UPDATE books SET " + pair + " WHERE book_id = " + book_id + ";";
 
-//    var changed = changedFields.pick([allowableFields]);
-//    console.log(changed);
-
-    var query = "UPDATE books SET ";
-    for (var key in changedFields) {
-        if(key == "img") continue;
-        query += key + " = '" + changedFields[key] + "', ";
-    }
-    query = query.substring(0, query.length - 2);
-    query += " WHERE book_id = " + book_id + ";";
     pool.getConnection(function(err, connection) {
         connection.query(query, function (err, result) {
             connection.release();
@@ -234,13 +240,15 @@ module.exports.getEventById = function (event_id, callback) {
     });
 };
 
-module.exports.updateEventById = function (event_id, changedFields, callback) {
-    var query = "UPDATE events SET ";
-    for (var key in changedFields) {
-        query += key + " = " + changedFields[key] + ", ";
-    }
-    query = query.substring(0, query.length - 2);
-    query += " WHERE event_id = " + event_id + ";";
+module.exports.updateEventById = function (event_id, changes, callback) {
+    var allowableFields =  [
+        "pawn",
+        "term"
+    ];
+
+    var pair = get(changes).onlyFields(allowableFields).pairToStr().finalize();
+    var query = "UPDATE events SET " + pair + " WHERE event_id = " + event_id + ";";
+
     pool.getConnection(function(err, connection) {
         connection.query(query, function (err, result) {
             connection.release();
@@ -252,7 +260,7 @@ module.exports.updateEventById = function (event_id, changedFields, callback) {
     });
 };
 
-module.exports.updateEventByBookId = function (book_id, changedFields, callback) {
+module.exports.updateEventByBookId = function (book_id, changes, callback) {
     pool.getConnection(function(err, connection) {
         connection.query("SELECT event FROM books WHERE book_id = ?;", [book_id] , function (err, result) {
             if (err) return callback(err);
@@ -261,12 +269,15 @@ module.exports.updateEventByBookId = function (book_id, changedFields, callback)
             }
 
             var event_id = result[0].event;
-            var query = "UPDATE events SET ";
-            for (var key in changedFields) {
-                query += key + " = " + changedFields[key] + ", ";
-            }
-            query = query.substring(0, query.length - 2);
-            query += " WHERE event_id = " + event_id + ";";
+
+            var allowableFields =  [
+                "pawn",
+                "term"
+            ];
+
+            var pair = get(changes).onlyFields(allowableFields).pairToStr().finalize();
+            var query = "UPDATE events SET " + pair + " WHERE event_id = " + event_id + ";";
+
             pool.getConnection(function(err, connection) {
                 connection.query(query, function (err, result) {
                     connection.release();
