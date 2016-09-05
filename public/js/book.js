@@ -1,11 +1,13 @@
 var pathname = $(location).attr('pathname');
 var bookIdPosition = pathname.lastIndexOf('/') + 1;
 var isBookInUse = false;
+var bookId;
 
 doAjaxQuery('GET', '/api/v1/books/' + pathname.substr(bookIdPosition), null, function (res) {
     view.fillBookInfo(res.data);
     if (res.data.event) {
         isBookInUse = true;
+        bookId = res.data.id;
     }
 });
 
@@ -62,9 +64,8 @@ $('.btnBookID').click(function(event) {
             "Сейчас эта книга находится на руках, у одного из наших учеников."
             + " Оставь свой email и мы сообщим, как только книга вновь"
             + " появится в библиотеке"
-        );
-    }
-    else  {
+        , bookId);
+    } else  {
         view.showSuccess(
             "Книга свободна и ты можешь прийти за ней."
             + " Наш адрес: г. Кропивницкий, переулок Васильевский 10, 5 этаж."
