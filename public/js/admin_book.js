@@ -30,7 +30,6 @@ var fillActionBook = function(data) {
     $('#date').val((data.date === null) ?
         view.normalDateFormat(new Date()) :
         view.normalDateFormat(new Date(data.date)));
-    settingStatusForButton(data.event);
 
 };
 
@@ -39,6 +38,7 @@ doAjaxQuery('GET', '/admin/api/v1/books/' + pathNameUrl[3], null, function(res) 
     if(res.data.event !== null){
       fillActionBook(res.data);
     }
+    settingStatusForButton(res.data.event);
 });
 
 $('.btnBookAction').click(function(event) {
@@ -85,14 +85,15 @@ $('.btnBookAction').click(function(event) {
             phone: $('#phone').val(),
         };
 
-        doAjaxQuery('POST', '/admin/api/v1/readers/add', JSON.stringify(data), function(res) {
+        doAjaxQuery('POST', '/admin/api/v1/readers/add', data, function(res) {
+          console.log(res);
             data.event = {
                 reader_id: res.data.reader_id,
                 date: new Date(),
-                term: $('#date').val(),
+                term: $('#term').val(),
                 pawn: $('#pawn').val(),
             };
-            doAjaxQuery('POST', '/admin/api/v1/books/' + data.id + '/give', JSON.stringify(data), function(res) {
+            doAjaxQuery('POST', '/admin/api/v1/books/' + data.id + '/give', data, function(res) {
                 settingStatusForButton(true);
             });
         });
