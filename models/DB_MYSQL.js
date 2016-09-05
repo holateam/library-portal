@@ -22,7 +22,7 @@ var getObj = function(source){
                 if (_this.hasOwnProperty(key)) obj[key] = _this[key];
             });
 
-            return obj; //pairToStr: function
+            return obj;
 	    }
     }
 }
