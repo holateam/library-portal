@@ -15,22 +15,11 @@ var settingStatusForButton = function(val) {
 };
 
 
-
-function fillFields(obj,fields){
-    console.log(obj.name);
-    fields=fields.split(',');
-    fields.map(function(f){
-        $('#'+f).val(obj[f]);
-    });
-}
-
 var fillActionBook = function(data) {
-    console.log(data);
-    fillFields(data,'name,phone,email,term,pawn');
+    view.fillFields(data,'name,phone,email,term,pawn','val');
     $('#date').val((data.date === null) ?
         view.normalDateFormat(new Date()) :
         view.normalDateFormat(new Date(data.date)));
-
 };
 
 doAjaxQuery('GET', '/admin/api/v1/books/' + pathNameUrl[3], null, function(res) {
@@ -44,7 +33,7 @@ doAjaxQuery('GET', '/admin/api/v1/books/' + pathNameUrl[3], null, function(res) 
 $('.btnBookAction').click(function(event) {
     var status = $('.btnBookAction').attr('data');
     var data = {
-        id: $('#bookID').attr('book-id')
+        id: $('#id').attr('book-id')
     };
     if (status == 'true') {
         var isChecked = $('#renewalOfBook').prop('checked');

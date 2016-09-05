@@ -1,13 +1,12 @@
 /* ----------------------------- begin view ----------------------------------*/
 var view = {
-  // showElement: function (element) {
-  //   for (var i = 0; i < arguments.length; i++) //
-  //     $(arguments[i]).css('display', 'block');
-  // },
-  // hideElement: function (element) {
-  //   for (var i = 0; i < arguments.length; i++)
-  //     $(arguments[i]).css('display', 'none');
-  // },
+  fillFields: function(obj,fields,func){
+    console.log(obj.name);
+    fields=fields.split(',');
+    fields.map(function(f){
+        ($('#'+f)[func])(obj[f]);
+    });
+  },
   showErrEmail: function () {
     var c = '.input-group';
     $(c).removeClass('has-success');
@@ -84,18 +83,10 @@ var view = {
   },
 
   fillBookInfo: function (book) {
-    $('#bookID').attr('book-id', book.id);
+    console.log(book);
+    view.fillFields(book,'title,author,year,pages,isbn,description',"html");
+    $('#id').attr({'book-id': book.id,'busy': book.event});
     $('#bookImg img').attr('src', '/img/books/' + book.id + '.jpg');
-    $('#titleBook').html(book.title);
-    $('#author').html(book.author);
-    $('#year').html(book.year);
-    $('#pages').html(book.pages);
-    $('#isbn').html(book.isbn);
-    $('#bookDescriptionText').html(book.description);
-    $('#bookID').attr('busy', book.event);
-
-    var nameClassIsBook = (book.event === null) ? '.freeBook' : '.busyBook';
-    $(nameClassIsBook).css('display', 'block');
   },
   normalDateFormat: function (date) {
     return date.toISOString().substring(0, 10);
