@@ -1,7 +1,7 @@
 /* ----------------------------- begin view ----------------------------------*/
 var view = {
   showElement: function (element) {
-    for (var i = 0; i < arguments.length; i++)
+    for (var i = 0; i < arguments.length; i++) //
       $(arguments[i]).css('display', 'block');
   },
   hideElement: function (element) {
@@ -127,20 +127,36 @@ var view = {
         closeOnConfirm: false,
         animation: 'slide-from-top',
         inputPlaceholder: 'Введи свой e-mail',
+        confirmButtonColor: '#27AE60',
         showLoaderOnConfirm: true
       },
       function (inputValue) {
         if (inputValue === false) {
           return false;
         }
-
         if (!controller.validateEmail(inputValue)) {
           swal.showInputError('Ты где-то ошибся. Проверь введенные данные.');
           return false;
         }
-
-        doAjaxQuery('GET', '/api/v1/books/' + bookId + '/order', {'email' : inputValue}, function (res) {
+        doAjaxQuery('GET', '/books/' + bookId + '/order', inputValue, function (res) {
           view.showSuccess('Твой e-mail ' + inputValue + '\nдобавлен в список ожидания.');
+        });
+      });
+  },
+
+  showConfirm: function () {
+    swal({
+        title: 'Вы уверены?',
+        text: 'Согласие приведет к невозратитому удалению книги',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#27AE60',
+        confirmButtonText: 'Да, уверен!',
+        closeOnConfirm: false
+      },
+      function(){
+        doAjaxQuery('GET', '/books/' + bookId + '/remove', null, function (res) {
+          swal('Удалено!', 'Надеюсь вы осознаете, что сейчас произошло ))', 'success');
         });
       });
   }

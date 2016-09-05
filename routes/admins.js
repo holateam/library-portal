@@ -33,13 +33,7 @@ Render(adminRouter, '/book/update/:id', verify.auth, 'admin_add_edit_book', 'Upd
 
 adminRouter.route('/api/v1/books')
 .get(function(req, res, next) {
-    var data = {};
-    data.filter = req.query.filter;
-    data.limit = req.query.limit;
-    data.offset = req.query.offset;
-    data.search = req.query.search;
-
-    dbLayer.getBooksForAdmin(data, function(err, resp) {
+    dbLayer.getBooksForAdmin(req.query, function(err, resp) {
         res.json(standardRes(err, resp));
     });
 });
@@ -53,13 +47,7 @@ adminRouter.route('/api/v1/books/:book_id')
 
 adminRouter.route('/api/v1/books/add')
 .post(verify.auth, function(req, res, next) {
-    var changes = req.body.changes;
-    changes.cover = "cover";
-    changes.status = true;
-    changes.year = parseInt(changes.year);
-    changes.pages = parseInt(changes.pages);
-
-    dbLayer.addBook(changes, function(err, resp) {
+    dbLayer.addBook(req.body.changes, function(err, resp) {
         if (!err) {
             if(changes.img){
                 var base64Data = changes.img.replace(/^data:image\/jpeg;base64,/, "");

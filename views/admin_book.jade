@@ -5,53 +5,53 @@ block content
     table.table.table-hover(style='display:none')
       thead
         tr
-          th Book Title
-          th Author
-          th Reader's name
-          th Reader's email
-          th Phone number
-          th Return date
-          th Amount of guarantee
+          th Название
+          th Автор
+          th Читатель
+          th Email
+          th Телефон
+          th Дата возврата
+          th Залог
       tbody
         tr#pattern.book_list_row
       div#bookID
         div.col-md-3#bookImg
             img(src='')
             div.blokBtnAdmin
-              button#btnEditBook.btn.btn-default(type='button') Edit book
-              button#btnRemoveBook.btn.btn-default(type='button') Remove Book
+              button#btnEditBook.btn.btn-default(type='button') Редактировать
+              button#btnRemoveBook.btn.btn-default(type='button') !Удалить!
         div.col-md-5.bookInfo
             h4#titleBook
             div
-                span.properties author:
+                span.properties автор:
                 span#author
             div
-                span.properties year:
+                span.properties год:
                 span#year
             div
-                span.properties pages:
+                span.properties страниц:
                 span#pages
             div
                 span.properties ISBN:
                 span#isbn
         div.orderBlock.col-md-4
             div.actionBook
-              h3 The condition of the book
+              h3 Форма приема / выдачи
               br
-              p Here are the information about the condition of the book
+              p Тут вносить данные при выдаче и приеме книги
             div.response
-              h3 Congratulations
+              h3 Успех
               br
-              p Instructions on how to get the book sent to your email:
+              p Иструкции высланы на email
 
             .input-group.form-queue
               .input-group-addon
                 i.fa.fa-user.fa-1x(aria-hidden="true")
-              input#name.form-control(type='text', placeholder='name' name='name')
+              input#name.form-control(type='text', placeholder='имя' name='name')
             .input-group.form-queue
               .input-group-addon
                 i.fa.fa-mobile.fa-1x(aria-hidden="true")
-              input#phone.form-control(type='text', placeholder='phone' name='phone')
+              input#phone.form-control(type='text', placeholder='телефон' name='phone')
             .input-group.form-queue
               .input-group-addon
                 i.fa.fa-at.fa-1x(aria-hidden="true")
@@ -61,18 +61,18 @@ block content
             .input-group.form-queue.termD-group
               .input-group-addon
                 i.fa.fa-clock-o.fa-1x(aria-hidden="true")
-              input#term.form-control(type='text', placeholder='term' name='term')
+              input#term.form-control(type='text', placeholder='срок' name='term')
             .input-group.form-queue.depositD-group
               .input-group-addon
                 i.fa.fa-money.fa-1x(aria-hidden="true")
-              input#pawn.form-control(type='text', placeholder='deposit $' name='pawn')
+              input#pawn.form-control(type='text', placeholder='залог $' name='pawn')
             .input-group.form-queue.dateD-group
               .input-group-addon
                 i.fa.fa-calendar-check-o.fa-1x(aria-hidden="true")
-              input#date.form-control(type='text', placeholder='Date of the taking of the book' name='date' disabled)
+              input#date.form-control(type='text', placeholder='Дата возврата книги' name='date' disabled)
             .input-group.form-queue
             div.updateBookAction
-              span renewal of book
+              span продлить
               input#renewalOfBook(type='checkbox', value='option1')
 
 
