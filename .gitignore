@@ -52,5 +52,5 @@ public/css
 public/js/libs.min.js
 
 #File img books
-public/img/books/*.jpg
+public/img/books/*
 public/uploads
