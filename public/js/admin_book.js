@@ -106,9 +106,7 @@ $('#btnRemoveBook').click(function(event) {
     var data = {
         id: $('#bookID').attr('book-id')
     };
-    doAjaxQuery('GET', '/admin/api/v1/books/' + data.id + '/remove', null, function(res) {
-        window.location.href = '/admin';
-    });
+    view.showConfirm(data.id);
 });
 
 
