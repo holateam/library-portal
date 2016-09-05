@@ -12,6 +12,36 @@ var pool = mysql.createPool({
 });
 
 
+var getObj = function(source){
+
+    return {
+	    onlyFields: function(arr){
+            var _this = source;
+            var obj = {};
+            arr.forEach(function(key){
+                if (_this.hasOwnProperty(key)) obj[key] = _this[key];
+            });
+
+            return obj; //pairToStr: function
+	    }
+    }
+}
+
+var get = function(source){
+
+    return {
+	    onlyFields: function(arr){
+            var _this = source;
+            var obj = {};
+            arr.forEach(function(key){
+                if (_this.hasOwnProperty(key)) obj[key] = _this[key];
+            });
+
+            return obj; //pairToStr: function
+	    }
+    }
+}
+
 module.exports.addBook = function (bookInfo,callback) {
     pool.getConnection(function(err, connection) {
 
@@ -106,6 +136,7 @@ module.exports.updateBookById = function (book_id, changedFields, callback) {
         "description"
     ];
 
+    console.log(getObj(changedFields).onlyFields(allowableFields));
 
 //    var changed = changedFields.pick([allowableFields]);
 //    console.log(changed);
