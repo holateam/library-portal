@@ -1,13 +1,13 @@
 /* ----------------------------- begin view ----------------------------------*/
 var view = {
-  showElement: function (element) {
-    for (var i = 0; i < arguments.length; i++) //
-      $(arguments[i]).css('display', 'block');
-  },
-  hideElement: function (element) {
-    for (var i = 0; i < arguments.length; i++)
-      $(arguments[i]).css('display', 'none');
-  },
+  // showElement: function (element) {
+  //   for (var i = 0; i < arguments.length; i++) //
+  //     $(arguments[i]).css('display', 'block');
+  // },
+  // hideElement: function (element) {
+  //   for (var i = 0; i < arguments.length; i++)
+  //     $(arguments[i]).css('display', 'none');
+  // },
   showErrEmail: function () {
     var c = '.input-group';
     $(c).removeClass('has-success');
@@ -39,16 +39,10 @@ var view = {
     content.html(contentHTML);
     $('.blockI').matchHeight(); // Aligns all the height of the book
   },
-  showZeroSearch: function (searchText, pathUrl) {
-    if (pathUrl === '') {
-      $('#content .row> :not(#pattern)').remove();
-    } else {
-      $('#bookID').remove();
-      $('#content .row .book_list_row:not(#pattern)').remove();
-    }
-    $('#zero_search').remove();
-    var textZeroSearch = '<div id="zero_search"><div class="col-md-2 col-sm-2 col-lg-2"><img src="/img/books/no-cover.jpg"></div><div class="col-md-10 col-sm-10 col-lg-10"><h3>Find "' + searchText + '" was harder than we thought</h3> <p>Please ensure that the request is correct or reframe it.</p></div></div></div>';
-    $('#content .row').append(textZeroSearch);
+  showNot_found: function (searchText, pathUrl) {
+      var contentNotFound = $('#not_found').html()
+      .replace(/{searchText}/g, searchText);
+      $('#content').html(contentNotFound);
   },
   nullToDash: function (string) {
     return (((string == null) || (string == 0)) ? '-' : string);

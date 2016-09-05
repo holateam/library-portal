@@ -12,7 +12,7 @@ var requestBooksSearch = function() {
                 (pathUrl === '') ? view.addBooksItems(res.data.books): view.addBooksList(res.data.books);
             } else {
                 console.log("zero");
-                view.showZeroSearch(text, pathUrl);
+                view.showNot_found(text, pathUrl);
             }
         });
 };
