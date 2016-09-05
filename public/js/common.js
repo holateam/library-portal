@@ -1,7 +1,7 @@
 /* ----------------------------- begin view ----------------------------------*/
 var view = {
   showElement: function (element) {
-    for (var i = 0; i < arguments.length; i++)
+    for (var i = 0; i < arguments.length; i++) //
       $(arguments[i]).css('display', 'block');
   },
   hideElement: function (element) {
