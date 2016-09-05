@@ -2,11 +2,11 @@ var pathNameUrl = $(location).attr('pathname').split('/');
 
 var settingStatusForButton = function(val) {
     var obj = (val === null) ? {
-        name: 'Give the book',
+        name: 'Выдать книгу',
         data_busy: false,
         disabled: true,
     } : {
-        name: 'Pick up the book',
+        name: 'Принять книгу',
         data_busy: true,
         disabled: false,
     };
@@ -30,13 +30,15 @@ var fillActionBook = function(data) {
     $('#date').val((data.date === null) ?
         view.normalDateFormat(new Date()) :
         view.normalDateFormat(new Date(data.date)));
-    settingStatusForButton(data.event);
 
 };
 
 doAjaxQuery('GET', '/admin/api/v1/books/' + pathNameUrl[3], null, function(res) {
     view.fillBookInfo(res.data);
-    fillActionBook(res.data);
+    if(res.data.event !== null){
+      fillActionBook(res.data);
+    }
+    settingStatusForButton(res.data.event);
 });
 
 $('.btnBookAction').click(function(event) {
@@ -83,14 +85,15 @@ $('.btnBookAction').click(function(event) {
             phone: $('#phone').val(),
         };
 
-        doAjaxQuery('POST', '/admin/api/v1/readers/add', JSON.stringify(data), function(res) {
+        doAjaxQuery('POST', '/admin/api/v1/readers/add', data, function(res) {
+          console.log(res);
             data.event = {
                 reader_id: res.data.reader_id,
                 date: new Date(),
-                term: $('#date').val(),
+                term: $('#term').val(),
                 pawn: $('#pawn').val(),
             };
-            doAjaxQuery('POST', '/admin/api/v1/books/' + data.id + '/give', JSON.stringify(data), function(res) {
+            doAjaxQuery('POST', '/admin/api/v1/books/' + data.id + '/give', data, function(res) {
                 settingStatusForButton(true);
             });
         });
@@ -106,9 +109,7 @@ $('#btnRemoveBook').click(function(event) {
     var data = {
         id: $('#bookID').attr('book-id')
     };
-    doAjaxQuery('GET', '/admin/api/v1/books/' + data.id + '/remove', null, function(res) {
-        window.location.href = '/admin';
-    });
+    view.showConfirm(data.id);
 });
 
 

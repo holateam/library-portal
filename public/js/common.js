@@ -1,13 +1,13 @@
 /* ----------------------------- begin view ----------------------------------*/
 var view = {
-  showElement: function (element) {
-    for (var i = 0; i < arguments.length; i++)
-      $(arguments[i]).css('display', 'block');
-  },
-  hideElement: function (element) {
-    for (var i = 0; i < arguments.length; i++)
-      $(arguments[i]).css('display', 'none');
-  },
+  // showElement: function (element) {
+  //   for (var i = 0; i < arguments.length; i++) //
+  //     $(arguments[i]).css('display', 'block');
+  // },
+  // hideElement: function (element) {
+  //   for (var i = 0; i < arguments.length; i++)
+  //     $(arguments[i]).css('display', 'none');
+  // },
   showErrEmail: function () {
     var c = '.input-group';
     $(c).removeClass('has-success');
@@ -39,16 +39,10 @@ var view = {
     content.html(contentHTML);
     $('.blockI').matchHeight(); // Aligns all the height of the book
   },
-  showZeroSearch: function (searchText, pathUrl) {
-    if (pathUrl === '') {
-      $('#content .row> :not(#pattern)').remove();
-    } else {
-      $('#bookID').remove();
-      $('#content .row .book_list_row:not(#pattern)').remove();
-    }
-    $('#zero_search').remove();
-    var textZeroSearch = '<div id="zero_search"><div class="col-md-2 col-sm-2 col-lg-2"><img src="/img/books/no-cover.jpg"></div><div class="col-md-10 col-sm-10 col-lg-10"><h3>Find "' + searchText + '" was harder than we thought</h3> <p>Please ensure that the request is correct or reframe it.</p></div></div></div>';
-    $('#content .row').append(textZeroSearch);
+  showNot_found: function (searchText, pathUrl) {
+      var contentNotFound = $('#not_found').html()
+      .replace(/{searchText}/g, searchText);
+      $('#content').html(contentNotFound);
   },
   nullToDash: function (string) {
     return (((string == null) || (string == 0)) ? '-' : string);
@@ -126,21 +120,44 @@ var view = {
         showCancelButton: true,
         closeOnConfirm: false,
         animation: 'slide-from-top',
-        inputPlaceholder: 'Введи свой e-mail',
+        inputPlaceholder: 'Введите свой e-mail',
+        confirmButtonColor: '#27AE60',
         showLoaderOnConfirm: true
       },
       function (inputValue) {
         if (inputValue === false) {
           return false;
         }
-
         if (!controller.validateEmail(inputValue)) {
-          swal.showInputError('Ты где-то ошибся. Проверь введенные данные.');
+          swal.showInputError('Вы где-то ошиблись. Проверьте введенные данные.');
           return false;
         }
+        doAjaxQuery('GET', '/api/v1/books/' + bookId + '/order', {'email': inputValue}, function (res) {
+          view.showSuccess('Ваш e-mail ' + inputValue + '\nдобавлен в список ожидания.');
+        });
+      });
+  },
 
-        doAjaxQuery('GET', '/books/' + bookId + '/order', inputValue, function (res) {
-          this.showSuccess('Твой e-mail ' + inputValue + '\nдобавлен в список ожидания.');
+  showConfirm: function (bookId) {
+    swal({
+        title: 'Вы уверены?',
+        text: 'Согласие приведет к невозратитому удалению книги',
+        type: 'warning',
+        showCancelButton: true,
+        cancelButtonText: 'Льолик, не надо!',
+        confirmButtonColor: '#27AE60',
+        confirmButtonText: 'Да, уверен!',
+        closeOnConfirm: false
+      },
+      function(){
+        doAjaxQuery('GET', '/admin/api/v1/books/' + bookId + '/remove', null, function (res) {
+          swal({
+              title: 'Удалено!',
+              text: 'Надеюсь, вы осознаете что сейчас произошло ))',
+              type: 'success'},
+              function () {
+                window.location.href = '/admin';
+              });
         });
       });
   }
