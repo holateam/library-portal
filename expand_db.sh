@@ -47,6 +47,7 @@ do
              wget --no-check-certificate 'https://docs.google.com/uc?export=download&id=0B2mfUDzNJYyfOHJ0dlpkNWhRYVk' -O books.zip
              unzip books.zip
              rm books.zip
+             cd ../../
              ;;
          v)
              VERBOSE=1
