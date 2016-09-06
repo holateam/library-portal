@@ -9,9 +9,9 @@ var requestBooksSearch = function() {
     doAjaxQuery('GET', '' + pathUrl + '/api/v1/books?search=' + textEncode + '', null,
         function(res) {
             if (res.data.total.amount > 0) {
+                $('#content').empty();
                 (pathUrl === '') ? view.addBooksItems(res.data.books): view.addBooksList(res.data.books);
             } else {
-                console.log("zero");
                 view.showNot_found(text, pathUrl);
             }
         });
