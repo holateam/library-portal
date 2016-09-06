@@ -95,6 +95,7 @@ var view = {
     view.fillFields(book,'title,author,year,pages,isbn,description',"html");
     $('#id').attr({'book-id': book.id,'busy': book.event});
     $('#bookImg img').attr('src', '/img/books/' + book.id + '.jpg');
+    $('.description').html(book.description);
   },
   normalDateFormat: function (date) {
     return date.toISOString().substring(0, 10);
