@@ -6,13 +6,14 @@ $('.sidebar_item[data-filter=' + filter + ']').click();
 window.history.replaceState({}, '', $(location).attr('origin'));
 
 $(document).scroll(function () {
+    console.log(sessionStorage.getItem('filter'));
     if ($(window).scrollTop() + $(window).height() == $(document).height()) {
         offsetScrollCoef++;
         var offset = offsetScrollCoef * global.number_of_items_onscroll;
 
         if (offset < global.total_items_exist) {
             doAjaxQuery('GET', '/api/v1/books', {
-                'filter': filter,
+                'filter': sessionStorage.getItem('filter') || 'new',
                 'limit': global.number_of_items_onscroll,
                 'offset': offset
             }, function (res) {
