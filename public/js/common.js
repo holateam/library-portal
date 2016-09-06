@@ -79,7 +79,6 @@ var view = {
     var contentHTML = '';
 
     for (var i in books) {
-      console.log(view.addBooksListRow(books[i]));
       contentHTML += view.addBooksListRow(books[i]);
     }
 
@@ -91,7 +90,6 @@ var view = {
   },
 
   fillBookInfo: function (book) {
-    console.log(book);
     view.fillFields(book,'title,author,year,pages,isbn,description',"html");
     $('#id').attr({'book-id': book.id,'busy': book.event});
     $('#bookImg img').attr('src', '/img/books/' + book.id + '.jpg');
@@ -109,7 +107,6 @@ var view = {
   },
 
   showSuccess: function (text) {
-    console.log(text);
     swal('Отлично!', text, 'success');
   },
 
