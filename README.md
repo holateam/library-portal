@@ -15,30 +15,33 @@ To get started with the library do the following steps:
 
 #### Download
 
-Clone the project, use the next command: 
+Clone the project, use the next command:
 ```bash
 git clone https://github.com/holateam/library-portal.git
 ```
 
 #### Install dependencies
 
-First, install nodejs if you had not already done. 
+First, install nodejs if you had not already done.
 ```bash
 https://nodejs.org/en/
 ```
 
 To install necessary packages open the root project folder in terminal, and use the next command:
-```bash 
-npm i 
+```bash
+npm i
 ```
 
 #### Expand the database
 
 To expand the database enter this command in the root of project:
 ```bash
-sudo bash expand_db_v2.sh -b <library> -u <librarian> -p <password>
+sudo bash expand_db_v2.sh -b library -u librarian -p password
 ```
-
+or this command, to expand demo:
+```bash
+sudo bash expand_db_v2.sh -b library -u librarian -p password -d
+```
 
 ## What it takes to design the frontend?
 
