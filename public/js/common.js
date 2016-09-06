@@ -2,14 +2,14 @@
 var view = {
   fillFields: function(obj,fields,func){
     console.log(obj.name);
-    fields=fields.split(',');
+    fields=fields.split(/, */);
     fields.map(function(f){
         ($('#'+f)[func])(obj[f]);
     });
   },
   selectFields: function(fields,func){
     var obj = {};
-    fields=fields.split(',');
+    fields=fields.split(/, */);
     fields.map(function(f){
         var v = ($('#'+f)[func])();
         obj[f]=(v);

@@ -103,7 +103,7 @@ $('#renewalOfBook').click(function(event) {
     var isChecked = $('#renewalOfBook').prop('checked');
     if (isChecked) {
         $('.btnBookAction').text('Update').attr('data-update', true);
-        $('#name, #phone, #email, #pawn').attr('disabled', true);
+        $('#name,#phone,#email,#pawn').attr('disabled', true);
     } else {
         $('#name,#phone,#email,#pawn').attr('disabled', false);
         var isBusy = $('.btnBookAction').attr('data');
