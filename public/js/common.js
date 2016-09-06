@@ -7,6 +7,16 @@ var view = {
         ($('#'+f)[func])(obj[f]);
     });
   },
+  selectFields: function(fields,func){
+    var obj = {};
+    fields=fields.split(',');
+    fields.map(function(f){
+        var v = ($('#'+f)[func])();
+        obj[f]=(v);
+    });
+    console.log(JSON.stringify(obj));
+    return obj;
+  },
   showErrEmail: function () {
     var c = '.input-group';
     $(c).removeClass('has-success');
@@ -100,6 +110,7 @@ var view = {
   },
 
   showSuccess: function (text) {
+    console.log(text);
     swal('Отлично!', text, 'success');
   },
 

@@ -1,22 +1,5 @@
-var pathNameUrl = $(location).attr('pathname').split('/');
-
-var settingStatusForButton = function(val) {
-    var obj = (val === null) ? {
-        name: 'Выдать книгу',
-        data_busy: false,
-        disabled: true,
-    } : {
-        name: 'Принять книгу',
-        data_busy: true,
-        disabled: false,
-    };
-    $('.btnBookAction').text(obj.name).attr('data', obj.data_busy);
-    $('#renewalOfBook').attr('disabled', obj.disabled);
-};
-
-
 var fillActionBook = function(data) {
-    view.fillFields(data,'name,phone,email,term,pawn','val');
+    view.fillFields(data, 'name,phone,email,term,pawn', 'val');
     $('#date').val((data.date === null) ?
         view.normalDateFormat(new Date()) :
         view.normalDateFormat(new Date(data.date)));
@@ -24,64 +7,72 @@ var fillActionBook = function(data) {
 
 doAjaxQuery('GET', '/admin/api/v1/books/' + pathNameUrl[3], null, function(res) {
     view.fillBookInfo(res.data);
-    if(res.data.event !== null){
-      fillActionBook(res.data);
+    if (res.data.event !== null) {
+        fillActionBook(res.data);
     }
     settingStatusForButton(res.data.event);
 });
 
+var pathNameUrl = $(location).attr('pathname').split('/');
+
+var settingStatusForButton = function(val) {
+    var name, data_busy, disabled;
+    if (val === null) {
+        name = 'Выдать книгу';
+        data_busy = false;
+        disabled = true;
+    } else {
+        name = 'Принять книгу';
+        data_busy = true;
+        disabled = false;
+    }
+    $('.btnBookAction').text(name).attr('data', data_busy);
+    $('#renewalOfBook').attr('disabled', disabled);
+};
+
+/* ----------------------- Pressing the action button ---------------------- */
+var updateTermBook = function(data, update) {
+
+    doAjaxQuery('POST', '/admin/api/v1/books/' + data.id + '/renewal', update, function(res) {
+        $('#renewalOfBook').prop('checked', false);
+        $('#name,#phone,#email,#pawn').attr('disabled', false);
+    });
+    msg = "Человек стремится к знаниям!\nНу разве это не прекрасно?";
+    view.showSuccess(msg);
+};
+
+var takeBook = function(data, update) {
+    doAjaxQuery('GET', '/admin/api/v1/books/' + data.id + '/take', update, function(res) {
+        $('.orderBlock input').val('');
+    });
+    msg = "Общий уровень знаний на планете ощутимо повысился! ";
+    view.showSuccess(msg);
+};
+
+/* ----------------------- Pressing the action button ---------------------- */
 $('.btnBookAction').click(function(event) {
     var status = $('.btnBookAction').attr('data');
     var data = {
         id: $('#id').attr('book-id')
     };
     if (status == 'true') {
-        var isChecked = $('#renewalOfBook').prop('checked');
-        var obj = (isChecked) ? {
-            method: 'POST',
-            url: '/admin/api/v1/books/' + data.id + '/renewal',
-            func: function() {
-                $('#renewalOfBook').prop('checked', false);
-                $('#name,#phone,#email,#pawn').css('disabled',false);
-                settingStatusForButton(true);
-                view.showSuccess('Человек стремится к знаниям!\nНу разве это не прекрасно? ))');
-            }
-        } : {
-            method: 'GET',
-            url: '/admin/api/v1/books/' + data.id + '/take',
-            func: function() {
-                $('.orderBlock input').val('');
-                settingStatusForButton(null);
-                view.showSuccess('Общий уровень знаний на планете ощутимо повысился! ))');
-            }
+        var obj, update, msg, flag, isChecked = $('#renewalOfBook').prop('checked');
+        update = {
+            changes: view.selectFields('term,pawn', 'val')
         };
-        var updata = {
-            changes: {
-                term: $('#term').val(),
-                pawn: $('#pawn').val()
-            }
-        };
-        doAjaxQuery(obj.method, obj.url, updata, function(res) {
-            obj.func();
-            // $('.orderBlock input').val('');
-            // settingStatusForButton(null);
-        });
-
+        if (isChecked) {
+            updateTermBook(data, update);
+            settingStatusForButton(true);
+        } else {
+            takeBook(data, update);
+            settingStatusForButton(null);
+        }
     } else {
-        data.reader = {
-            name: $('#name').val(),
-            email: $('#email').val(),
-            phone: $('#phone').val(),
-        };
-
+        data.reader = view.selectFields('name,email,phone', 'val');
         doAjaxQuery('POST', '/admin/api/v1/readers/add', data, function(res) {
-          console.log(res);
-            data.event = {
-                reader_id: res.data.reader_id,
-                date: new Date(),
-                term: $('#term').val(),
-                pawn: $('#pawn').val(),
-            };
+            data.event = view.selectFields('term,pawn', 'val');
+            data.event.reader_id = res.data.reader_id;
+            data.event.date = new Date();
             doAjaxQuery('POST', '/admin/api/v1/books/' + data.id + '/give', data, function(res) {
                 settingStatusForButton(true);
             });
@@ -90,10 +81,11 @@ $('.btnBookAction').click(function(event) {
     }
 });
 
+/* ----------------------- Pressing button edit book ----------------------- */
 $('#btnEditBook').click(function(event) {
     window.location.href = '/admin/book/update/' + pathNameUrl[3] + '';
 });
-
+/* --------------------- Pressing button remove book ----------------------- */
 $('#btnRemoveBook').click(function(event) {
     var data = {
         id: $('#bookID').attr('book-id')
@@ -101,14 +93,14 @@ $('#btnRemoveBook').click(function(event) {
     view.showConfirm(data.id);
 });
 
-
+/* ---------------------- Click checked renewal book ----------------------- */
 $('#renewalOfBook').click(function(event) {
     var isChecked = $('#renewalOfBook').prop('checked');
     if (isChecked) {
         $('.btnBookAction').text('Update').attr('data-update', true);
-        $('#name,#phone,#email,#pawn').css('disabled',true);
+        $('#name, #phone, #email, #pawn').attr('disabled', true);
     } else {
-        $('#name,#phone,#email,#pawn').css('disabled',false);
+        $('#name,#phone,#email,#pawn').attr('disabled', false);
         var isBusy = $('.btnBookAction').attr('data');
         var val = (isBusy !== 'true') ? null : isBusy;
         settingStatusForButton(val);
