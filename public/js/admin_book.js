@@ -6,6 +6,8 @@ var fillActionBook = function(data) {
         view.normalDateFormat(new Date(data.date)));
 };
 
+$('#search').hide();
+
 /* ------------------ Obtaining data book with id -------------------------- */
 doAjaxQuery('GET', '/admin/api/v1/books/' + pathNameUrl[3], null, function(res) {
     view.fillBookInfo(res.data);
