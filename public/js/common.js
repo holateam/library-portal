@@ -1,7 +1,6 @@
 /* ----------------------------- begin view ----------------------------------*/
 var view = {
   fillFields: function(obj,fields,func){
-    console.log(obj.name);
     fields=fields.split(/, */);
     fields.map(function(f){
         ($('#'+f)[func])(obj[f]);
@@ -14,7 +13,6 @@ var view = {
         var v = ($('#'+f)[func])();
         obj[f]=(v);
     });
-    console.log(JSON.stringify(obj));
     return obj;
   },
   showErrEmail: function () {

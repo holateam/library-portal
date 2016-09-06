@@ -14,6 +14,8 @@ html,body
     text-decoration: none
   h1,h2,h3,h4,h5
     color: #2c3e50
+.black
+  color: black
 .btn-success
   color: #fff
   background-color: #27ae60
@@ -180,9 +182,10 @@ html,body
     .kv-file-upload
       display: none
     .bookDescription
+      // text-align: right
       max-height: 312px
       overflow: hidden
-      padding: 30px 0 0 0
+      padding: 0 0 0 0
       h4
         font-weight: 500
       #description
@@ -196,7 +199,7 @@ html,body
     #id
       margin-top: 20px
       .btnBookID
-        float: right
+        float: left
       #bookImg img
         width: 220px
         height: auto
@@ -206,25 +209,41 @@ html,body
         text-align: center
         .btn
           margin: 0 3px
+      .btnBlock
+        padding: 0
       .bookLastInfo
-        font-size: 12px
-        width: 220px
-        padding: 10px 0 10px 10px
+        display: table
+        table-layout: fixed
+        width: 100%
+        .bookRow
+          display: table-row
+          padding-bottom: 10px
+          line-height: 17px
+          font-size: 12px
+        // width: 220px
+        // padding: 10px 0 10px 10px
         .properties
+          display: table-cell
+          padding-right: 19px
+          padding-bottom: 8px
+          color: #888
+          width: 20%
+          word-break: break-word
           font-weight: 600
-          display: inline-block
+          // display: inline-block
         #year,#pages,#isbn
           padding: 0 5px 0 5px
       .bookInfo
-        padding: 0 15px 10px
+        // padding: 0 15px 10px
         color: #2c3e50
         font-size: 14px
         .titleBook
           font-weight: 600
-          // font-size: 22px
+          font-size: 22px
           line-height: 32px
           letter-spacing: .01em
-          margin-bottom: 10px
+          margin-bottom: 20px
+          width: 80%
           // color: #888
           // width: 80px
           // padding-right: 19px

@@ -3,24 +3,34 @@ block content
   div#content.col-xs-12.col-sm-12.col-md-12.col-lg-12
     include book_item
     div#id
-      div.col-md-12.bookInfo
-        h1#title.titleBook
-        div
-          span.properties
-            b Автор:
-          span#author
       div.col-xs-12.col-sm-3.col-md-3#bookImg
         img(src='')
+      div.col-xs-12.col-sm-5.col-md-5.col-lg-5
+        div.bookInfo
+          div#title.titleBook
+        //- div
+        //-   span.properties
+        //-     b Автор:
+        //-   span#author
         .bookLastInfo
-          span.properties год:
-          span#year
-          span.properties страниц:
-          span#pages
-          span.properties isbn:
-          span#isbn
-      div.bookDescription.col-xs-12.col-sm-9.col-md-9
-        button.btnBookID.btn.btn-success(type='button') Хочу читать!
+          div.bookRow
+            span.properties автор:
+            span#author.black
+          div.bookRow
+            span.properties год:
+            span#year.black
+          div.bookRow
+            span.properties страниц:
+            span#pages.black
+          div.bookRow
+            span.properties isbn:
+            span#isbn.black
+        div.btnBlock.col-md-12
+          br    
+          button.btnBookID.btn-lg.btn.btn-success(type='button') Хочу читать!
+      div.bookDescription.col-xs-4.col-sm-4.col-md-4
         h4 О книге
-          hr
-          p#description
+        hr
+        p#description
+
     script(src='/js/book.js' defer)
