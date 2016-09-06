@@ -2,7 +2,7 @@ var sidebarItems = $('.sidebar_item');
 var loadLimit = 12;
 
 sidebarItems.click(function(event) {
-
+    offsetScrollCoef = 1;
     var context = $(this);
     var filter = context.attr('data-filter');
     sessionStorage.setItem('filter', filter);
