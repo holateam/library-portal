@@ -181,8 +181,8 @@ html,body
       display: none
     .bookDescription
       // text-align: right
-      max-height: 312px
-      overflow: hidden
+      // max-height: 312px
+      // overflow: hidden
       // padding: 0 0 0 0
       h4
         font-weight: 500
@@ -488,7 +488,26 @@ html,body
     padding: 0 15px 0 15px
 
 @media(min-width:360px)and(max-width:767px)
-  body
+  .titleBook
+    width: 100% !important
+    text-align: center
+  #bookImg
+    float: none
+    text-align: -webkit-center
+    img
+      text-align: center
+  .info
+    padding: 15px 0
+  .btnBlock
+    text-align: center
+    padding: 25px 0 10px 0
+    .btnBookID
+      float: none !important
+  .bookDescription
+    max-height: 100% !important
+    overflow: auto !important
+    h4
+      text-align: center
 
 
 // @media(min-width:768px)
