@@ -36,11 +36,11 @@ npm i
 
 To expand the database enter this command in the root of project:
 ```bash
-sudo bash expand_db_v2.sh -b library -u librarian -p password
+sudo bash expand_db.sh -b library -u librarian -p password
 ```
 or this command, to expand demo:
 ```bash
-sudo bash expand_db_v2.sh -b library -u librarian -p password -d
+sudo bash expand_db.sh -b library -u librarian -p password -d
 ```
 
 ## What it takes to design the frontend?
