@@ -1,3 +1,4 @@
+/* -------------------- Filling out the book data ------------------------- */
 var fillActionBook = function(data) {
     view.fillFields(data, 'name,phone,email,term,pawn', 'val');
     $('#date').val((data.date === null) ?
@@ -5,6 +6,7 @@ var fillActionBook = function(data) {
         view.normalDateFormat(new Date(data.date)));
 };
 
+/* ------------------ Obtaining data book with id -------------------------- */
 doAjaxQuery('GET', '/admin/api/v1/books/' + pathNameUrl[3], null, function(res) {
     view.fillBookInfo(res.data);
     if (res.data.event !== null) {
@@ -15,6 +17,7 @@ doAjaxQuery('GET', '/admin/api/v1/books/' + pathNameUrl[3], null, function(res) 
 
 var pathNameUrl = $(location).attr('pathname').split('/');
 
+/* ------------------- Changing the status of a button --------------------- */
 var settingStatusForButton = function(val) {
     var name, data_busy, disabled;
     if (val === null) {
@@ -30,7 +33,7 @@ var settingStatusForButton = function(val) {
     $('#renewalOfBook').attr('disabled', disabled);
 };
 
-/* ----------------------- Pressing the action button ---------------------- */
+/* ----------------------- Update the field term --------------------------- */
 var updateTermBook = function(data, update) {
 
     doAjaxQuery('POST', '/admin/api/v1/books/' + data.id + '/renewal', update, function(res) {
@@ -41,6 +44,7 @@ var updateTermBook = function(data, update) {
     view.showSuccess(msg);
 };
 
+// ------------------- They gave a book in his hands, and recorded the event,  // ---------------------- also recorded in the data reader data base.
 var takeBook = function(data, update) {
     doAjaxQuery('GET', '/admin/api/v1/books/' + data.id + '/take', update, function(res) {
         $('.orderBlock input').val('');
@@ -60,10 +64,10 @@ $('.btnBookAction').click(function(event) {
         update = {
             changes: view.selectFields('term,pawn', 'val')
         };
-        if (isChecked) {
+        if (isChecked) { // update term book
             updateTermBook(data, update);
             settingStatusForButton(true);
-        } else {
+        } else { // take book user
             takeBook(data, update);
             settingStatusForButton(null);
         }
@@ -85,6 +89,7 @@ $('.btnBookAction').click(function(event) {
 $('#btnEditBook').click(function(event) {
     window.location.href = '/admin/book/update/' + pathNameUrl[3] + '';
 });
+
 /* --------------------- Pressing button remove book ----------------------- */
 $('#btnRemoveBook').click(function(event) {
     var data = {
