@@ -43,8 +43,8 @@ do
          d)
              DBFILE='./demo/demo.sql'
              cd ./public/img
-             curl -O -J -L https://drive.google.com/open?id=0B2mfUDzNJYyfOHJ0dlpkNWhRYVk > books.zip
-             unzip books.zip
+             curl -O -J -L https://docs.google.com/uc?authuser=0&id=0B2mfUDzNJYyfOHJ0dlpkNWhRYVk&export=download > books.zip
+             unzip books
              rm books.zip
              ;;
          v)
