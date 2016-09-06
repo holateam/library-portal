@@ -14,8 +14,6 @@ html,body
     text-decoration: none
   h1,h2,h3,h4,h5
     color: #2c3e50
-.black
-  color: black
 .btn-success
   color: #fff
   background-color: #27ae60
@@ -185,7 +183,7 @@ html,body
       // text-align: right
       max-height: 312px
       overflow: hidden
-      padding: 0 0 0 0
+      // padding: 0 0 0 0
       h4
         font-weight: 500
       #description
@@ -198,6 +196,10 @@ html,body
         color: #27ae60
     #id
       margin-top: 20px
+      h4
+        padding: 5px 0
+      hr
+        margin: 5px 0
       .btnBookID
         float: left
       #bookImg img
@@ -209,8 +211,6 @@ html,body
         text-align: center
         .btn
           margin: 0 3px
-      .btnBlock
-        padding: 0
       .bookLastInfo
         display: table
         table-layout: fixed
@@ -226,20 +226,20 @@ html,body
           display: table-cell
           padding-right: 19px
           padding-bottom: 8px
-          color: #888
-          width: 20%
+          color: #2c3e50
+          // width: 22%
           word-break: break-word
           font-weight: 600
           // display: inline-block
         #year,#pages,#isbn
-          padding: 0 5px 0 5px
+
       .bookInfo
         // padding: 0 15px 10px
         color: #2c3e50
         font-size: 14px
         .titleBook
           font-weight: 600
-          font-size: 22px
+          font-size: 24px
           line-height: 32px
           letter-spacing: .01em
           margin-bottom: 20px
@@ -465,3 +465,32 @@ html,body
 
 .showSweetAlert[data-animation=pop]
   animation: displaySweetAlert 0.2s
+@media(min-width:1200px)and(max-width:1920px)
+  body
+
+/* Small devices (tablets, 768px and up) */
+@media(min-width:991px)and(max-width:1170px)
+  body
+
+/* Small devices (tablets, 768px and up) */
+@media(min-width:768px)and(max-width:990px)
+  .titleBook
+    width: 100%
+  .bookRow
+    font-size: 14px !important
+    .properties
+      width: 20%
+
+  .btnBlock
+    margin-top: 20px
+  .bookDescription
+    margin-top: 20px
+    padding: 0 15px 0 15px
+
+@media(min-width:360px)and(max-width:767px)
+  body
+
+
+// @media(min-width:768px)
+    body
+      background-color: black
