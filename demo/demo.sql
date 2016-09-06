@@ -28,9 +28,11 @@ CREATE TABLE `books` (
   `author` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `year` int(4) NOT NULL,
+  `cover` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `pages` int(4) NOT NULL,
   `ISBN` text COLLATE utf8mb4_unicode_ci NOT NULL,
-   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` tinyint(1) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `event` int(10) DEFAULT NULL,
   PRIMARY KEY (`book_id`),
   KEY `FK_books` (`event`),
@@ -167,4 +169,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-09-06 15:53:40
+-- Dump completed on 2016-09-06 19:40:19
