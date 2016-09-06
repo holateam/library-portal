@@ -43,8 +43,9 @@ do
          d)
              DBFILE='./demo/demo.sql'
              cd ./public/img
-             curl -O -J -L https://docs.google.com/uc?authuser=0&id=0B2mfUDzNJYyfOHJ0dlpkNWhRYVk&exportFormat=zip > books.zip
-             unzip books
+             rm -rf books
+             wget --no-check-certificate 'https://docs.google.com/uc?export=download&id=0B2mfUDzNJYyfOHJ0dlpkNWhRYVk' -O books.zip
+             unzip books.zip
              rm books.zip
              ;;
          v)
