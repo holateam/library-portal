@@ -1,4 +1,7 @@
 extends layout
+block vars
+  - var search = false
+  - var sidebar = false
 block content
   div#content.col-xs-12.col-sm-12.col-md-12.col-lg-12
     include book_item

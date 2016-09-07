@@ -12,8 +12,10 @@ html(lang='ru')
         script(src='/js/common.js' defer)
 
     body
+        block vars
         include header
-        include sidebar
+        if (sidebar == true)
+            include sidebar
         section#main
             div.container
                 block content

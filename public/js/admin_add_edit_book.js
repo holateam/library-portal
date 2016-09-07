@@ -1,3 +1,6 @@
+var pathname = $(location).attr('pathname');
+var stringToFind = '/admin/book/update/';
+var stringPosition = pathname.indexOf(stringToFind);
 var canvas = document.getElementById('canvas');
 var isImgChanged = false;
 var img = new Image();
@@ -11,7 +14,6 @@ function fillBookEditor(book) {
     $('#book_description').val(book.description);
     img.src = getBookImgSrcFromServ(book.id);
     if (img.src) {
-        img.src = getBookImgSrcFromServ(book.id);
         img.onload = function () {
             canvas.getContext('2d').drawImage(img, 0, 0);
         };
@@ -51,15 +53,10 @@ $('#book_img_upload').change(function (e) {
         drawCenteredImageOnCanvas(img, canvas);
     };
 });
-
-var pathname = $(location).attr('pathname');
-var stringToFind = '/admin/book/update/';
-var stringPosition = pathname.indexOf(stringToFind);
-
-doAjaxQuery('GET', '/admin/api/v1/books/' + pathname.substr(stringToFind.length), null, function (res) {
-    fillBookEditor(res.data);
+if (stringPosition != -1)
+    doAjaxQuery('GET', '/admin/api/v1/books/' + pathname.substr(stringToFind.length), null, function (res) {
+        fillBookEditor(res.data);
 });
-
 
 $('#book_save').click(function () {
     var s = null;

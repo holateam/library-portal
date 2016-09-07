@@ -62,10 +62,8 @@ module.exports.addBook = function (bookInfo,callback) {
 
         bookInfo.year = parseInt(bookInfo.year) || 0;
         bookInfo.pages = parseInt(bookInfo.pages) || 0;
-        bookInfo.cover = bookInfo.pages || "cover";  // todo: delete
-        bookInfo.status = true; // todo: delete
 
-        connection.query("INSERT INTO books (book_id, ISBN, title, author, description, year, pages, cover, status, event) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, NULL)", [bookInfo.isbn, bookInfo.title, bookInfo.author, bookInfo.description, bookInfo.year, bookInfo.pages, bookInfo.cover, bookInfo.status], function (err, result) {
+        connection.query("INSERT INTO books (book_id, ISBN, title, author, description, year, pages, event) VALUES (NULL, ?, ?, ?, ?, ?, ?, NULL)", [bookInfo.isbn, bookInfo.title, bookInfo.author, bookInfo.description, bookInfo.year, bookInfo.pages], function (err, result) {
             connection.release();
             if (err) return callback(err);
             var data = {};
@@ -327,10 +325,8 @@ module.exports.getBooks = function (data, callback) {
         "b.author",
         "b.description",
         "b.year",
-        "b.cover",
         "b.pages",
         "b.ISBN",
-        "b.status",
         "b.date",
         "b.event"
     ];
@@ -411,10 +407,8 @@ module.exports.getBooksForAdmin = function (data, callback) {
         "b.author",
         "b.description",
         "b.year",
-        "b.cover",
         "b.pages",
         "b.ISBN",
-        "b.status",
         "b.date",
         "b.event",
 

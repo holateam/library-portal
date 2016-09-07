@@ -8,15 +8,15 @@ section#header
             span.plus ++
       .col-xs-7.hidden-sm.hidden-md.hidden-lg
         .social
-          a(href='https://vk.com/programming_in_kr')
+          a(href='https://vk.com/programming_in_kr', target="_blank")
             span.fa-stack.fa-sm
               i.fa.fa-vk.fa-stack-1x
-          a(href='https://www.facebook.com/groups/programming.ua/')
+          a(href='https://www.facebook.com/groups/programming.ua/',target="_blank")
             span.fa-stack.fa-sm
               i.fa.fa-facebook.fa-stack-1x
-          a(href='http://programming.kr.ua/ru/courses#faq')
+          a(href='http://programming.kr.ua/ru/courses#faq', target="_blank")
             span.fa-stack.fa-sm
-              i.fa.fa-envelope-o.fa-stack-1x
+              i.fa.fa-question.fa-stack-1x
       .col-xs-12.col-sm-7.col-md-8.col-lg-8
         .main-menu
           .col-xs-12.col-sm-12.col-md-12.col-lg-12
@@ -26,17 +26,19 @@ section#header
                 //- select#list.form-control(size='3', multiple='')
                 div#list.bAutoComplete.mSearchAutoComplete(size='')
                 include mini_item
+                include not_found_item
                   //- option.pItem(value='id') Text2
+
               button#search_btn.btn.btn-default(type='submit') OK
       .col-xs-2.col-sm-3.col-md-2.col-lg-2.hidden-xs
         .social
-          a(href='https://vk.com/programming_in_kr')
+          a(href='https://vk.com/programming_in_kr', target="_blank")
             span.fa-stack.fa-sm
               i.fa.fa-vk.fa-stack-1x
-          a(href='https://www.facebook.com/groups/programming.ua/')
+          a(href='https://www.facebook.com/groups/programming.ua/', target="_blank")
             span.fa-stack.fa-sm
               i.fa.fa-facebook.fa-stack-1x
-          a(href='http://programming.kr.ua/ru/courses#faq')
+          a(href='http://programming.kr.ua/ru/courses#faq', target="_blank")
             span.fa-stack.fa-sm
-              i.fa.fa-envelope-o.fa-stack-1x
+              i.fa.fa-question.fa-stack-1x
 script(src='/js/search.js' defer)
