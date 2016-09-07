@@ -1,41 +1,41 @@
 /* ----------------------------- begin view ----------------------------------*/
 var view = {
-    fillFields: function (obj, fields, func) {
+    fillFields: function(obj, fields, func) {
         fields = fields.split(/, */);
-        fields.map(function (f) {
+        fields.map(function(f) {
             ($('#' + f)[func])(obj[f]);
         });
     },
-    selectFields: function (fields, func) {
+    selectFields: function(fields, func) {
         var obj = {};
         fields = fields.split(/, */);
-        fields.map(function (f) {
+        fields.map(function(f) {
             var v = ($('#' + f)[func])();
             obj[f] = (v);
         });
         return obj;
     },
-    showErrEmail: function () {
+    showErrEmail: function() {
         var c = '.input-group';
         $(c).removeClass('has-success');
         $(c).addClass('has-error');
         view.hideElement('.glyphicon-ok');
         view.showElement('.glyphicon-remove');
     },
-    showSuccessEmail: function () {
+    showSuccessEmail: function() {
         var c = '.input-group';
         $(c).removeClass('has-error');
         $(c).addClass('has-success');
         view.hideElement('.glyphicon-remove');
         view.showElement('.glyphicon-ok');
     },
-    addBookItem: function (book) {
+    addBookItem: function(book) {
         return $('#pattern').html()
             .replace(/{id}/g, book.id)
             .replace(/{title}/g, book.title)
             .replace(/{author}/g, book.author);
     },
-    addBooksItems: function (books, doClean) {
+    addBooksItems: function(books, doClean) {
         var content = $('#content');
         var contentHTML = ((doClean) ? '' : content.html());
 
@@ -46,16 +46,39 @@ var view = {
         content.html(contentHTML);
         $('.blockI').matchHeight(); // Aligns all the height of the book
     },
-    showNot_found: function (searchText, pathUrl) {
+    addMiniItemSearch: function(book) {
+        var id = (book.id == 'no-cover') ? '#not_found' : '#miniItem';
+        return $(id).html()
+            .replace(/{id}/g, book.id)
+            .replace(/{title}/g, book.title)
+            .replace(/{author}/g, book.author);
+    },
+    addMiniItemsSearch: function(books) {
+        var content = $('#list');
+        content.html('');
+        var contentHTML = content.html();
+        var limitImetsInSearch = 6;
+        var n = 0;
+        for (var i in books) {
+            n++;
+            if (i <= limitImetsInSearch) {
+                contentHTML += view.addMiniItemSearch(books[i]);
+                content.attr('size', n);
+            }
+        }
+        content.html(contentHTML);
+        content.show('fast');
+    },
+    showNot_found: function(searchText, pathUrl) {
         var contentNotFound = $('#not_found').html()
             .replace(/{searchText}/g, searchText);
         $('#content').html(contentNotFound);
     },
-    nullToDash: function (string) {
+    nullToDash: function(string) {
         return (((string == null) || (string == 0)) ? '-' : string);
     },
 
-    addBooksListRow: function (book) {
+    addBooksListRow: function(book) {
         var date;
         if (book.date) {
             date = new Date(book.date);
@@ -74,43 +97,49 @@ var view = {
             .replace(/{pawn}/g, view.nullToDash(book.pawn));
     },
 
-    addBooksList: function (books) {
+    addBooksList: function(books) {
         var content = $('#table_content');
         var contentHTML = '';
 
         for (var i in books) {
+            console.log(view.addBooksListRow(books[i]));
             contentHTML += view.addBooksListRow(books[i]);
         }
 
         content.html(contentHTML);
 
-        $('.book_list_row').click(function () {
+        $('.book_list_row').click(function() {
             $(location).attr('href', 'admin/book/' + $(this).attr('data-book-id'));
         });
     },
 
-    fillBookInfo: function (book) {
+    fillBookInfo: function(book) {
+        console.log(book);
         view.fillFields(book, 'title,author,year,pages,isbn,description', "html");
-        $('#id').attr({'book-id': book.id, 'busy': book.event});
+        $('#id').attr({
+            'book-id': book.id,
+            'busy': book.event
+        });
         $('#bookImg img').attr('src', '/img/books/' + book.id + '.jpg');
         $('.description').html(book.description);
     },
-    normalDateFormat: function (date) {
+    normalDateFormat: function(date) {
         return date.toISOString().substring(0, 10);
     },
-    addPopUpBlock: function (title, text) {
+    addPopUpBlock: function(title, text) {
         $('#main').after('<div id="test-modal" class="mfp-hide white-popup-block"><h1>' + title + '</h1><p>' + text + '</p><p><a class="popup-modal-dismiss" href="#">X</a></p></div>');
     },
 
-    showError: function (text) {
+    showError: function(text) {
         swal('Ооопс!', text, 'error');
     },
 
-    showSuccess: function (text) {
+    showSuccess: function(text) {
+        console.log(text);
         swal('Отлично!', text, 'success');
     },
 
-    showSubscribe: function (text, bookId) {
+    showSubscribe: function(text, bookId) {
         swal({
                 title: 'Хотите почитать?',
                 text: text,
@@ -122,7 +151,7 @@ var view = {
                 confirmButtonColor: '#27AE60',
                 showLoaderOnConfirm: true
             },
-            function (inputValue) {
+            function(inputValue) {
                 if (inputValue === false) {
                     return false;
                 }
@@ -130,13 +159,15 @@ var view = {
                     swal.showInputError('Вы где-то ошиблись. Проверьте введенные данные.');
                     return false;
                 }
-                doAjaxQuery('GET', '/api/v1/books/' + bookId + '/order', {'email': inputValue}, function (res) {
+                doAjaxQuery('GET', '/api/v1/books/' + bookId + '/order', {
+                    'email': inputValue
+                }, function(res) {
                     view.showSuccess('Ваш e-mail ' + inputValue + '\nдобавлен в список ожидания.');
                 });
             });
     },
 
-    showConfirm: function (bookId) {
+    showConfirm: function(bookId) {
         swal({
                 title: 'Вы уверены?',
                 text: 'Согласие приведет к невозвратимому удалению книги',
@@ -147,14 +178,14 @@ var view = {
                 confirmButtonText: 'Да, уверен!',
                 closeOnConfirm: false
             },
-            function () {
-                doAjaxQuery('GET', '/admin/api/v1/books/' + bookId + '/remove', null, function (res) {
+            function() {
+                doAjaxQuery('GET', '/admin/api/v1/books/' + bookId + '/remove', null, function(res) {
                     swal({
                             title: 'Удалено!',
                             text: 'Надеюсь, вы осознаете что сейчас произошло ))',
                             type: 'success'
                         },
-                        function () {
+                        function() {
                             window.location.href = '/admin';
                         });
                 });
@@ -165,7 +196,7 @@ var view = {
 
 /* --------------------------- begin controller ------------------------------*/
 var controller = {
-    validateEmail: function (value) {
+    validateEmail: function(value) {
         var regex = /^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,10}$/;
         return regex.test(value);
     }
@@ -182,27 +213,27 @@ function doAjaxQuery(method, url, data, callback) {
         contentType: 'application/json',
         dataType: 'json',
         data: ((method == 'POST') ? JSON.stringify(data) : data),
-        success: function (res) {
+        success: function(res) {
             if (!res.success) {
                 view.showError(res.msg);
                 return;
             }
             callback(res);
         },
-        error: function (jqXHR, textStatus) {
+        error: function(jqXHR, textStatus) {
             view.showError('Ошибка ' + textStatus);
         }
     });
 }
 
-$(function () {
+$(function() {
     $('.popup-modal').magnificPopup({
         type: 'inline',
         preloader: false,
         focus: '#username',
         modal: true
     });
-    $(document).on('click', '.popup-modal-dismiss', function (e) {
+    $(document).on('click', '.popup-modal-dismiss', function(e) {
         e.preventDefault();
         $.magnificPopup.close();
     });
