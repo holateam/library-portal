@@ -5,8 +5,6 @@ var canvas = document.getElementById('canvas');
 var isImgChanged = false;
 var img = new Image();
 
-$('#search').hide();
-
 function fillBookEditor(book) {
     $('#book_title').val(book.title);
     $('#book_author').val(book.author);

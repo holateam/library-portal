@@ -7,7 +7,7 @@ window.history.replaceState({}, '', $(location).attr('origin'));
 
 $(document).scroll(function () {
     console.log(sessionStorage.getItem('filter'));
-    if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+    if ($(window).scrollTop() + $(window).height() <= $(document).height()) {
         offsetScrollCoef++;
         var offset = offsetScrollCoef * global.number_of_items_onscroll;
 

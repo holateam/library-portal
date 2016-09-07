@@ -47,8 +47,6 @@ doAjaxQuery('GET', '/api/v1/books/' + pathname.substr(bookIdPosition), null, fun
 //         }
 //     }
 // });
-$('#search').hide();
-$('.sidebar2').hide();
 /*------------------ Sending email by clicking on the button ----------------*/
 $('.btnBookID').click(function(event) {
     // var email = $('.orderEmail').val();

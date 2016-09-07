@@ -1,17 +1,18 @@
 extends admin_layout
-
+block vars
+  -var search = false
 block content
   div.row.col-md-12
     table.table.table-hover
       thead
         tr
-          th Book Title
-          th Author
-          th Reader's name
-          th Reader's email
-          th Phone number
-          th Return date
-          th Amount of guarantee
+          th Название
+          th Автор
+          th Читающий
+          th Email
+          th Телефон
+          th Дата возврата
+          th Залог
       tbody#table_content
 
   include books_list_row
