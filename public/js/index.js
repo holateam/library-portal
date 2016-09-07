@@ -5,7 +5,7 @@ $(document).ready(function () {
 
 
     $(document).scroll(function () {
-        if (($(document).height() - $(window).scrollTop() <= 2 * $(window).height()) && !isScrollRunned) {
+        if ((( $(document).height() - $(window).scrollTop() ) < ( 2 * $(window).height() )) && !isScrollRunned) {
             isScrollRunned = true;
             drawItemsOnScroll();
         }
@@ -24,9 +24,7 @@ $(document).ready(function () {
                     'offset': offset
                 }, function (res) {
                     view.addBooksItems(res.data.books, false);
-                    setTimeout(function () {
-                        isScrollRunned = false;
-                    }, 500);
+                    isScrollRunned = false;
                 });
             offset += numOfItems;
         }
