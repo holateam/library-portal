@@ -21,9 +21,14 @@ section#header
         .main-menu
           .col-xs-12.col-sm-12.col-md-12.col-lg-12
             form.navbar-form.navbar-right
-              if (search == true)
-                .form-group
-                  input#search.form-control(type='text', placeholder='Найти книгу')
+              .form-group
+                input#search.form-control(type='text', placeholder='Найти книгу')
+                //- select#list.form-control(size='3', multiple='')
+                div#list.bAutoComplete.mSearchAutoComplete(size='')
+                include mini_item
+                include not_found_item
+                  //- option.pItem(value='id') Text2
+
               button#search_btn.btn.btn-default(type='submit') OK
       .col-xs-2.col-sm-3.col-md-2.col-lg-2.hidden-xs
         .social
