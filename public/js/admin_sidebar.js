@@ -6,7 +6,7 @@ sidebarItems.click(function(event) {
     sessionStorage.setItem('admin_filter', filter);
 
     sidebarItems.removeClass('active');
-    context.closest('li').addClass('active');
+    context.closest('.filterBlock a').addClass('active');
 
     var pathname = $(location).attr('pathname');
 

@@ -11,9 +11,9 @@ var requestBooksSearch = function() {
             function(res) {
                 if (res.data.total.amount > 0) {
                     var books = res.data.books;
-                    view.addMiniItemsSearch(books);
+                    view.addMiniItemsSearch(pathUrl,books);
                 } else {
-                    view.addMiniItemsSearch([{
+                    view.addMiniItemsSearch(pathUrl,[{
                         id: 'no-cover',
                         title: 'По запросу "' + text + '" ничего не найдено :(',
                         author: 'Миллионы натренированных обезъян облазили весю библиотеку и не нашли ничего подходящего, что могло бы соответствовать Вашему запросу.'

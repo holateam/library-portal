@@ -190,7 +190,33 @@ var view = {
                         });
                 });
             });
+    },
+    addMiniItemSearch: function(pathUrl,book) {
+      console.log(book.id);
+        var id = (book.id == 'no-cover') ? '#not_found' : '#miniItem';
+        return $(id).html()
+            .replace(/{id}/g, book.id)
+            .replace(/{path}/g, pathUrl)
+            .replace(/{title}/g, book.title)
+            .replace(/{author}/g, book.author);
+    },
+    addMiniItemsSearch: function(pathUrl,books) {
+        var content = $('#list');
+        content.html('');
+        var contentHTML = content.html();
+        var limitImetsInSearch = 6;
+        var n = 0;
+        for (var i in books) {
+            n++;
+            if (i <= limitImetsInSearch) {
+                contentHTML += view.addMiniItemSearch(pathUrl,books[i]);
+                content.attr('size', n);
+            }
+        }
+        content.html(contentHTML);
+        content.show('fast');
     }
+
 };
 /* ------------------------------- end view ----------------------------------*/
 
