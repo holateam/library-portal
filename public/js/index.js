@@ -1,10 +1,12 @@
 $('.sidebar_item[data-filter=' + global.filter + ']').click();
-
+var isScrollRunned = false;
 $(document).ready(function () {
     window.history.replaceState({}, '', $(location).attr('origin'));
 
+
     $(document).scroll(function () {
-        if ($(document).height() - $(window).scrollTop() <= 2 * $(window).height()) {
+        if (($(document).height() - $(window).scrollTop() <= 2 * $(window).height()) && !isScrollRunned) {
+            isScrollRunned = true;
             drawItemsOnScroll();
         }
     });
@@ -22,9 +24,12 @@ $(document).ready(function () {
                     'offset': offset
                 }, function (res) {
                     view.addBooksItems(res.data.books, false);
+                    setTimeout(function () {
+                        isScrollRunned = false;
+                    }, 500);
                 });
             offset += numOfItems;
         }
     }());
-
 });
+
