@@ -133,7 +133,7 @@ html,body
     display: none
     .eAutoComplete_itemList
       line-height: 40px
-      max-height: 62px
+      // max-height: 62px
       margin: 5px 0
       opacity: 0.5
       &:last-child
@@ -384,6 +384,10 @@ html,body
         padding: 0 0 5px 0
         text-overflow: ellipsis
         overflow: hidden
+    .table-hover
+      font-size: 14px
+      tr
+        cursor: pointer
 .filterBlock
   border-bottom-width: 1px
   border-bottom-style: solid
@@ -511,6 +515,19 @@ html,body
     padding: 0 15px 0 15px
 
 @media(min-width:320px)and(max-width:767px)
+  .mSearchAutoComplete
+    .eAutoComplete_itemList
+      height: auto !important
+      a
+        padding: 10px 0 !important
+      .col-my-2
+        display: none
+      img
+        display: none
+      .title
+        font-size: 14px !important
+      .author
+        font-size: 12px !important
   .titleBook
     width: 100% !important
     text-align: center

@@ -159,15 +159,16 @@ var view = {
         });
       });
   },
-  addMiniItemSearch: function(book) {
+  addMiniItemSearch: function(pathUrl,book) {
     console.log(book.id);
       var id = (book.id == 'no-cover') ? '#not_found' : '#miniItem';
       return $(id).html()
           .replace(/{id}/g, book.id)
+          .replace(/{path}/g, pathUrl)
           .replace(/{title}/g, book.title)
           .replace(/{author}/g, book.author);
   },
-  addMiniItemsSearch: function(books) {
+  addMiniItemsSearch: function(pathUrl,books) {
       var content = $('#list');
       content.html('');
       var contentHTML = content.html();
@@ -176,7 +177,7 @@ var view = {
       for (var i in books) {
           n++;
           if (i <= limitImetsInSearch) {
-              contentHTML += view.addMiniItemSearch(books[i]);
+              contentHTML += view.addMiniItemSearch(pathUrl,books[i]);
               content.attr('size', n);
           }
       }
