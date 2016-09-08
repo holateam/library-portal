@@ -46,29 +46,6 @@ var view = {
         content.html(contentHTML);
         $('.blockI').matchHeight(); // Aligns all the height of the book
     },
-    addMiniItemSearch: function(book) {
-        var id = (book.id == 'no-cover') ? '#not_found' : '#miniItem';
-        return $(id).html()
-            .replace(/{id}/g, book.id)
-            .replace(/{title}/g, book.title)
-            .replace(/{author}/g, book.author);
-    },
-    addMiniItemsSearch: function(books) {
-        var content = $('#list');
-        content.html('');
-        var contentHTML = content.html();
-        var limitImetsInSearch = 6;
-        var n = 0;
-        for (var i in books) {
-            n++;
-            if (i <= limitImetsInSearch) {
-                contentHTML += view.addMiniItemSearch(books[i]);
-                content.attr('size', n);
-            }
-        }
-        content.html(contentHTML);
-        content.show('fast');
-    },
     showNot_found: function(searchText, pathUrl) {
         var contentNotFound = $('#not_found').html()
             .replace(/{searchText}/g, searchText);
@@ -77,7 +54,6 @@ var view = {
     nullToDash: function(string) {
         return (((string == null) || (string == 0)) ? '-' : string);
     },
-
     addBooksListRow: function(book) {
         var date;
         if (book.date) {
@@ -96,7 +72,6 @@ var view = {
             .replace(/{date}/g, view.nullToDash(date))
             .replace(/{pawn}/g, view.nullToDash(book.pawn));
     },
-
     addBooksList: function(books) {
         var content = $('#table_content');
         var contentHTML = '';
@@ -112,7 +87,6 @@ var view = {
             $(location).attr('href', 'admin/book/' + $(this).attr('data-book-id'));
         });
     },
-
     fillBookInfo: function(book) {
         console.log(book);
         view.fillFields(book, 'title,author,year,pages,isbn,description', "html");
@@ -129,16 +103,13 @@ var view = {
     addPopUpBlock: function(title, text) {
         $('#main').after('<div id="test-modal" class="mfp-hide white-popup-block"><h1>' + title + '</h1><p>' + text + '</p><p><a class="popup-modal-dismiss" href="#">X</a></p></div>');
     },
-
     showError: function(text) {
         swal('Ооопс!', text, 'error');
     },
-
     showSuccess: function(text) {
         console.log(text);
         swal('Отлично!', text, 'success');
     },
-
     showSubscribe: function(text, bookId) {
         swal({
                 title: 'Хотите почитать?',
@@ -166,7 +137,6 @@ var view = {
                 });
             });
     },
-
     showConfirm: function(bookId) {
         swal({
                 title: 'Вы уверены?',
@@ -191,8 +161,8 @@ var view = {
                 });
             });
     },
-    addMiniItemSearch: function(pathUrl,book) {
-      console.log(book.id);
+    addMiniItemSearch: function(pathUrl, book) {
+        console.log(book.id);
         var id = (book.id == 'no-cover') ? '#not_found' : '#miniItem';
         return $(id).html()
             .replace(/{id}/g, book.id)
@@ -200,7 +170,7 @@ var view = {
             .replace(/{title}/g, book.title)
             .replace(/{author}/g, book.author);
     },
-    addMiniItemsSearch: function(pathUrl,books) {
+    addMiniItemsSearch: function(pathUrl, books) {
         var content = $('#list');
         content.html('');
         var contentHTML = content.html();
@@ -209,7 +179,7 @@ var view = {
         for (var i in books) {
             n++;
             if (i <= limitImetsInSearch) {
-                contentHTML += view.addMiniItemSearch(pathUrl,books[i]);
+                contentHTML += view.addMiniItemSearch(pathUrl, books[i]);
                 content.attr('size', n);
             }
         }

@@ -27,7 +27,6 @@ $(document).ready(function () {
                     isScrollRunned = false;
                 });
             offset += numOfItems;
-        }
+        };
     }());
 });
-
