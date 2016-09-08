@@ -3,7 +3,7 @@ block vars
   - var search = false
   - var sidebar = false
 block content
-  div#content.col-xs-12.col-sm-12.col-md-12.col-lg-12
+  div#content.book_block.col-xs-12.col-sm-12.col-md-12.col-lg-12
     include book_item
     div#id
       div.col-xs-12.col-sm-3.col-md-3#bookImg.item
@@ -11,10 +11,6 @@ block content
       div.col-xs-12.col-sm-9.col-md-9.col-lg-9.info
         div.bookInfo.col-md-12
           div#title.titleBook
-        //- div
-        //-   span.properties
-        //-     b Автор:
-        //-   span#author
         div.col-xs-12.col-sm-12.col-md-4.col-lg-4
           .bookLastInfo
             div.bookRow
