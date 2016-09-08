@@ -72,13 +72,12 @@ var view = {
             .replace(/{date}/g, view.nullToDash(date))
             .replace(/{pawn}/g, view.nullToDash(book.pawn));
     },
-    addBooksList: function(books) {
+    addBooksList: function(res) {
         var content = $('#table_content');
         var contentHTML = '';
-
-        for (var i in books) {
-            console.log(view.addBooksListRow(books[i]));
-            contentHTML += view.addBooksListRow(books[i]);
+        console.log("Количество книг: " + res.data.books.length);
+        for (var i in res.data.books) {
+            contentHTML += view.addBooksListRow(res.data.books[i]);
         }
 
         content.html(contentHTML);
@@ -162,7 +161,6 @@ var view = {
             });
     },
     addMiniItemSearch: function(pathUrl, book) {
-        console.log(book.id);
         var id = (book.id == 'no-cover') ? '#not_found' : '#miniItem';
         return $(id).html()
             .replace(/{id}/g, book.id)
