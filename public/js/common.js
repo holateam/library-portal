@@ -168,11 +168,11 @@ var view = {
             .replace(/{title}/g, book.title)
             .replace(/{author}/g, book.author);
     },
-    addMiniItemsSearch: function(pathUrl, books) {
+    addMiniItemsSearch: function(pathUrl, books, text) {
         var content = $('#list');
         content.html('');
         var contentHTML = content.html();
-        var limitImetsInSearch = 6;
+        var limitImetsInSearch = 3;
         var n = 0;
         for (var i in books) {
             n++;
@@ -180,6 +180,10 @@ var view = {
                 contentHTML += view.addMiniItemSearch(pathUrl, books[i]);
                 content.attr('size', n);
             }
+        }
+        if(n > limitImetsInSearch){
+          contentHTML += $('#more').html()
+            .replace(/{text}/g,text);
         }
         content.html(contentHTML);
         content.show('fast');

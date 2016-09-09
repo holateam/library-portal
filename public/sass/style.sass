@@ -134,8 +134,30 @@ html,body
     top: 56px
     z-index: 2
     display: none
+    .eAutoComplete_itemMore
+      text-align: right
+      a
+        margin: 0
+        display: block !important
+        text-align: right
+        line-height: 0
+        padding: 10px 0
+        // color: #2c3e50
+        // border-bottom: 1px dashed #2c3e50
+        &:hover
+          // color: #34b96c
+          // border-bottom: 1px dashed #34b96c
+        span
+          font-size: 14px
+          font-weight: 600
+          color: #34b96c
+          border-bottom: 1px dashed #34b96c
+          line-height: 24px
+          &:hover
+            color: #2c3e50
+            border-bottom: 1px dashed #2c3e50
     .eAutoComplete_itemList
-      line-height: 40px
+      line-height: 0px
       // max-height: 62px
       margin: 5px 0
       opacity: 0.5

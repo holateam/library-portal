@@ -7,7 +7,7 @@ var callbackQueryMiniItemsSearch = function(res, text) {
     console.log("Количество книг в строке поиска: " + res.data.books.length);
     if (res.data.total.amount > 0) {
         var books = res.data.books;
-        view.addMiniItemsSearch(pathUrl, books);
+        view.addMiniItemsSearch(pathUrl, books,text);
     } else {
         view.addMiniItemsSearch(pathUrl, [{
             id: 'no-cover',
