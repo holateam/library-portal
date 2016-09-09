@@ -1,7 +1,6 @@
 var drawItemsOnScroll,
     isScrollRunning = false;
 
-
 (function () {
     data = {
         filter: getParameterByName('filter') || "new",
@@ -31,7 +30,6 @@ $(document).ready(function () {
         }
     });
 });
-
 
 function getParameterByName(name, url) {
     if (!url) url = $(location).attr('href');
@@ -76,4 +74,3 @@ function loadIndexPage(reqData) {
         drawItemsOnScroll = initDrawItemsOnScroll(res.data.total.amount);
     });
 }
-

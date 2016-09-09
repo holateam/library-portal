@@ -103,8 +103,9 @@ html,body
 .sidebar2
   text-align: center
   a
-    margin-left: 1%
-    margin-right: 1%
+    padding-left: 1%
+    padding-right: 1%
+    padding-bottom: 10px
     line-height: 80px
     color: #2c3e50
     text-transform: uppercase
@@ -115,6 +116,8 @@ html,body
   li
     float: left
 .navbar-form
+  border-top: 0
+  border-bottom: 0
   width: 100%
   .form-group
     width: 100%
@@ -122,6 +125,12 @@ html,body
   #search
     width: 100%
     padding-left: 30px
+  .loader
+    position: absolute
+    top: 0
+    right: 10px
+    display: none
+
   #list
   .mSearchAutoComplete
     padding: 10px 0
@@ -131,8 +140,25 @@ html,body
     top: 56px
     z-index: 2
     display: none
+    .eAutoComplete_itemMore
+      text-align: right
+      a
+        margin: 0
+        display: block !important
+        text-align: right
+        line-height: 0
+        padding: 10px 0
+        &:hover
+        span
+          font-size: 12px
+          color: #34b96c
+          border-bottom: 1px dashed #34b96c
+          line-height: 14px
+          &:hover
+            color: #2c3e50
+            border-bottom: 1px dashed #2c3e50
     .eAutoComplete_itemList
-      line-height: 40px
+      line-height: 0px
       // max-height: 62px
       margin: 5px 0
       opacity: 0.5
@@ -233,15 +259,37 @@ html,body
     width: 13%
   #pattern
     display: none
+  .found
+    margin: 60px 15px 20px 15px
+    // border-bottom: 1px solid grey
+    box-shadow: 0px 1px 0px 0px rgba(195, 195, 195, 0.27)
+    .text_found,.number_found
+      font-weight: bold
+      padding: 0 5px
+    .breadcrumb
+      padding: 8px 0
+      margin-bottom: 0
+      list-style: none
+      background-color: inherit
+      border-radius: 4px
+      font-size: 12px
+      li
+        a
+          color: #27ae60
+          &:hover
+            color: #2c3e50
+  .book_block
+    margin-top: 80px
   #content
     .details,.btnBookID
       background-color: white
-      color: #2c3e50
-      border-color: #263646
+      color: #34b96c
+      border-color: #34b96c
+      outline: none
       &:hover
         background-color: white
-        color: #34b96c
-        border-color: #34b96c
+        color: #2c3e50
+        border-color: #263646
     .fileinput-upload-button
       display: none
     .kv-file-upload
@@ -515,6 +563,13 @@ html,body
     padding: 0 15px 0 15px
 
 @media(min-width:320px)and(max-width:767px)
+  .sidebar2
+    a
+      font-size: 50% !important
+    .btn-success
+      font-size: 50% !important
+  .table-hover
+    font-size: 30% !important
   .mSearchAutoComplete
     .eAutoComplete_itemList
       height: auto !important

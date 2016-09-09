@@ -1,6 +1,4 @@
 extends admin_layout
-block vars
-  -var search = false
 block content
   div.row.col-md-12
     div.found(style='display: none; margin: 0 0 20px 0; padding: 0 0 5px 0')
@@ -22,4 +20,3 @@ block content
       tbody#table_content
 
   include books_list_row
-  script(src='/js/admin_index.js' defer)

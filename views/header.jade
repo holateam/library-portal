@@ -23,13 +23,17 @@ section#header
             form.navbar-form.navbar-right
               .form-group
                 input#search.form-control(type='text', placeholder='Найти книгу')
-                //- select#list.form-control(size='3', multiple='')
+                div.loader
+                  img(src='/img/loading.gif')
                 div#list.bAutoComplete.mSearchAutoComplete(size='')
                 include mini_item
                 include not_found_item
-                  //- option.pItem(value='id') Text2
-
-              button#search_btn.btn.btn-default(type='submit') OK
+                script#more(type='text/template')
+                  div.eAutoComplete_itemMore.col-md-12
+                    a(href='{pathUrl}/search?search={text}')
+                      div.col-my-2
+                        span все результаты
+              //- button#search_btn.btn.btn-default(type='submit') OK
       .col-xs-2.col-sm-3.col-md-2.col-lg-2.hidden-xs
         .social
           a(href='https://vk.com/programming_in_kr', target="_blank")
