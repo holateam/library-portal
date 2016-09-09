@@ -181,10 +181,10 @@ var view = {
                 content.attr('size', n);
             }
         }
-        if(n > limitImetsInSearch){
-          contentHTML += $('#more').html()
-            .replace(/{text}/g,text)
-            .replace(/{pathUrl}/g,pathUrl);
+        if (n > limitImetsInSearch) {
+            contentHTML += $('#more').html()
+                .replace(/{text}/g, text)
+                .replace(/{pathUrl}/g, pathUrl);
         }
         content.html(contentHTML);
         content.show('fast');

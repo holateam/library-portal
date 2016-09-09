@@ -4,6 +4,7 @@ var pathUrl = (pathNameUrl[1] == 'admin') ? '/admin' : '';
 console.log(JSON.stringify(pathNameUrl[1]));
 
 var callbackQueryMiniItemsSearch = function(res, text) {
+    $('.loader').show();
     console.log("Количество книг в строке поиска: " + res.data.books.length);
     if (res.data.total.amount > 0) {
         var books = res.data.books;
@@ -15,6 +16,9 @@ var callbackQueryMiniItemsSearch = function(res, text) {
             author: 'Миллионы натренированных обезъян облазили весю библиотеку и не нашли ничего подходящего, что могло бы соответствовать Вашему запросу.'
         }]);
     }
+    setTimeout(function() {
+        $('.loader').hide();
+    }, 200);
 };
 
 var msgResultSearchText = function(text, number_found) {

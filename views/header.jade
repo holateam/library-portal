@@ -23,6 +23,8 @@ section#header
             form.navbar-form.navbar-right
               .form-group
                 input#search.form-control(type='text', placeholder='Найти книгу')
+                div.loader
+                  img(src='/img/loading.gif')
                 div#list.bAutoComplete.mSearchAutoComplete(size='')
                 include mini_item
                 include not_found_item
