@@ -266,8 +266,7 @@ $(function() {
 });
 
 var global = {
-    view_limit_on_page_load: 24,
-    total_items_exist: Number.POSITIVE_INFINITY,
+    items_limit_on_page_load: 24,
     number_of_items_onscroll: 6,
     filter: 'new'
 };
