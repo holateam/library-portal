@@ -25,7 +25,9 @@ gulp.task('scripts', function(){
     'libs/bootstrap/dist/js/bootstrap.min.js',
     'libs/matchHeight/dist/jquery.matchHeight-min.js',
     'libs/bootstrap-fileinput/js/fileinput.min.js',
-    'libs/sweetalert/dist/sweetalert.min.js'
+    'libs/sweetalert/dist/sweetalert.min.js',
+    'libs/bootstrap-star-rating/js/star-rating.min.js',
+
   ])
   .pipe(concat('libs.min.js'))
   .pipe(uglify())

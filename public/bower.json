@@ -26,6 +26,7 @@
     "magnific-popup": "^1.1.0",
     "matchHeight": "jquery-match-height#^0.7.0",
     "bootstrap-fileinput": "^4.3.4",
-    "sweetalert": "^1.1.3"
+    "sweetalert": "^1.1.3",
+    "bootstrap-star-rating": "^4.0.1"
   }
 }
