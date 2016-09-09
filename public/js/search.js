@@ -1,11 +1,11 @@
 var pathNameUrl = $(location).attr('pathname').split('/');
 var pathUrl = (pathNameUrl[1] == 'admin') ? '/admin' : '';
 
-console.log(JSON.stringify(pathNameUrl[1]));
+// console.log(JSON.stringify(pathNameUrl[1]));
 
 var callbackQueryMiniItemsSearch = function(res, text) {
     $('.loader').show();
-    console.log("Количество книг в строке поиска: " + res.data.books.length);
+    // console.log("Количество книг в строке поиска: " + res.data.books.length);
     if (res.data.total.amount > 0) {
         var books = res.data.books;
         view.addMiniItemsSearch(pathUrl, books, text);
@@ -40,7 +40,7 @@ var callbackQueryItemsSearch = function(res, text) {
 /* ------------------- Get the query in database searching -------------------*/
 var requestBooksSearch = function(callback) {
     var text = $('#search').val();
-    console.log('текст для поиска: ' + text);
+    // console.log('текст для поиска: ' + text);
     if (text.length > 0) {
         text = text.replace(/(^\s+|\s+$)/g, '');
         var textEncode = encodeURIComponent(text); // shielding request
@@ -89,13 +89,13 @@ $('body').click(function(event) {
 /* ---------- Live search if the search did not introduced n time ----------- */
 $('#search').keydown(function(event) {
     var text = $(this).val();
-    console.log("текст: " + text + " длина: " + text.length);
+    // console.log("текст: " + text + " длина: " + text.length);
     if (event.keyCode === 13) {
         event.preventDefault();
         if (text.length > 0) {
             var encodeText = encodeURIComponent($('#search').val());
             if (pathUrl == '/admin') {
-                console.log("Админ");
+                // console.log("Админ");
                 requestBooksSearch(function(res) {
                     view.addBooksList(res);
                     msgResultSearchText(text, res.data.books.length);
@@ -128,7 +128,7 @@ $('#search').keydown(function(event) {
         $('#search').keydown(function(event) {
             if (!(event.keyCode >= 33 && event.keyCode <= 40) &&
                 !(event.keyCode >= 16 && event.keyCode <= 20)) {
-                console.log('Отмена');
+                // console.log('Отмена');
                 clearTimeout(task);
             }
         });

@@ -75,7 +75,7 @@ var view = {
     addBooksList: function(res) {
         var content = $('#table_content');
         var contentHTML = '';
-        console.log("Количество книг: " + res.data.books.length);
+        // console.log("Количество книг: " + res.data.books.length);
         for (var i in res.data.books) {
             contentHTML += view.addBooksListRow(res.data.books[i]);
         }
@@ -87,7 +87,7 @@ var view = {
         });
     },
     fillBookInfo: function(book) {
-        console.log(book);
+        // console.log(book);
         view.fillFields(book, 'title,author,year,pages,isbn,description', "html");
         $('#id').attr({
             'book-id': book.id,
@@ -106,7 +106,7 @@ var view = {
         swal('Ооопс!', text, 'error');
     },
     showSuccess: function(text) {
-        console.log(text);
+        // console.log(text);
         swal('Отлично!', text, 'success');
     },
     showSubscribe: function(text, bookId) {
