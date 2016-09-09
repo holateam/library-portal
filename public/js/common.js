@@ -183,7 +183,8 @@ var view = {
         }
         if(n > limitImetsInSearch){
           contentHTML += $('#more').html()
-            .replace(/{text}/g,text);
+            .replace(/{text}/g,text)
+            .replace(/{pathUrl}/g,pathUrl);
         }
         content.html(contentHTML);
         content.show('fast');

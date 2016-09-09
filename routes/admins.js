@@ -30,6 +30,8 @@ Render(adminRouter, '/addbook', verify.auth, 'admin_add_edit_book', 'Add book');
 Render(adminRouter, '/editbook/:id', verify.auth, 'admin_add_edit_book', 'Add book');
 Render(adminRouter, '/book/:id', verify.auth, 'admin_book', 'book');
 Render(adminRouter, '/book/update/:id', verify.auth, 'admin_add_edit_book', 'Update book');
+Render(adminRouter, '/search',verify.auth, 'admin_search');
+
 
 adminRouter.route('/api/v1/books')
 .get(function(req, res, next) {

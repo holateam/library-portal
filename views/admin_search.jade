@@ -1,0 +1,22 @@
+extends admin_layout
+block content
+  div.row.col-md-12
+    div.found(style='display: none; margin: 0 0 20px 0; padding: 0 0 5px 0')
+      h5 По вашему запросу:
+        span.text_found
+        | найдено
+        span.number_found
+        br
+    table.table.table-hover
+      thead
+        tr
+          th название
+          th автор
+          th читающий
+          th email
+          th телефон
+          th возврат
+          th залог
+      tbody#table_content
+
+  include books_list_row

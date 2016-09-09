@@ -7,7 +7,7 @@ var callbackQueryMiniItemsSearch = function(res, text) {
     console.log("Количество книг в строке поиска: " + res.data.books.length);
     if (res.data.total.amount > 0) {
         var books = res.data.books;
-        view.addMiniItemsSearch(pathUrl, books,text);
+        view.addMiniItemsSearch(pathUrl, books, text);
     } else {
         view.addMiniItemsSearch(pathUrl, [{
             id: 'no-cover',
@@ -56,18 +56,31 @@ $('body').click(function(event) {
     }
 });
 
-if (pathNameUrl[1] == 'search') {
-    var search_text = $(location).attr('search').split('=');
-    search_text = decodeURIComponent(search_text[1]);
-    $('#search').val(search_text);
-    text = search_text.replace(/(^\s+|\s+$)/g, '');
-    var textEncode = encodeURIComponent(text); // shielding request
-    doAjaxQuery('GET', '' + pathUrl + '/api/v1/books?search=' + textEncode + '', null,
-        function(res) {
+(function() {
+    if (pathNameUrl[1] == 'search' || pathNameUrl[2] == 'search') {
+        var search_text = $(location).attr('search').split('=');
+        search_text = decodeURIComponent(search_text[1]);
+        $('#search').val(search_text);
+        text = search_text.replace(/(^\s+|\s+$)/g, '');
+        var textEncode = encodeURIComponent(text); // shielding request
+        if (pathNameUrl[1] == 'search') {
+            doAjaxQuery('GET', '' + pathUrl + '/api/v1/books?search=' + textEncode + '', null,
+                function(res) {
+                    callbackQueryItemsSearch(res, text);
+                });
+        } else if (pathNameUrl[1] == 'admin' && pathNameUrl[2] == 'search') {
+            requestBooksSearch(function(res) {
+                view.addBooksList(res);
+                msgResultSearchText(text, res.data.books.length);
+                $('.found').show();
+                $('#list').hide(200);
+            });
+        }
+    }
 
-            callbackQueryItemsSearch(res, text);
-        });
-}
+}());
+
+
 
 /* ---------- Live search if the search did not introduced n time ----------- */
 $('#search').keydown(function(event) {
@@ -99,6 +112,13 @@ $('#search').keydown(function(event) {
             var task = setTimeout(function() {
                 requestBooksSearch(callbackQueryMiniItemsSearch);
             }, 500);
+            if (pathUrl == '/admin') {
+                $('#eAutoComplete_itemMore a').on('click', function(event) {
+                    event.preventDefault();
+                    alert('yes');
+
+                });
+            }
         }
 
         $('#search').keydown(function(event) {
