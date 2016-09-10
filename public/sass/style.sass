@@ -281,7 +281,7 @@ html,body
   .book_block
     margin-top: 80px
   #content
-    .details,.btnBookID
+    .details
       background-color: white
       color: #34b96c
       border-color: #34b96c
@@ -316,7 +316,24 @@ html,body
       hr
         margin: 5px 0
       .btnBookID
-        float: left
+        margin-top: 30px
+        margin-bottom: 30px
+        -webkit-border-radius: 7px
+        -moz-border-radius: 7px
+        border-radius: 7px
+        font-family: Arial
+        color: #ffffff
+        font-size: 17px
+        background: #34b96c
+        padding: 10px 20px 10px 20px
+        border: solid #34b96c 2px
+        text-decoration: none
+        outline: none
+        &:hover
+          background: #ffffff
+          text-decoration: none
+          color: #34b96c
+          outline: none
       #bookImg img
         width: 220px
         height: auto
@@ -334,7 +351,10 @@ html,body
           display: table-row
           padding-bottom: 10px
           line-height: 17px
-          font-size: 12px
+          font-size: 14px
+          white-space: nowrap
+          overflow: hidden
+          text-overflow: ellipsis
         // width: 220px
         // padding: 10px 0 10px 10px
         .properties
@@ -342,8 +362,13 @@ html,body
           padding-right: 19px
           padding-bottom: 8px
           color: #2c3e50
+          opacity: 0.5
+          width: 13%
+          text-overflow: ellipsis
+
+
           // width: 22%
-          word-break: break-word
+
           font-weight: 600
           // display: inline-block
         #year,#pages,#isbn
