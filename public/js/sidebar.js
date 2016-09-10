@@ -1,13 +1,8 @@
-var sidebarItems = $('.sidebar_item');
-
-sidebarItems.click(function (event) {
+$('.sidebar_item').click(function (event) {
     event.preventDefault();
-    var context = $(this);
-    var filter = context.attr('data-filter');
+    var filter = $(this).attr('data-filter');
     $('#search').val('');
-    sidebarItems.removeClass('active');
-    context.closest('a').addClass('active');
-
+    setSidebarActiveButton($(this), filter);
     (function () {
             var data = {
                 filter: filter || 'new',
@@ -15,6 +10,7 @@ sidebarItems.click(function (event) {
                 limit: global.items_limit_on_page_load
             };
         loadIndexPage(data);
+        isScrollRunning = false;
     }());
 });
 
