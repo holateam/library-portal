@@ -1,11 +1,9 @@
 var pathNameUrl = $(location).attr('pathname').split('/');
 var pathUrl = (pathNameUrl[1] == 'admin') ? '/admin' : '';
 
-// console.log(JSON.stringify(pathNameUrl[1]));
-
+/* ------------- The result of the search in autocomplete list --------------*/
 var callbackQueryMiniItemsSearch = function(res, text) {
     $('.loader').show();
-    // console.log("Количество книг в строке поиска: " + res.data.books.length);
     if (res.data.total.amount > 0) {
         var books = res.data.books;
         view.addMiniItemsSearch(pathUrl, books, text);
@@ -13,7 +11,7 @@ var callbackQueryMiniItemsSearch = function(res, text) {
         view.addMiniItemsSearch(pathUrl, [{
             id: 'no-cover',
             title: 'По запросу "' + text + '" ничего не найдено :(',
-            author: 'Миллионы натренированных обезъян облазили весю библиотеку и не нашли ничего подходящего, что могло бы соответствовать Вашему запросу.'
+            author: 'my'
         }]);
     }
     setTimeout(function() {
@@ -21,6 +19,7 @@ var callbackQueryMiniItemsSearch = function(res, text) {
     }, 200);
 };
 
+/*-------------------The message on the search result -----------------------*/
 var msgResultSearchText = function(text, number_found) {
     $('.text_found').text(text);
     var titles = ['совпадение', 'совпадения', 'совпадений'];
@@ -31,6 +30,7 @@ var msgResultSearchText = function(text, number_found) {
     $('.number_found').text(number_found + " " + coincidence);
 };
 
+/* ----------------------- Search result on the page ------------------------*/
 var callbackQueryItemsSearch = function(res, text) {
     view.addBooksItems(res.data.books);
     $('.breadcrumb .active').text('поиск');
@@ -39,8 +39,7 @@ var callbackQueryItemsSearch = function(res, text) {
 
 /* ------------------- Get the query in database searching -------------------*/
 var requestBooksSearch = function(callback) {
-    var text = $('#search').val();
-    // console.log('текст для поиска: ' + text);
+    var text = htmlspecialchars($('#search').val());
     if (text.length > 0) {
         text = text.replace(/(^\s+|\s+$)/g, '');
         var textEncode = encodeURIComponent(text); // shielding request
@@ -54,17 +53,19 @@ var requestBooksSearch = function(callback) {
     }
 };
 
+/* ------------------------------- Hide auto search -------------------------*/
 $('body').click(function(event) {
     if ($(event.target).attr('id') !== 'search' && $(event.target).attr('id') !== 'list') {
         $('#list').hide(200);
     }
 });
 
+
 (function() {
     if (pathNameUrl[1] == 'search' || pathNameUrl[2] == 'search') {
         var search_text = $(location).attr('search').split('=');
-        search_text = decodeURIComponent(search_text[1]);
-        $('#search').val(search_text);
+        search_text = decodeURIComponent((search_text[1] == null) ? ' ' : search_text[1]);
+        $('#search').val(htmlspecialchars(search_text));
         text = search_text.replace(/(^\s+|\s+$)/g, '');
         var textEncode = encodeURIComponent(text); // shielding request
         if (pathNameUrl[1] == 'search') {
@@ -84,18 +85,14 @@ $('body').click(function(event) {
 
 }());
 
-
-
 /* ---------- Live search if the search did not introduced n time ----------- */
 $('#search').keydown(function(event) {
     var text = $(this).val();
-    // console.log("текст: " + text + " длина: " + text.length);
     if (event.keyCode === 13) {
         event.preventDefault();
         if (text.length > 0) {
             var encodeText = encodeURIComponent($('#search').val());
             if (pathUrl == '/admin') {
-                // console.log("Админ");
                 requestBooksSearch(function(res) {
                     view.addBooksList(res);
                     msgResultSearchText(text, res.data.books.length);
@@ -128,7 +125,6 @@ $('#search').keydown(function(event) {
         $('#search').keydown(function(event) {
             if (!(event.keyCode >= 33 && event.keyCode <= 40) &&
                 !(event.keyCode >= 16 && event.keyCode <= 20)) {
-                // console.log('Отмена');
                 clearTimeout(task);
             }
         });

@@ -243,3 +243,12 @@ var global = {
     number_of_items_onscroll: 6,
     filter: 'new'
 };
+
+function htmlspecialchars(html) {
+    html = html.replace(/&/g, "&amp;");
+    html = html.replace(/</g, "&lt;");
+    html = html.replace(/>/g, "&gt;");
+    html = html.replace(/"/g, "&quot;");
+    return html;
+
+}
