@@ -1,27 +1,32 @@
 var drawItemsOnScroll,
     isScrollRunning = false;
-
-(function () {
-    data = {
-        filter: getParameterByName('filter') || "new",
-        offset: getParameterByName('offset'),
-        limit: getParameterByName('count') || global.items_limit_on_page_load
-    };
-    doAjaxQuery('GET', '/api/v1/books', data, function (res) {
-        view.addBooksItems(res.data.books, true);
-        drawItemsOnScroll = initDrawItemsOnScroll(res.data.total.amount);
-        if (localStorage.getItem('h')) {
-            $(window).scrollTop(localStorage.getItem('h'));
-            localStorage.removeItem('h');
-        }
-    });
-}());
-
-$('#content').on('click', '.book', function () {
-    localStorage.setItem('h', $(window).scrollTop());
-});
+console.log(isScrollRunning);
 
 $(document).ready(function () {
+
+    (function () {
+
+        data = {
+            filter: getParameterByName('filter') || "new",
+            offset: getParameterByName('offset'),
+            limit: getParameterByName('count') || global.items_limit_on_page_load
+        };
+
+        setSidebarActiveButton(null, data.filter);
+        doAjaxQuery('GET', '/api/v1/books', data, function (res) {
+            console.log('qindex');
+            view.addBooksItems(res.data.books, true);
+            drawItemsOnScroll = initDrawItemsOnScroll(res.data.total.amount);
+            if (localStorage.getItem('h')) {
+                $(window).scrollTop(localStorage.getItem('h'));
+                localStorage.removeItem('h');
+            }
+        });
+    }());
+
+    $('#content').on('click', '.book', function () {
+        localStorage.setItem('h', $(window).scrollTop());
+    });
 
     $(document).scroll(function () {
         if ((( $(document).height() - $(window).scrollTop() ) < ( 2 * $(window).height() )) && !isScrollRunning) {
@@ -73,4 +78,14 @@ function loadIndexPage(reqData) {
         changeHistoryStateWithParams('push', res.data.filter, res.data.offset);
         drawItemsOnScroll = initDrawItemsOnScroll(res.data.total.amount);
     });
+}
+
+function setSidebarActiveButton(activeElem, filterStringValue) {
+    $('.sidebar_item').removeClass('active');
+    if (activeElem) {
+        activeElem.closest('a').addClass('active');
+        return;
+    } else {
+        $('a[data-filter=' + filterStringValue + ']').addClass('active');
+    }
 }
