@@ -15,6 +15,51 @@ var defaultCoverPath = "./public/img/books/";
 var defaultBookCover = "no-cover.jpg";
 var defaultCoverExtension = ".jpg";
 
+const winston = require('winston');
+const env = process.env.NODE_ENV || 'development';
+const logDir = 'logAP';
+// Create the log directory if it does not exist
+if (!fs.existsSync(logDir)) {
+  fs.mkdirSync(logDir);
+}
+const tsFormat = () => (new Date()).toLocaleTimeString();
+const logger = new (winston.Logger)({
+  transports: [
+/*
+    // colorize the output to the console
+    new (winston.transports.Console)({
+      timestamp: tsFormat,
+      colorize: true,
+      level: 'info',
+      json: true
+    }),
+*/
+    new (require('winston-daily-rotate-file'))({
+      filename: `${logDir}/-results.log`,
+      timestamp: tsFormat,
+      datePattern: 'yyyy-MM-dd',
+      prepend: true,
+      level: env === 'development' ? 'verbose' : 'info',
+      json: true
+    })
+  ]
+});
+
+var makeLog = function(req, err, resp) {
+    data = {
+        date: new Date().toISOString(),
+        method: req.method,
+        path: req.path,
+        data: req.body,
+        response: resp
+    };
+    if (err) {
+        logger.error(err.toString(), data);
+    } else {
+        logger.info('info', data);
+    }
+}
+
 var Render = function(router, path, middleware, view, title) {
     router.get(path, middleware, function(req, res, next) {
         res.render(view, {
@@ -45,6 +90,7 @@ adminRouter.route('/api/v1/books')
     .get(function(req, res, next) {
         dbLayer.getBooksForAdmin(req.query, function(err, resp) {
             res.json(standardRes(err, resp));
+//            makeLog(req, err, resp);
         });
     });
 
@@ -52,6 +98,7 @@ adminRouter.route('/api/v1/books/:book_id')
     .get(function(req, res, next) {
         dbLayer.getBookForAdmin(req.params.book_id, function(err, resp) {
             res.json(standardRes(err, resp));
+//            makeLog(req, err, resp);
         });
     });
 
@@ -68,6 +115,7 @@ adminRouter.route('/api/v1/books/add')
                 }
             }
             res.json(standardRes(err, resp));
+            makeLog(req, err, resp);
         });
     });
 
@@ -84,6 +132,7 @@ adminRouter.route('/api/v1/books/:book_id/update')
                 }
             }
             res.json(standardRes(err, resp));
+            makeLog(req, err, resp);
         });
     });
 
@@ -91,6 +140,7 @@ adminRouter.route('/api/v1/books/:book_id/remove')
     .get(verify.auth, function(req, res, next) {
         dbLayer.deleteBookById(req.params.book_id, function(err, resp) {
             res.json(standardRes(err, resp));
+            makeLog(req, err, resp);
         });
     });
 
@@ -98,6 +148,7 @@ adminRouter.route('/api/v1/books/remove')
     .post(verify.auth, function(req, res, next) {
         dbLayer.deleteBookWithIdInList(req.body.ids, function(err, resp) {
             res.json(standardRes(err, resp));
+            makeLog(req, err, resp);
         });
     });
 
@@ -112,6 +163,7 @@ adminRouter.route('/api/v1/readers/add')
     .post(verify.auth, function(req, res, next) {
         dbLayer.createReader(req.body.reader, function(err, resp) {
             res.json(standardRes(err, resp));
+            makeLog(req, err, resp);
         });
     });
 
@@ -119,6 +171,7 @@ adminRouter.route('/api/v1/books/:book_id/give')
     .post(verify.auth, function(req, res, next) {
         dbLayer.giveBookById(req.params.book_id, req.body.event, function(err, resp) {
             res.json(standardRes(err, resp));
+            makeLog(req, err, resp);
         });
     });
 
@@ -126,6 +179,7 @@ adminRouter.route('/api/v1/books/:book_id/renewal')
     .post(verify.auth, function(req, res, next) {
         dbLayer.updateEventByBookId(req.params.book_id, req.body.changes, function(err, resp) {
             res.json(standardRes(err, resp));
+            makeLog(req, err, resp);
         });
     });
 
@@ -134,6 +188,7 @@ adminRouter.route('/api/v1/books/:book_id/take')
         dbLayer.takeBookById(req.params.book_id, function(err, resp) {
             mailer.sendMail(req.params.book_id);
             res.json(standardRes(err, resp));
+            makeLog(req, err, resp);
         });
     });
 
@@ -141,6 +196,7 @@ adminRouter.route('/api/v1/events/:event_id')
     .get(verify.auth, function(req, res, next) {
         dbLayer.getEventById(req.params.event_id, function(err, resp) {
             res.json(standardRes(err, resp));
+            makeLog(req, err, resp);
         });
     });
 
@@ -148,6 +204,7 @@ adminRouter.route('/api/v1/events/:event_id/update')
     .post(verify.auth, function(req, res, next) {
         dbLayer.updateEventById(req.params.event_id, req.body.changes, function(err, resp) {
             res.json(standardRes(err, resp));
+            makeLog(req, err, resp);
         });
     });
 
