@@ -11,7 +11,7 @@ var callbackQueryMiniItemsSearch = function(res, text) {
         view.addMiniItemsSearch(pathUrl, [{
             id: 'no-cover',
             title: 'По запросу "' + text + '" ничего не найдено :(',
-            author: 'my'
+            author: 'Миллионы натренированных обезьян облазили всю библиотеку и не нашли ничего подходящего, что могло бы соответствовать Вашему запросу.'
         }]);
     }
     setTimeout(function() {
@@ -60,31 +60,6 @@ $('body').click(function(event) {
     }
 });
 
-
-(function() {
-    if (pathNameUrl[1] == 'search' || pathNameUrl[2] == 'search') {
-        var search_text = $(location).attr('search').split('=');
-        search_text = decodeURIComponent((search_text[1] == null) ? ' ' : search_text[1]);
-        $('#search').val(htmlspecialchars(search_text));
-        text = search_text.replace(/(^\s+|\s+$)/g, '');
-        var textEncode = encodeURIComponent(text); // shielding request
-        if (pathNameUrl[1] == 'search') {
-            doAjaxQuery('GET', '' + pathUrl + '/api/v1/books?search=' + textEncode + '', null,
-                function(res) {
-                    callbackQueryItemsSearch(res, text);
-                });
-        } else if (pathNameUrl[1] == 'admin' && pathNameUrl[2] == 'search') {
-            requestBooksSearch(function(res) {
-                view.addBooksList(res);
-                msgResultSearchText(text, res.data.books.length);
-                $('.found').show();
-                $('#list').hide(200);
-            });
-        }
-    }
-
-}());
-
 /* ---------- Live search if the search did not introduced n time ----------- */
 $('#search').keydown(function(event) {
     var text = $(this).val();
@@ -114,7 +89,7 @@ $('#search').keydown(function(event) {
                 requestBooksSearch(callbackQueryMiniItemsSearch);
             }, 500);
             if (pathUrl == '/admin') {
-                $('#eAutoComplete_itemMore a').on('click', function(event) {
+                $('#eAutoComplete_itemMore').find('a').on('click', function(event) {
                     event.preventDefault();
                     alert('yes');
 
@@ -131,4 +106,30 @@ $('#search').keydown(function(event) {
     } else {
         $('#list').hide();
     }
+});
+
+
+$(document).ready(function() {
+    (function() {
+        if (pathNameUrl[1] == 'search' || pathNameUrl[2] == 'search') {
+            var search_text = $(location).attr('search').split('=');
+            search_text = decodeURIComponent((search_text[1] == null) ? ' ' : search_text[1]);
+            $('#search').val(htmlspecialchars(search_text));
+            text = search_text.replace(/(^\s+|\s+$)/g, '');
+            var textEncode = encodeURIComponent(text); // shielding request
+            if (pathNameUrl[1] == 'search') {
+                doAjaxQuery('GET', '' + pathUrl + '/api/v1/books?search=' + textEncode + '', null,
+                    function(res) {
+                        callbackQueryItemsSearch(res, text);
+                    });
+            } else if (pathNameUrl[1] == 'admin' && pathNameUrl[2] == 'search') {
+                requestBooksSearch(function(res) {
+                    view.addBooksList(res);
+                    msgResultSearchText(text, res.data.books.length);
+                    $('.found').show();
+                    $('#list').hide(200);
+                });
+            }
+        }
+    }());
 });
