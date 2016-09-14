@@ -13,7 +13,7 @@ html,body
   a:focus, a:hover
     text-decoration: none
   h1,h2,h3,h4,h5
-    color: #2c3e50
+  color: #2c3e50
 .btn-success
   color: #fff
   background-color: #27ae60
@@ -22,10 +22,8 @@ html,body
     background-color: #2cc56d
     border-color: #34b96c
 
-/* ------------------ section #header - styles sass ------------------------- */
-#header
-  a
-    display: inline-block
+/* -------------------------- .header-wrapper ------------------------------ */
+.header-wrapper
   .navbar
     border-bottom: 5px solid rgb(39, 174, 96)
     background-color: white
@@ -38,7 +36,7 @@ html,body
       .plus
         color: #27ae60
       .sh,.plus
-        font-family: arial
+        font-family: arial, sans-serif
         font-size: 60px
         font-weight: bold
         line-height: 60px
@@ -55,216 +53,286 @@ html,body
         opacity: 0.8
         span
           margin-left: 10px
+          cursor: pointer
       a:hover
         color: #27ae60
         opacity: 1
-.main-menu
-  text-align: right
-  // overflow: hidden
-  line-height: 73px
-  .link
-    margin-left: 2%
-    line-height: 80px
-    color: #2c3e50
-    text-transform: uppercase
-    font-size: 81%
-    white-space: nowrap
-    &:hover
-      color: #27AE60
-      font-weight: 700
-    .fa-vk
-      color: #3498DB
-      font-size: 150%
-      border: 1px solid
-      border-radius: 50%
-      padding: 0.3rem
-      text-align: center
-  .nav1
-    height: 80px
-    overflow: hidden
+    .main-menu
+      text-align: right
+      line-height: 73px
+      .navbar-form
+        border-top: 0
+        border-bottom: 0
+        width: 100%
+        .form-group
+          width: 100%
+          position: relative
+        #search
+          width: 100%
+          padding-left: 30px
+        .bAutoComplete
+          height: auto
+          display: none
+          text-align: left
+          background-color: white
+          box-shadow: 0 2px 10px -2px rgba(0,0,0,.7)
+        #search_btn
+          margin-left: 10px
+          display: none
+        .mSearchAutoComplete
+          padding: 10px 0
+          width: 100%
+          position: absolute
+          left: 0
+          top: 56px
+          z-index: 2
+          display: none
+          .eAutoComplete_itemMore
+            text-align: right
+            a
+              margin: 0
+              display: block !important
+              text-align: right
+              line-height: 0
+              padding: 10px 0
+              span
+                font-size: 12px
+                color: #34b96c
+                border-bottom: 1px dashed #34b96c
+                line-height: 14px
+                &:hover
+                  color: #2c3e50
+                  border-bottom: 1px dashed #2c3e50
+          .eAutoComplete_itemList
+            line-height: 0
+            margin: 5px 0
+            opacity: 0.5
+            &:last-child
+              a
+                border-bottom: 0
+            a
+              background: none
+              padding: 5px 8px
+              margin: 0
+              color: #555
+              line-height: 14px
+              display: inline-block
+              text-decoration: none
+              cursor: pointer
+              font-size: 12px
+              width: 100%
+              border-bottom: 1px solid lightgrey
+              .infoBook
+                .title
+                  line-height: 25px
+                  font-size: 16px
+                  font-weight: 500
+              .col-my-2
+                position: relative
+                min-height: 1px
+                padding-right: 5px
+                padding-left: 5px
+                float: left
+                width: 7%
+              .col-my-10
+                position: relative
+                min-height: 1px
+                padding-right: 5px
+                padding-left: 5px
+                float: left
+                width: 93%
+              img
+                max-height: 50px
+            &:hover
+              opacity: 1
 
-  .green-submenu
-    background-color: #27ae60
-    text-align: center
-    background-image: url("../img/galaxyrefitstarboard.png")
-    background-size: 100%
-    background-position: 0 53%
-    background-repeat: no-repeat
-    &::before
-      content: ''
-      position: absolute
-      width: 100%
-      height: 55px
-      left: 0
-      background-color: rgba(39, 174, 96, 0.9)
-      pointer-events: none
-      background-position-x: 0px
-      background-repeat: repeat-x
+/*----------------------------------- .sidebar2  ----------------------------*/
 .sidebar2
   text-align: center
-  a
-    padding-left: 1%
-    padding-right: 1%
-    padding-bottom: 10px
-    line-height: 80px
-    color: #2c3e50
-    text-transform: uppercase
-    font-size: 81%
-    white-space: nowrap
-    &:hover
-      font-weight: bold
-  li
-    float: left
-.navbar-form
-  border-top: 0
-  border-bottom: 0
-  width: 100%
-  .form-group
-    width: 100%
-    position: relative
-  #search
-    width: 100%
-    padding-left: 30px
-  .loader
-    position: absolute
-    top: 0
-    right: 10px
-    display: none
-    img
-      height: 20px
+  .nav2
+    .filterBlock
+      border-bottom: 1px solid rgba(34, 36, 38, 0.15)
+      padding: 10px
+      a
+        padding-left: 1%
+        padding-right: 1%
+        padding-bottom: 10px
+        line-height: 80px
+        color: #2c3e50
+        text-transform: uppercase
+        font-size: 81%
+        white-space: nowrap
+        &:hover
+          font-weight: bold
+      .active
+        border-color: #27ae60
+        border-bottom: 1px solid
+        padding-bottom: 10px
+.loader
+  position: absolute
+  top: 0
+  right: 10px
+  display: none
+  img
+    height: 20px
 
-  #list
-  .mSearchAutoComplete
-    padding: 10px 0
-    width: 100%
-    position: absolute
-    left: 0
-    top: 56px
-    z-index: 2
-    display: none
-    .eAutoComplete_itemMore
-      text-align: right
-      a
-        margin: 0
-        display: block !important
-        text-align: right
-        line-height: 0
-        padding: 10px 0
-        &:hover
-        span
-          font-size: 12px
-          color: #34b96c
-          border-bottom: 1px dashed #34b96c
-          line-height: 14px
-          &:hover
-            color: #2c3e50
-            border-bottom: 1px dashed #2c3e50
-    .eAutoComplete_itemList
-      line-height: 0px
-      // max-height: 62px
-      margin: 5px 0
-      opacity: 0.5
-      &:last-child
-        a
-          border-bottom: 0
-      a
-        background: none
-        padding: 5px 8px
-        margin: 0
-        color: #555
-        line-height: 14px
-        display: block
-        text-decoration: none
-        cursor: pointer
-        font-size: 12px
-        width: 100%
-        border-bottom: 1px solid lightgrey
-        &:hover
-          // border-bottom: none
-        .infoBook
-          // height: 54px
-          // border-bottom: 1px solid lightgrey
-          .title
-            line-height: 25px
-            font-size: 16px
-            font-weight: 500
-        .col-my-2
-          position: relative
-          min-height: 1px
-          padding-right: 5px
-          padding-left: 5px
-          float: left
-          width: 7%
-        .col-my-10
-          position: relative
-          min-height: 1px
-          padding-right: 5px
-          padding-left: 5px
-          float: left
-          width: 93%
-        img
-          max-height: 50px
-      &:hover
-        opacity: 1
-  .bAutoComplete
-    height: auto
-    display: none
-    text-align: left
-    background-color: white
-    box-shadow: 0 2px 10px -2px rgba(0,0,0,.7)
-  #search_btn
-    margin-left: 10px
-    display: none
-// .eAutoComplete_itemList
-//   a:last-child
-//     border-bottom: 0
-/* ----------------------- section #main  - styles sass --------------------- */
-#main
+/*-------------------------------- .main-wrapper  ---------------------------*/
+
+.main-wrapper
   position: relative
   min-height: 100%
   height: auto !important
   height: 100%
   padding: 10px 0 20px 0
-  // margin-bottom: -20px
-  .top
-    padding-top: 40px
-  .menu
-    border-bottom-width: 0
-    border-right-width: 2px
-    border-right-style: solid
-    border-right-color: rgba(34,36,38,.15)
-    .menu_nav
-      padding-left: 0
-      margin:
-        top: 10px
-        bottom: 10px
-      li
-        float: none
-        list-style: none
-        a
-          color: #27ae60
-          padding: 10px 15px
-          display: block
-          &:hover
-            background-color: white
-            font-weight: bold
-            text-decoration: none
-      .active
-        border-color: #27ae60
-        border-right-style: solid
-        margin: 0 -2px 0 0
-        border-right-width: 2px
-  .menu_fixed_middle
-    top: 160px
-    position: fixed
-    z-index: 1029
-    width: 13%
   #pattern
     display: none
+  .book_item
+    .book
+      text-align: center
+      padding: 20px 10px
+      &:hover
+        box-shadow: 0 3px 7px 1px rgba(195, 195, 195, 0.27)
+      a
+        display: block
+        img
+          width: auto
+          height: 128px
+          cursor: pointer
+        .blockI
+          position: relative
+          &::before
+            bottom: 30px
+            margin-left: -40%
+            padding: 10px
+            width: 80%
+            font-size: 10px
+            color: white
+            text-align: center
+            background-color: rgba(0, 0, 0, .85)
+            border-radius: 5px
+            content: attr(data-title)
+            box-sizing: border-box
+          &::after
+            content: ''
+            border-top: 10px solid rgba(0, 0, 0, .85)
+            border-left: 10px solid transparent
+            border-right: 10px solid transparent
+            bottom: 20px
+            margin-left: -10px
+        .blockI::before,.blockI::after
+          display: block
+          position: absolute
+          left: 50%
+          visibility: hidden
+          opacity: 0
+          transition: opacity .5s
+        .blockI:hover::before,.blockI:hover::after
+          visibility: visible
+          opacity: 1
+        .title
+          color: #2c3e50
+          font-size: 12px !important
+          line-height: 1.5 !important
+          text-align: center
+          white-space: nowrap
+          padding: 5px 0 0 0
+          text-overflow: ellipsis
+          overflow: hidden
+        .author
+          color: #2c3e50
+          font-size: 12px !important
+          line-height: 1.5 !important
+          text-align: center
+          white-space: nowrap
+          padding: 0 0 5px 0
+          text-overflow: ellipsis
+          overflow: hidden
+        .details
+          background-color: white
+          color: #34b96c
+          border-color: #34b96c
+          outline: none
+          &:hover
+            background-color: white
+            color: #2c3e50
+            border-color: #263646
+  .book_block
+    margin-top: 80px
+    #id
+      margin-top: 20px
+      .item
+        text-align: -webkit-center
+        img
+          width: 220px
+          height: auto
+        .rating
+          text-align: center
+        hr
+          margin: 5px 0
+      .info
+        .bookInfo
+          color: rgb(44, 62, 80)
+          font-size: 14px
+          .titleBook
+            font-weight: 600
+            font-size: 24px
+            line-height: 32px
+            letter-spacing: 0.01em
+            margin-bottom: 20px
+            width: 80%
+      .bookLastInfo
+        display: table
+        table-layout: fixed
+        width: 100%
+        .bookRow
+          display: table-row
+          padding-bottom: 10px
+          line-height: 17px
+          font-size: 14px
+          white-space: nowrap
+          text-overflow: ellipsis
+          overflow: hidden
+          .properties
+            display: table-cell
+            padding-right: 19px
+            padding-bottom: 8px
+            color: #2c3e50
+            word-break: break-word
+            font-weight: 600
+      .btnBookID
+          margin-top: 30px
+          margin-bottom: 30px
+          font-family: Arial, sans-serif
+          color: rgb(255, 255, 255)
+          font-size: 17px
+          text-decoration: none
+          border-radius: 7px
+          background: rgb(52, 185, 108)
+          padding: 10px 20px
+          border-image: initial
+          outline: none
+          &:hover
+            text-decoration: none
+            color: rgb(52, 185, 108)
+            background: rgb(255, 255, 255)
+            outline: none
+      h4
+        padding: 5px 0
+        font-weight: 500
+      hr
+        margin: 5px 0
+      .bookDescription
+        #description
+          font-size: 14px
+          text-align: left
+          text-indent: 1.5em
+          line-height: 24px
+        p:first-letter
+          font-size: 22px
+          color: #27ae60
   .found
     margin: 60px 15px 20px 15px
-    // border-bottom: 1px solid grey
-    box-shadow: 0px 1px 0px 0px rgba(195, 195, 195, 0.27)
+    box-shadow: 0 1px 0 0 rgba(195, 195, 195, 0.27)
     .text_found,.number_found
       font-weight: bold
       padding: 0 5px
@@ -280,252 +348,80 @@ html,body
           color: #27ae60
           &:hover
             color: #2c3e50
-  .book_block
-    margin-top: 80px
-    .item
+  .top
+    padding-top: 40px
+    .table-hover
+      tr
+        cursor: pointer
+
+  #id
+    margin-top: 20px
+    #bookImg
       text-align: -webkit-center
-    .rating
-      text-align: center
-  #content
-    .details
-      background-color: white
-      color: #34b96c
-      border-color: #34b96c
-      outline: none
-      &:hover
-        background-color: white
-        color: #2c3e50
-        border-color: #263646
-    .fileinput-upload-button
-      display: none
-    .kv-file-upload
-      display: none
-    .bookDescription
-      // text-align: right
-      // max-height: 312px
-      // overflow: hidden
-      // padding: 0 0 0 0
-      h4
-        font-weight: 500
-      #description
-        font-size: 14px
-        text-align: left
-        text-indent: 1.5em
-        line-height: 24px
-      p:first-letter
-        font-size: 22px
-        color: #27ae60
-    #id
-      margin-top: 20px
-      h4
-        padding: 5px 0
-      hr
-        margin: 5px 0
-      .btnBookID
-        margin-top: 30px
-        margin-bottom: 30px
-        -webkit-border-radius: 7px
-        -moz-border-radius: 7px
-        border-radius: 7px
-        font-family: Arial
-        color: #ffffff
-        font-size: 17px
-        background: #34b96c
-        padding: 10px 20px 10px 20px
-        border: solid #34b96c 2px
-        text-decoration: none
-        outline: none
-        &:hover
-          background: #ffffff
-          text-decoration: none
-          color: #34b96c
-          outline: none
-      #bookImg img
+      img
         width: 220px
         height: auto
-        // box-shadow: 1px 1px 6px 3px rgba(195, 195, 195, 0.27)
-        // box-shadow: 10px 10px 5px -9px rgba(0, 0, 0, 0.75)
       .blokBtnAdmin
         padding: 10px 0
         text-align: center
         .btn
           margin: 0 3px
-      .bookLastInfo
-        display: table
-        table-layout: fixed
-        width: 100%
-        .bookRow
-          display: table-row
-          padding-bottom: 10px
-          line-height: 17px
-          font-size: 14px
-          white-space: nowrap
-          overflow: hidden
-          text-overflow: ellipsis
-        // width: 220px
-        // padding: 10px 0 10px 10px
-        .properties
-          display: table-cell
-          padding-right: 19px
-          padding-bottom: 8px
-          color: #2c3e50
-          opacity: 0.5
-          width: 13%
-          text-overflow: ellipsis
-
-
-          // width: 22%
-
-          font-weight: 600
-          // display: inline-block
-        #year,#pages,#isbn
-
-      .bookInfo
-        // padding: 0 15px 10px
-        color: #2c3e50
-        font-size: 14px
-        .titleBook
-          font-weight: 600
-          font-size: 24px
-          line-height: 32px
-          letter-spacing: .01em
-          margin-bottom: 20px
-          width: 80%
-          // color: #888
-          // width: 80px
-          // padding-right: 19px
-          // padding-bottom: 8px
-        .properties
-          padding: 0 5px 0 10px
-        .btnBook
-          // margin-top: 60px
-          text-align: center
-      .orderBlock
-        text-align: center
-        background-color: #fff
-        border: 1px solid #e1e1e1
-        box-shadow: 0 2px 10px -2px rgba(0,0,0,.15)
-        padding: 30px 20px 35px 20px
-        border-radius: 3px
-        .busyBook,.freeBook,.response
-          display: none
-          .youEmail
-            color: #27ae60
-        .glyphicon-ok,.glyphicon-remove
-          display: none
-          .btnBookID
-        .termD-group
-          max-width: 50%
-          float: right
-        .updateBookAction
-          span
-            position: relative
-            padding: 10px
-            top: -2px
-          text-align: right
-
-        .form-queue
-          padding: 2px 0
-        i.fa
-          width: 20px
-
-    a
-      display: block
-      img
-        width: auto
-        height: 128px
-        cursor: pointer
-    .book
-      text-align: center
-      padding: 20px 10px
-      &:hover
-        box-shadow: 0px 3px 7px 1px rgba(195, 195, 195, 0.27)
-      .title
-        // padding: 10px 0 5px 0
-        // color: #27ae60
-        // font-size: 14px
-        // font-weight: bold
-        color: #2c3e50
-        font-size: 12px !important
-        line-height: 1.5 !important
-        text-align: center
-        white-space: nowrap
-        padding: 5px 0 0 0
-        text-overflow: ellipsis
-        overflow: hidden
-      .author
-        color: #2c3e50
-        // font-style: italic
-        // font-size: 15px
-        font-size: 12px !important
-        line-height: 1.5 !important
-        text-align: center
-        white-space: nowrap
-        padding: 0 0 5px 0
-        text-overflow: ellipsis
-        overflow: hidden
-    .table-hover
+    .bookInfo
+      color: #2c3e50
       font-size: 14px
-      tr
-        cursor: pointer
-.filterBlock
-  border-bottom-width: 1px
-  border-bottom-style: solid
-  border-bottom-color: rgba(34, 36, 38, 0.15)
-  padding: 10px
-  .active
-    border-color: #27ae60
-    border-bottom-style: solid
-    border-bottom-width: 1px
-    padding-bottom: 10px
+      h4
+        padding: 5px 0
+      .titleBook
+        font-weight: 600
+        font-size: 24px
+        line-height: 32px
+        letter-spacing: .01em
+        margin-bottom: 20px
+        width: 80%
+      .properties
+        padding: 0 5px 0 10px
+      .btnBook
+        text-align: center
+    .orderBlock
+      text-align: center
+      background-color: #fff
+      border: 1px solid #e1e1e1
+      box-shadow: 0 2px 10px -2px rgba(0,0,0,.15)
+      padding: 30px 20px 35px 20px
+      border-radius: 3px
+      .busyBook,.freeBook,.response
+        display: none
+        .youEmail
+          color: #27ae60
+      .glyphicon-ok,.glyphicon-remove
+        display: none
+      .termD-group
+        max-width: 50%
+        float: right
+      .updateBookAction
+        span
+          position: relative
+          padding: 10px
+          top: -2px
+        text-align: right
 
-#formAddBook
+      .form-queue
+        padding: 2px 0
+      i.fa
+        width: 20px
+
   #book_save
     float: right
+  #canvas
+    border: 2px solid #2cc56d
+    border-radius: 10px
+#loading
+  text-align: center
+  display: none
 
-    // display: none
-.blockI
-  position: relative
-  &::before
-    // display: block
-    // position: absolute
-    bottom: 30px
-    // left: 50%
-    margin-left: -40%
-    padding: 10px
-    width: 80%
-    font-size: 10px
-    color: white
-    text-align: center
-    background-color: rgba(0, 0, 0, .85)
-    border-radius: 5px
-    content: attr(data-title)
-    box-sizing: border-box
-    // transition: opacify .7s
-    // visibility: hidden
-    // opacity: 0
-  &::after
-    content: ''
-    border-top: 10px solid rgba(0, 0, 0, .85)
-    border-left: 10px solid transparent
-    border-right: 10px solid transparent
-    bottom: 20px
-    margin-left: -10px
-.blockI::before,.blockI::after
-  display: block
-  position: absolute
-  left: 50%
-  visibility: hidden
-  opacity: 0
-  transition: opacity .5s
-.blockI:hover::before,.blockI:hover::after
-  visibility: visible
-  opacity: 1
+/*------------------------------- .footer-wrapper  --------------------------*/
 
-  #loading
-    text-align: center
-/* ---------------------- section #footer - styles sass --------------------- */
-#footer
+.footer-wrapper
   position: absolute
   width: 100%
   .content_footer
@@ -539,15 +435,6 @@ html,body
       cursor: pointer
       &:hover
         color: white
-
-
-#canvas
-  border: 2px solid #2cc56d
-  border-radius: 10px
-
-@media (max-width: 750px)
-	.container
-    width: 360px
 
 @keyframes displaySweetAlert
   0%
@@ -575,15 +462,19 @@ html,body
 
 .showSweetAlert[data-animation=pop]
   animation: displaySweetAlert 0.2s
-@media(min-width:1200px)and(max-width:1920px)
-  body
 
-/* Small devices (tablets, 768px and up) */
+/* Large devices (large desktops, 1200px and up) */
+@media(min-width:1200px)and(max-width:1920px)
+
+
+/* Medium devices (desktops, 991px and up) */
 @media(min-width:991px)and(max-width:1170px)
-  body
+
 
 /* Small devices (tablets, 768px and up) */
 @media(min-width:768px)and(max-width:990px)
+  .container
+    width: 320px
   .titleBook
     width: 100%
   .bookRow
@@ -597,7 +488,10 @@ html,body
     margin-top: 20px
     padding: 0 15px 0 15px
 
+/* Mobile devices (mobile, 319px and up) */
 @media(min-width:320px)and(max-width:767px)
+  .form-group
+    left: 10%
   .sidebar2
     a
       font-size: 50% !important
@@ -638,12 +532,6 @@ html,body
     overflow: auto !important
     h4
       text-align: center
-
-
-// @media(min-width:768px)
-    body
-      background-color: black
-
-#loading
-  text-align: center
-  display: none
+  .logo
+    .sh,.plus
+      font-size: 50px !important
